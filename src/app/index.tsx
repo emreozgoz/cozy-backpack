@@ -106,12 +106,15 @@ export default function Home() {
       ) : null}
 
       <View style={[styles.topBar, { paddingTop: insets.top + 8 }]} pointerEvents="box-none">
-        <RoundButton
-          label="🎁"
-          onPress={() => router.push('/daily-reward')}
-          accessibilityLabel={ui.dailyReward}
-          badge={canClaim}
-        />
+        <View style={styles.leftButtons}>
+          <RoundButton
+            label="🎁"
+            onPress={() => router.push('/daily-reward')}
+            accessibilityLabel={ui.dailyReward}
+            badge={canClaim}
+          />
+          <RoundButton label="🛍" onPress={() => router.push('/shop')} accessibilityLabel={ui.shop} />
+        </View>
         <View style={styles.chips}>
           <Chip icon={<StarGlyph />} value={totalStars(progress)} label={ui.stars} />
           <Chip icon={<Coin />} value={buttons} label={ui.buttons} />
@@ -214,6 +217,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
   },
+  leftButtons: { flexDirection: 'column', gap: 8 },
   chips: { flexDirection: 'row', gap: 6, flexShrink: 1, flexWrap: 'wrap', justifyContent: 'center' },
   chipIcon: { fontSize: 14 },
   bottom: {

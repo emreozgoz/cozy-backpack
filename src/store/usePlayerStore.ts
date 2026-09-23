@@ -49,6 +49,8 @@ interface PlayerState {
   canClaimDailyReward(today: string): boolean;
   claimDailyReward(today: string): DailyReward | null;
   spendHint(): boolean;
+  addHints(n: number): void;
+  addButtons(n: number): void;
   buyDecor(id: string): boolean;
   equipDecor(id: string): void;
   setSetting<K extends keyof Settings>(key: K, value: Settings[K]): void;
@@ -133,6 +135,14 @@ export const usePlayerStore = create<PlayerState>()(
         if (hints <= 0) return false;
         set({ hints: hints - 1 });
         return true;
+      },
+
+      addHints(n) {
+        set({ hints: get().hints + n });
+      },
+
+      addButtons(n) {
+        set({ buttons: get().buttons + n });
       },
 
       buyDecor(id) {

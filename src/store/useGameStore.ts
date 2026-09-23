@@ -11,6 +11,7 @@ import { bounds, nextOrientation, orientedCells } from '@/game/shapes';
 import type { ItemInstance, LevelDef, Orientation, Placement } from '@/game/types';
 
 import { usePlayerStore, type Completion } from './usePlayerStore';
+import { useShopStore } from './useShopStore';
 
 type Status = 'playing' | 'won';
 
@@ -136,6 +137,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       const completion = isDailyId(level.id)
         ? player.completeDaily(level.id.slice(DAILY_PREFIX.length), stars)
         : player.completeLevel(level.id, stars);
+      useShopStore.getState().noteLevelCleared(isDailyId(level.id));
       set({ status: 'won', stars, completion, issues: [], hint: null });
     } else {
       set({ failedZips: failedZips + 1, issues });

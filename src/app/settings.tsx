@@ -1,11 +1,12 @@
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useT, type LanguageSetting } from '@/i18n';
 import { usePlayerStore } from '@/store/usePlayerStore';
+import { isAdFree, privacy, useShopStore } from '@/store/useShopStore';
 import { RoundButton, SoftButton } from '@/ui/kit';
 import { radius, usePalette } from '@/ui/tokens';
 
@@ -17,6 +18,18 @@ export default function Settings() {
   const setSetting = usePlayerStore((s) => s.setSetting);
   const [confirming, setConfirming] = useState(false);
   const [resetDone, setResetDone] = useState(false);
+  const entitlements = useShopStore((s) => s.entitlements);
+  const busy = useShopStore((s) => s.busy);
+  const [storeMessage, setStoreMessage] = useState<string | null>(null);
+  const [privacyNeeded, setPrivacyNeeded] = useState(false);
+
+  useEffect(() => {
+    privacy.required().then(setPrivacyNeeded);
+  }, []);
+
+  const restore = async () => {
+    setStoreMessage((await useShopStore.getState().restore()) ? ui.restoreDone : ui.restoreNone);
+  };
 
   const rows: { key: 'sound' | 'haptics'; label: string }[] = [
     { key: 'sound', label: ui.sound },
@@ -94,6 +107,25 @@ export default function Settings() {
       </View>
 
       <View style={[styles.card, styles.danger, { backgroundColor: palette.surface }]}>
+        <View style={styles.row}>
+          <Text style={[styles.label, { color: palette.text }]}>{ui.membership}</Text>
+          <Text style={[styles.status, { color: palette.textMuted }]}>
+            {entitlements.vip ? ui.vipActive : isAdFree(entitlements) ? ui.adFreeActive : '—'}
+          </Text>
+        </View>
+        {!entitlements.vip ? (
+          <SoftButton label={ui.vipTitle} kind="soft" onPress={() => router.push('/vip')} />
+        ) : null}
+        <SoftButton label={ui.restore} kind="ghost" onPress={restore} disabled={!!busy} />
+        {privacyNeeded ? (
+          <SoftButton label={ui.privacyOptions} kind="ghost" onPress={() => privacy.show()} />
+        ) : null}
+        {storeMessage ? (
+          <Text style={[styles.note, { color: palette.textMuted }]}>{storeMessage}</Text>
+        ) : null}
+      </View>
+
+      <View style={[styles.card, styles.danger, { backgroundColor: palette.surface }]}>
         {confirming ? (
           <>
             <Text style={[styles.confirm, { color: palette.text }]}>{ui.resetConfirm}</Text>
@@ -142,6 +174,7 @@ const styles = StyleSheet.create({
   card: { borderRadius: radius.l, paddingHorizontal: 16, paddingVertical: 4 },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 14 },
   label: { fontSize: 17, fontWeight: '700' },
+  status: { fontSize: 15, fontWeight: '700' },
   languageRow: { flexWrap: 'wrap', gap: 10 },
   segment: { flexDirection: 'row', borderRadius: 999, padding: 3 },
   segmentItem: { borderRadius: 999, paddingVertical: 7, paddingHorizontal: 12 },

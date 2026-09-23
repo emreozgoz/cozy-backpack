@@ -12,7 +12,8 @@ import type { Subject } from '@/game/types';
 import { useT } from '@/i18n';
 import { useGameStore } from '@/store/useGameStore';
 import { usePlayerStore } from '@/store/usePlayerStore';
-import { Coin, RoundButton } from '@/ui/kit';
+import { rewardedAvailable, useShopStore } from '@/store/useShopStore';
+import { Coin, RoundButton, SoftButton } from '@/ui/kit';
 import { radius, usePalette, type Palette } from '@/ui/tokens';
 
 export default function Play() {
@@ -45,10 +46,29 @@ export default function Play() {
     setBoardSize({ w: width, h: height });
   };
 
+  const [offerHintAd, setOfferHintAd] = useState(false);
+  const canWatch = useShopStore((s) => rewardedAvailable(s));
+
+  const watchForHint = async () => {
+    const shop = useShopStore.getState();
+    if (!rewardedAvailable(shop)) {
+      setNotice(ui.rewardedLimit);
+      setOfferHintAd(false);
+      return;
+    }
+    if (await shop.watchRewarded()) {
+      usePlayerStore.getState().addHints(1);
+      setOfferHintAd(false);
+      feedback.hint();
+    } else {
+      setNotice(ui.adUnavailable);
+    }
+  };
+
   const hint = () => {
     const player = usePlayerStore.getState();
     if (player.hints <= 0) {
-      setNotice(ui.noHints);
+      setOfferHintAd(true);
       feedback.nope();
       return;
     }
@@ -91,6 +111,15 @@ export default function Play() {
           >
             {stuckReasons[issues[0].kind]}
           </Animated.Text>
+        ) : offerHintAd && hints === 0 ? (
+          <Animated.View key="hint-ad" entering={FadeIn} style={styles.offer}>
+            <Text style={[styles.stuck, { color: palette.text }]}>
+              {canWatch ? ui.noHints : ui.rewardedLimit}
+            </Text>
+            {canWatch ? (
+              <SoftButton label={ui.watchAdForHint} onPress={watchForHint} style={styles.offerButton} />
+            ) : null}
+          </Animated.View>
         ) : notice ? (
           <Animated.Text key={notice} entering={FadeIn} style={[styles.stuck, { color: palette.text }]}>
             {notice}
@@ -167,6 +196,27 @@ function WinCard({ palette, levelId }: { palette: Palette; levelId: string }) {
   const daily = isDailyId(levelId);
   const streak = usePlayerStore((s) => s.dailyPuzzle.streak);
   const next = daily ? undefined : nextLevelId(levelId);
+  const canWatch = useShopStore((s) => rewardedAvailable(s));
+  const [doubled, setDoubled] = useState(false);
+  const [leaving, setLeaving] = useState(false);
+
+  const double = async () => {
+    if (!completion || doubled) return;
+    if (await useShopStore.getState().watchRewarded()) {
+      usePlayerStore.getState().addButtons(completion.buttons);
+      setDoubled(true);
+      feedback.zipClosed();
+    }
+  };
+
+  // A gentle interstitial may sit between days (never after the daily puzzle).
+  const goOn = async () => {
+    if (leaving) return;
+    setLeaving(true);
+    await useShopStore.getState().maybeShowInterstitial(daily);
+    if (next) router.replace({ pathname: '/play/[levelId]', params: { levelId: next } });
+    else router.back();
+  };
 
   // One ding per earned star, in step with the stars popping in.
   useEffect(() => {
@@ -201,9 +251,14 @@ function WinCard({ palette, levelId }: { palette: Palette; levelId: string }) {
             <View style={styles.earned}>
               <Coin size={22} />
               <Text style={[styles.earnedText, { color: palette.text }]}>
-                {ui.earned(completion.buttons)}
+                {ui.earned(doubled ? completion.buttons * 2 : completion.buttons)}
               </Text>
             </View>
+            {doubled ? (
+              <Text style={[styles.rewardLine, { color: palette.success }]}>{ui.doubled}</Text>
+            ) : canWatch && completion.buttons > 0 ? (
+              <SoftButton label={ui.doubleButtons} kind="soft" onPress={double} style={styles.offerButton} />
+            ) : null}
             {daily && streak > 1 ? (
               <Text style={[styles.rewardLine, { color: palette.textMuted }]}>{ui.streak(streak)}</Text>
             ) : null}
@@ -215,9 +270,8 @@ function WinCard({ palette, levelId }: { palette: Palette; levelId: string }) {
           </Animated.View>
         ) : null}
         <Pressable
-          onPress={() =>
-            next ? router.replace({ pathname: '/play/[levelId]', params: { levelId: next } }) : router.back()
-          }
+          onPress={goOn}
+          disabled={leaving}
           style={[styles.zipButton, { backgroundColor: palette.primary }]}
         >
           <Text style={styles.zipText}>{next ? ui.next : ui.home}</Text>
@@ -313,6 +367,8 @@ const styles = StyleSheet.create({
   stars: { flexDirection: 'row', gap: 8 },
   star: { fontSize: 48 },
   secondary: { paddingVertical: 6 },
+  offer: { alignItems: 'center', gap: 8, paddingVertical: 6 },
+  offerButton: { paddingVertical: 11, paddingHorizontal: 18 },
   rewards: { alignItems: 'center', gap: 4 },
   earned: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   earnedText: { fontSize: 22, fontWeight: '800', fontVariant: ['tabular-nums'] },

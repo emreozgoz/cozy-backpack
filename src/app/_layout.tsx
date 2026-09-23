@@ -5,7 +5,9 @@ import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { initSound, setHapticsEnabled, setSoundEnabled } from '@/features/feedback';
+import { MockAdOverlay } from '@/features/monetization/MockAdOverlay';
 import { usePlayerStore } from '@/store/usePlayerStore';
+import { useShopStore } from '@/store/useShopStore';
 import { usePalette } from '@/ui/tokens';
 
 SplashScreen.preventAutoHideAsync();
@@ -18,6 +20,7 @@ export default function RootLayout() {
   useEffect(() => {
     SplashScreen.hideAsync();
     initSound();
+    useShopStore.getState().init();
   }, []);
 
   useEffect(() => {
@@ -35,6 +38,7 @@ export default function RootLayout() {
           animation: 'fade',
         }}
       >
+        <Stack.Screen name="vip" options={{ presentation: 'modal' }} />
         <Stack.Screen
           name="daily-reward"
           options={{
@@ -44,6 +48,7 @@ export default function RootLayout() {
           }}
         />
       </Stack>
+      <MockAdOverlay />
     </GestureHandlerRootView>
   );
 }

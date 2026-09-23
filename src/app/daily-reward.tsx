@@ -7,6 +7,7 @@ import { DAILY_REWARDS, dayKey, type DailyReward } from '@/game/economy';
 import { feedback } from '@/features/feedback';
 import { useT } from '@/i18n';
 import { usePlayerStore } from '@/store/usePlayerStore';
+import { useShopStore } from '@/store/useShopStore';
 import { Coin, SoftButton } from '@/ui/kit';
 import { radius, usePalette } from '@/ui/tokens';
 
@@ -17,6 +18,7 @@ export default function DailyRewardModal() {
   const next = usePlayerStore((s) => s.dailyReward.next);
   const canClaim = usePlayerStore((s) => s.dailyReward.lastClaim !== dayKey());
   const [got, setGot] = useState<DailyReward | null>(null);
+  const [vipBonus, setVipBonus] = useState(0);
   // Which tile was just opened: after claiming, `next` has already moved on.
   const [claimedIndex, setClaimedIndex] = useState<number | null>(null);
   const highlight = claimedIndex ?? next;
@@ -27,6 +29,7 @@ export default function DailyRewardModal() {
     if (reward) {
       setClaimedIndex(index);
       setGot(reward);
+      setVipBonus(useShopStore.getState().claimVipHints(dayKey()));
       feedback.zipClosed();
     }
   };
@@ -73,6 +76,9 @@ export default function DailyRewardModal() {
         {got ? (
           <Animated.View entering={ZoomIn.springify()} style={styles.got}>
             <RewardLabel reward={got} color={palette.text} big />
+            {vipBonus ? (
+              <Text style={[styles.body, { color: palette.primary }]}>{ui.vipDaily(vipBonus)}</Text>
+            ) : null}
           </Animated.View>
         ) : null}
 
