@@ -5,13 +5,14 @@ import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
 
 import { DAILY_REWARDS, dayKey, type DailyReward } from '@/game/economy';
 import { feedback } from '@/features/feedback';
-import { ui } from '@/i18n/strings';
+import { useT } from '@/i18n';
 import { usePlayerStore } from '@/store/usePlayerStore';
 import { Coin, SoftButton } from '@/ui/kit';
 import { radius, usePalette } from '@/ui/tokens';
 
 // The 7-day gift strip. Presented as a transparent modal over the room.
 export default function DailyRewardModal() {
+  const { ui } = useT();
   const palette = usePalette();
   const next = usePlayerStore((s) => s.dailyReward.next);
   const canClaim = usePlayerStore((s) => s.dailyReward.lastClaim !== dayKey());

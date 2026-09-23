@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { levelsByWeek } from '@/data/levels';
 import type { LevelDef } from '@/game/types';
-import { subjects, ui, weekdays, weekNames } from '@/i18n/strings';
+import { useT } from '@/i18n';
 import { isUnlocked, nextToPlay, usePlayerStore } from '@/store/usePlayerStore';
 import { RoundButton, StarGlyph } from '@/ui/kit';
 import { radius, usePalette, type Palette } from '@/ui/tokens';
@@ -13,6 +13,7 @@ import { radius, usePalette, type Palette } from '@/ui/tokens';
 // The level map is a weekly planner: one notebook page per school week,
 // swiped sideways. It opens on the week of the next day to play.
 export default function Map() {
+  const { ui } = useT();
   const palette = usePalette();
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
@@ -70,6 +71,7 @@ function WeekPage({
   current: string;
   palette: Palette;
 }) {
+  const { ui, weekdays, subjects, weekNames } = useT();
   return (
     <View style={[styles.page, { backgroundColor: palette.note, shadowColor: palette.shadow }]}>
       {/* notebook rings and ruled lines */}
@@ -93,7 +95,7 @@ function WeekPage({
               accessibilityRole="button"
               accessibilityState={{ disabled: !open }}
               accessibilityLabel={`${weekdays[level.day]}, ${level.schedule.map((s) => subjects[s]).join(', ')}${
-                stars ? `, ${stars} yıldız` : ''
+                stars ? `, ${ui.starsCount(stars)}` : ''
               }${open ? '' : `, ${ui.locked}`}`}
               style={({ pressed }) => [
                 styles.day,

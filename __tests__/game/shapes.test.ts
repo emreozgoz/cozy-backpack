@@ -1,8 +1,7 @@
 import { bounds, orientedCells, parseShape, rotateCells } from '@/game/shapes';
 import type { ItemDef } from '@/game/types';
 
-const sorted = (cells: { x: number; y: number }[]) =>
-  cells.map((c) => `${c.x},${c.y}`).sort();
+const sorted = (cells: { x: number; y: number }[]) => cells.map((c) => `${c.x},${c.y}`).sort();
 
 describe('shapes', () => {
   it('parses X cells and ignores dots', () => {

@@ -33,7 +33,9 @@ describe('findHint', () => {
     const lvl = { ...level, items: [...level.items, { ref: 'toy_car', role: 'distractor' as const }] };
     const inst = createInstances(lvl, catalog);
     const car = inst.find((i) => i.def.id === 'toy_car')!;
-    const hint = findHint(lvl, inst, { [car.uid]: { compartmentId: 'main', x: 0, y: 0, rotation: 0, shapeIndex: 0 } });
+    const hint = findHint(lvl, inst, {
+      [car.uid]: { compartmentId: 'main', x: 0, y: 0, rotation: 0, shapeIndex: 0 },
+    });
     expect(hint).toEqual({ kind: 'remove', uid: car.uid });
   });
 

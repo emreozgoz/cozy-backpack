@@ -13,7 +13,15 @@ import {
 } from '@/game/economy';
 import type { Stars } from '@/game/scoring';
 
+import type { LanguageSetting } from '@/i18n';
+
 import { kvStorage } from './storage';
+
+export interface Settings {
+  sound: boolean;
+  haptics: boolean;
+  language: LanguageSetting;
+}
 
 export interface Completion {
   /** Buttons earned. */
@@ -34,7 +42,7 @@ interface PlayerState {
   dailyReward: { next: number; lastClaim: string | null };
   /** Daily puzzle history: stars per day and the current streak. */
   dailyPuzzle: { results: Record<string, Stars>; streak: number; lastDay: string | null };
-  settings: { sound: boolean; haptics: boolean };
+  settings: Settings;
 
   completeLevel(levelId: string, stars: Stars): Completion;
   completeDaily(day: string, stars: Stars): Completion;
@@ -43,7 +51,7 @@ interface PlayerState {
   spendHint(): boolean;
   buyDecor(id: string): boolean;
   equipDecor(id: string): void;
-  setSetting(key: keyof PlayerState['settings'], value: boolean): void;
+  setSetting<K extends keyof Settings>(key: K, value: Settings[K]): void;
   resetProgress(): void;
 }
 
@@ -55,7 +63,7 @@ const initial = {
   room: { ...DEFAULT_ROOM },
   dailyReward: { next: 0, lastClaim: null as string | null },
   dailyPuzzle: { results: {} as Record<string, Stars>, streak: 0, lastDay: null as string | null },
-  settings: { sound: true, haptics: true },
+  settings: { sound: true, haptics: true, language: 'system' } as Settings,
 };
 
 export function totalStars(progress: Record<string, number>): number {
@@ -157,7 +165,14 @@ export const usePlayerStore = create<PlayerState>()(
     }),
     {
       name: 'cozy-backpack/player',
-      version: 1,
+      version: 2,
+      // v1 saves had no language setting; nested settings are merged key by key
+      // so newly added settings get their defaults instead of disappearing.
+      migrate: (persisted) => persisted as PlayerState,
+      merge: (persisted, current) => {
+        const saved = (persisted ?? {}) as Partial<PlayerState>;
+        return { ...current, ...saved, settings: { ...current.settings, ...saved.settings } };
+      },
       storage: createJSONStorage(() => kvStorage),
     },
   ),

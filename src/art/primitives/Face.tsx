@@ -80,8 +80,22 @@ export function Face({ cx, cy, size, expression, eyeTransform, ink, blush }: Pro
   return (
     <Group>
       {eyes}
-      <Oval x={cx - gap * 1.75 - size * 0.08} y={cy + er * 1.4} width={size * 0.16} height={size * 0.1} color={blush} opacity={0.7} />
-      <Oval x={cx + gap * 1.75 - size * 0.08} y={cy + er * 1.4} width={size * 0.16} height={size * 0.1} color={blush} opacity={0.7} />
+      <Oval
+        x={cx - gap * 1.75 - size * 0.08}
+        y={cy + er * 1.4}
+        width={size * 0.16}
+        height={size * 0.1}
+        color={blush}
+        opacity={0.7}
+      />
+      <Oval
+        x={cx + gap * 1.75 - size * 0.08}
+        y={cy + er * 1.4}
+        width={size * 0.16}
+        height={size * 0.1}
+        color={blush}
+        opacity={0.7}
+      />
       {mouth}
     </Group>
   );

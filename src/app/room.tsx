@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { daylightFor, RoomScene } from '@/art/room/RoomScene';
 import { DECOR, DECOR_SLOTS, type DecorItem, type DecorSlot } from '@/data/decor';
 import { feedback } from '@/features/feedback';
-import { ui } from '@/i18n/strings';
+import { useT } from '@/i18n';
 import { totalStars, usePlayerStore } from '@/store/usePlayerStore';
 import { Chip, Coin, RoundButton, SoftButton, StarGlyph } from '@/ui/kit';
 import { radius, usePalette } from '@/ui/tokens';
@@ -15,6 +15,7 @@ import { radius, usePalette } from '@/ui/tokens';
 // Decorate the room: pick a slot, try an item on (the preview shows it even
 // before buying), then buy or equip it.
 export default function Room() {
+  const { ui, slots, decor } = useT();
   const palette = usePalette();
   const insets = useSafeAreaInsets();
   const room = usePlayerStore((s) => s.room);
@@ -83,20 +84,17 @@ export default function Room() {
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabs}>
           {DECOR_SLOTS.map((s) => (
             <Pressable
-              key={s.slot}
+              key={s}
               onPress={() => {
-                setSlot(s.slot);
+                setSlot(s);
                 setPreview(null);
               }}
               accessibilityRole="tab"
-              accessibilityState={{ selected: slot === s.slot }}
-              style={[
-                styles.tab,
-                { backgroundColor: slot === s.slot ? palette.primary : palette.surfaceWarm },
-              ]}
+              accessibilityState={{ selected: slot === s }}
+              style={[styles.tab, { backgroundColor: slot === s ? palette.primary : palette.surfaceWarm }]}
             >
-              <Text style={[styles.tabText, { color: slot === s.slot ? '#FFFFFF' : palette.text }]}>
-                {s.name}
+              <Text style={[styles.tabText, { color: slot === s ? '#FFFFFF' : palette.text }]}>
+                {slots[s]}
               </Text>
             </Pressable>
           ))}
@@ -124,7 +122,7 @@ export default function Room() {
                 ]}
               >
                 <Text style={[styles.optionName, { color: palette.text }]} numberOfLines={2}>
-                  {item.name}
+                  {decor[item.id]}
                 </Text>
                 <View style={styles.optionMeta}>
                   {isOn ? (

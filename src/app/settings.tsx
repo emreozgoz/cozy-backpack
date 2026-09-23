@@ -1,15 +1,16 @@
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { ui } from '@/i18n/strings';
+import { useT, type LanguageSetting } from '@/i18n';
 import { usePlayerStore } from '@/store/usePlayerStore';
 import { RoundButton, SoftButton } from '@/ui/kit';
 import { radius, usePalette } from '@/ui/tokens';
 
 export default function Settings() {
+  const { ui } = useT();
   const palette = usePalette();
   const insets = useSafeAreaInsets();
   const settings = usePlayerStore((s) => s.settings);
@@ -17,9 +18,15 @@ export default function Settings() {
   const [confirming, setConfirming] = useState(false);
   const [resetDone, setResetDone] = useState(false);
 
-  const rows: { key: keyof typeof settings; label: string }[] = [
+  const rows: { key: 'sound' | 'haptics'; label: string }[] = [
     { key: 'sound', label: ui.sound },
     { key: 'haptics', label: ui.haptics },
+  ];
+  // Language names stay in their own language so anyone can find theirs.
+  const languages: { value: LanguageSetting; label: string }[] = [
+    { value: 'system', label: ui.languageSystem },
+    { value: 'tr', label: 'Türkçe' },
+    { value: 'en', label: 'English' },
   ];
 
   return (
@@ -54,6 +61,36 @@ export default function Settings() {
             />
           </View>
         ))}
+        <View
+          style={[
+            styles.row,
+            styles.languageRow,
+            { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: palette.gridLine },
+          ]}
+        >
+          <Text style={[styles.label, { color: palette.text }]}>{ui.language}</Text>
+          <View
+            style={[styles.segment, { backgroundColor: palette.surfaceWarm }]}
+            accessibilityRole="radiogroup"
+          >
+            {languages.map((l) => {
+              const on = settings.language === l.value;
+              return (
+                <Pressable
+                  key={l.value}
+                  onPress={() => setSetting('language', l.value)}
+                  accessibilityRole="radio"
+                  accessibilityState={{ checked: on }}
+                  style={[styles.segmentItem, on && { backgroundColor: palette.primary }]}
+                >
+                  <Text style={[styles.segmentText, { color: on ? '#FFFFFF' : palette.text }]}>
+                    {l.label}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        </View>
       </View>
 
       <View style={[styles.card, styles.danger, { backgroundColor: palette.surface }]}>
@@ -105,6 +142,10 @@ const styles = StyleSheet.create({
   card: { borderRadius: radius.l, paddingHorizontal: 16, paddingVertical: 4 },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 14 },
   label: { fontSize: 17, fontWeight: '700' },
+  languageRow: { flexWrap: 'wrap', gap: 10 },
+  segment: { flexDirection: 'row', borderRadius: 999, padding: 3 },
+  segmentItem: { borderRadius: 999, paddingVertical: 7, paddingHorizontal: 12 },
+  segmentText: { fontSize: 14, fontWeight: '800' },
   danger: { paddingVertical: 12, gap: 10 },
   confirm: { fontSize: 15, fontWeight: '600', lineHeight: 21 },
   confirmRow: { flexDirection: 'row', gap: 10 },

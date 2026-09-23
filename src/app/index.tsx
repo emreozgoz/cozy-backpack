@@ -16,7 +16,7 @@ import { daylightFor, roomLayout, RoomScene } from '@/art/room/RoomScene';
 import { getLevel } from '@/data/levels';
 import { dailyId } from '@/game/daily';
 import { dayKey } from '@/game/economy';
-import { ui, weekdays } from '@/i18n/strings';
+import { useT } from '@/i18n';
 import { nextToPlay, totalStars, usePlayerStore } from '@/store/usePlayerStore';
 import { Chip, Coin, RoundButton, SoftButton, StarGlyph } from '@/ui/kit';
 import { radius, usePalette } from '@/ui/tokens';
@@ -25,6 +25,7 @@ import { radius, usePalette } from '@/ui/tokens';
 let rewardOffered = false;
 
 export default function Home() {
+  const { ui, weekdays } = useT();
   const palette = usePalette();
   const insets = useSafeAreaInsets();
   const progress = usePlayerStore((s) => s.progress);

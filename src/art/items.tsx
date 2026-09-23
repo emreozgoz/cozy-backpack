@@ -39,7 +39,15 @@ const book: Drawer = ({ w, h, base }) => {
   return {
     details: (
       <Group>
-        <RoundedRect x={G} y={G} width={spine} height={h - G * 2} r={10} color={shade(base, -0.18)} opacity={0.7} />
+        <RoundedRect
+          x={G}
+          y={G}
+          width={spine}
+          height={h - G * 2}
+          r={10}
+          color={shade(base, -0.18)}
+          opacity={0.7}
+        />
         <RoundedRect x={w - G - 6} y={G + 8} width={3} height={h - G * 2 - 16} r={1.5} color={WHITE_SOFT} />
       </Group>
     ),
@@ -53,11 +61,32 @@ const notebook: Drawer = ({ w, h, c, base }) => {
   return {
     details: (
       <Group>
-        <RoundedRect x={G} y={G} width={w * 0.3} height={h - G * 2} r={8} color={shade(base, -0.12)} opacity={0.6} />
+        <RoundedRect
+          x={G}
+          y={G}
+          width={w * 0.3}
+          height={h - G * 2}
+          r={8}
+          color={shade(base, -0.12)}
+          opacity={0.6}
+        />
         {Array.from({ length: rings }, (_, i) => (
-          <Circle key={i} cx={w * 0.24} cy={G + c * 0.25 + (i * (h - c * 0.5)) / (rings - 1)} r={Math.max(2, c * 0.05)} color={WHITE_SOFT} />
+          <Circle
+            key={i}
+            cx={w * 0.24}
+            cy={G + c * 0.25 + (i * (h - c * 0.5)) / (rings - 1)}
+            r={Math.max(2, c * 0.05)}
+            color={WHITE_SOFT}
+          />
         ))}
-        <RoundedRect x={w * 0.42} y={h * 0.12} width={w * 0.44} height={c * 0.26} r={4} color="rgba(255,255,255,0.8)" />
+        <RoundedRect
+          x={w * 0.42}
+          y={h * 0.12}
+          width={w * 0.44}
+          height={c * 0.26}
+          r={4}
+          color="rgba(255,255,255,0.8)"
+        />
       </Group>
     ),
     face: { cx: w * 0.62, cy: h * 0.55, size: w * 0.72 },
@@ -91,7 +120,14 @@ const lunchbox: Drawer = ({ w, h, base }) => {
           strokeCap="round"
           color={dark}
         />
-        <RoundedRect x={G} y={h * 0.3} width={w - G * 2} height={Math.max(3, h * 0.04)} r={2} color={shade(base, -0.16)} />
+        <RoundedRect
+          x={G}
+          y={h * 0.3}
+          width={w - G * 2}
+          height={Math.max(3, h * 0.04)}
+          r={2}
+          color={shade(base, -0.16)}
+        />
       </Group>
     ),
     face: { cx: w / 2, cy: h * 0.58, size: w * 0.85 },
@@ -102,7 +138,14 @@ const bottle: Drawer = ({ w, h, base }) => ({
   details: (
     <Group>
       <RoundedRect x={w * 0.22} y={G} width={w * 0.56} height={h * 0.13} r={6} color={shade(base, -0.25)} />
-      <RoundedRect x={G} y={h * 0.38} width={w - G * 2} height={h * 0.3} r={6} color="rgba(255,255,255,0.45)" />
+      <RoundedRect
+        x={G}
+        y={h * 0.38}
+        width={w - G * 2}
+        height={h * 0.3}
+        r={6}
+        color="rgba(255,255,255,0.45)"
+      />
       <RoundedRect x={w - G - 7} y={h * 0.18} width={3} height={h * 0.14} r={1.5} color={WHITE_SOFT} />
     </Group>
   ),
@@ -123,7 +166,14 @@ const crayons: Drawer = ({ w, h, base }) => {
             color={col}
           />
         ))}
-        <RoundedRect x={G} y={h * 0.3} width={w - G * 2} height={h * 0.7 - G} r={Math.min(10, h * 0.2)} color={base} />
+        <RoundedRect
+          x={G}
+          y={h * 0.3}
+          width={w - G * 2}
+          height={h * 0.7 - G}
+          r={Math.min(10, h * 0.2)}
+          color={base}
+        />
       </Group>
     ),
     details: <RoundedRect x={G + 6} y={h * 0.44} width={w * 0.3} height={3} r={1.5} color={WHITE_SOFT} />,
@@ -137,12 +187,28 @@ const sketchbook: Drawer = ({ w, h, c, base }) => {
     details: (
       <Group>
         {Array.from({ length: rings }, (_, i) => (
-          <Circle key={i} cx={G + c * 0.3 + (i * (w - c * 0.6 - G * 2)) / (rings - 1)} cy={G + c * 0.2} r={Math.max(2.5, c * 0.06)} color={WHITE_SOFT} />
+          <Circle
+            key={i}
+            cx={G + c * 0.3 + (i * (w - c * 0.6 - G * 2)) / (rings - 1)}
+            cy={G + c * 0.2}
+            r={Math.max(2.5, c * 0.06)}
+            color={WHITE_SOFT}
+          />
         ))}
         {/* a little painting on the cover */}
-        <RoundedRect x={w * 0.14} y={h * 0.2} width={w * 0.72} height={h * 0.34} r={10} color="rgba(255,255,255,0.55)" />
+        <RoundedRect
+          x={w * 0.14}
+          y={h * 0.2}
+          width={w * 0.72}
+          height={h * 0.34}
+          r={10}
+          color="rgba(255,255,255,0.55)"
+        />
         <Circle cx={w * 0.7} cy={h * 0.3} r={c * 0.14} color="#FFE29A" />
-        <Path path={`M ${w * 0.18} ${h * 0.5} q ${w * 0.16} ${-h * 0.16} ${w * 0.3} 0 q ${w * 0.12} ${-h * 0.1} ${w * 0.34} 0 z`} color="#BDE7C9" />
+        <Path
+          path={`M ${w * 0.18} ${h * 0.5} q ${w * 0.16} ${-h * 0.16} ${w * 0.3} 0 q ${w * 0.12} ${-h * 0.1} ${w * 0.34} 0 z`}
+          color="#BDE7C9"
+        />
       </Group>
     ),
     face: { cx: w / 2, cy: h * 0.72, size: w * 0.55 },
@@ -169,7 +235,14 @@ const toyCar: Drawer = ({ w, h, base }) => {
   return {
     body: (
       <Group>
-        <RoundedRect x={w * 0.22} y={h * 0.12} width={w * 0.5} height={h * 0.4} r={h * 0.14} color={shade(base, -0.08)} />
+        <RoundedRect
+          x={w * 0.22}
+          y={h * 0.12}
+          width={w * 0.5}
+          height={h * 0.4}
+          r={h * 0.14}
+          color={shade(base, -0.08)}
+        />
         <RoundedRect x={G} y={h * 0.36} width={w - G * 2} height={h * 0.42} r={h * 0.16} color={base} />
         <Circle cx={w * 0.27} cy={h * 0.8} r={wheel} color="#5B4636" />
         <Circle cx={w * 0.73} cy={h * 0.8} r={wheel} color="#5B4636" />
@@ -177,7 +250,16 @@ const toyCar: Drawer = ({ w, h, base }) => {
         <Circle cx={w * 0.73} cy={h * 0.8} r={wheel * 0.4} color="#D8CFC4" />
       </Group>
     ),
-    details: <RoundedRect x={w * 0.3} y={h * 0.18} width={w * 0.34} height={h * 0.22} r={h * 0.08} color="rgba(255,255,255,0.7)" />,
+    details: (
+      <RoundedRect
+        x={w * 0.3}
+        y={h * 0.18}
+        width={w * 0.34}
+        height={h * 0.22}
+        r={h * 0.08}
+        color="rgba(255,255,255,0.7)"
+      />
+    ),
     face: { cx: w * 0.5, cy: h * 0.54, size: h * 1.0 },
   };
 };
@@ -190,7 +272,12 @@ const ball: Drawer = ({ w, h, base }) => {
     body: <Circle cx={cx} cy={cy} r={r} color={base} />,
     details: (
       <Group>
-        <Path path={`M ${cx - r} ${cy - r * 0.2} q ${r} ${r * 0.5} ${r * 2} 0`} style="stroke" strokeWidth={Math.max(3, r * 0.1)} color={shade(base, -0.2)} />
+        <Path
+          path={`M ${cx - r} ${cy - r * 0.2} q ${r} ${r * 0.5} ${r * 2} 0`}
+          style="stroke"
+          strokeWidth={Math.max(3, r * 0.1)}
+          color={shade(base, -0.2)}
+        />
         <Oval x={cx - r * 0.6} y={cy - r * 0.75} width={r * 0.45} height={r * 0.25} color={WHITE_SOFT} />
       </Group>
     ),
@@ -213,7 +300,14 @@ const comic: Drawer = ({ w, h, base }) => {
         <Path path={`${star} Z`} color="#FFE29A" />
         <RoundedRect x={G + 6} y={h * 0.62} width={w * 0.5} height={3} r={1.5} color={WHITE_SOFT} />
         <RoundedRect x={G + 6} y={h * 0.7} width={w * 0.34} height={3} r={1.5} color={WHITE_SOFT} />
-        <RoundedRect x={w - G - 6} y={G + 8} width={3} height={h - G * 2 - 16} r={1.5} color={shade(base, -0.15)} />
+        <RoundedRect
+          x={w - G - 6}
+          y={G + 8}
+          width={3}
+          height={h - G * 2 - 16}
+          r={1.5}
+          color={shade(base, -0.15)}
+        />
       </Group>
     ),
     face: { cx: w * 0.62, cy: h * 0.72, size: w * 0.45 },
@@ -229,11 +323,26 @@ const plush: Drawer = ({ w, h, base }) => {
       <Group>
         <Circle cx={cx - head * 0.75} cy={hy - head * 0.72} r={head * 0.34} color={shade(base, -0.08)} />
         <Circle cx={cx + head * 0.75} cy={hy - head * 0.72} r={head * 0.34} color={shade(base, -0.08)} />
-        <RoundedRect x={G + 2} y={h * 0.46} width={w - G * 2 - 4} height={h * 0.54 - G} r={w * 0.3} color={shade(base, -0.05)} />
+        <RoundedRect
+          x={G + 2}
+          y={h * 0.46}
+          width={w - G * 2 - 4}
+          height={h * 0.54 - G}
+          r={w * 0.3}
+          color={shade(base, -0.05)}
+        />
         <Circle cx={cx} cy={hy} r={head} color={base} />
       </Group>
     ),
-    details: <Oval x={cx - w * 0.14} y={h * 0.62} width={w * 0.28} height={h * 0.18} color="rgba(255,255,255,0.45)" />,
+    details: (
+      <Oval
+        x={cx - w * 0.14}
+        y={h * 0.62}
+        width={w * 0.28}
+        height={h * 0.18}
+        color="rgba(255,255,255,0.45)"
+      />
+    ),
     face: { cx, cy: hy, size: head * 1.6 },
   };
 };
@@ -273,7 +382,16 @@ const generic: Drawer = ({ w, h, c, cells }) => {
   // Non-rectangular shapes: put the face on the bottom-left-most full cell.
   const anchor = rect ? null : [...cells].sort((a, b) => b.y - a.y || a.x - b.x)[0];
   return {
-    details: <RoundedRect x={w * 0.16} y={h * 0.14} width={w * 0.26} height={Math.max(3, h * 0.05)} r={2} color={WHITE_SOFT} />,
+    details: (
+      <RoundedRect
+        x={w * 0.16}
+        y={h * 0.14}
+        width={w * 0.26}
+        height={Math.max(3, h * 0.05)}
+        r={2}
+        color={WHITE_SOFT}
+      />
+    ),
     face: anchor
       ? { cx: (anchor.x + 0.5) * c, cy: (anchor.y + 0.5) * c, size: c * 0.8 }
       : { cx: w / 2, cy: h / 2, size: Math.min(w, h) * 0.8 },

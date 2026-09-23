@@ -9,13 +9,14 @@ import { nextLevelId } from '@/data/levels';
 import { feedback } from '@/features/feedback';
 import { isDailyId } from '@/game/daily';
 import type { Subject } from '@/game/types';
-import { stuckReasons, subjects, tips, ui, weekdays } from '@/i18n/strings';
+import { useT } from '@/i18n';
 import { useGameStore } from '@/store/useGameStore';
 import { usePlayerStore } from '@/store/usePlayerStore';
 import { Coin, RoundButton } from '@/ui/kit';
 import { radius, usePalette, type Palette } from '@/ui/tokens';
 
 export default function Play() {
+  const { ui, stuckReasons, tips } = useT();
   const { levelId } = useLocalSearchParams<{ levelId: string }>();
   const palette = usePalette();
   const insets = useSafeAreaInsets();
@@ -27,7 +28,6 @@ export default function Play() {
   const [tipClosed, setTipClosed] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const hints = usePlayerStore((s) => s.hints);
-
 
   // Notices (no hints left…) fade away on their own.
   useEffect(() => {
@@ -123,6 +123,7 @@ export default function Play() {
 }
 
 function ScheduleNote({ palette }: { palette: Palette }) {
+  const { weekdays, subjects } = useT();
   const level = useGameStore((s) => s.level)!;
   const instances = useGameStore((s) => s.instances);
   const placements = useGameStore((s) => s.placements);
@@ -159,6 +160,7 @@ const STAR_DELAY = 650;
 const STAR_STEP = 220;
 
 function WinCard({ palette, levelId }: { palette: Palette; levelId: string }) {
+  const { ui, decor } = useT();
   const completion = useGameStore((s) => s.completion);
   const stars = useGameStore((s) => s.stars) ?? 1;
   const load = useGameStore((s) => s.load);
@@ -207,7 +209,7 @@ function WinCard({ palette, levelId }: { palette: Palette; levelId: string }) {
             ) : null}
             {completion.unlocked.map((d) => (
               <Text key={d.id} style={[styles.rewardLine, { color: palette.primary }]}>
-                ✨ {ui.newDecor(d.name)}
+                ✨ {ui.newDecor(decor[d.id])}
               </Text>
             ))}
           </Animated.View>

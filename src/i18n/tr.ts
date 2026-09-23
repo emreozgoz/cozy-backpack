@@ -1,8 +1,10 @@
-import type { Subject, TipKey, Weekday } from '@/game/types';
+import type { DecorSlot } from '@/data/decor';
 import type { Issue } from '@/game/rules';
+import type { Subject, TipKey, Weekday } from '@/game/types';
 
-// Turkish UI copy for the prototype. M5 moves this to i18next with tr/en files.
-export const subjects: Record<Subject, string> = {
+// Turkish copy — the source dictionary. en.ts must match its shape exactly.
+
+const subjects: Record<Subject, string> = {
   math: 'Matematik',
   turkish: 'Türkçe',
   science: 'Fen',
@@ -15,7 +17,7 @@ export const subjects: Record<Subject, string> = {
   pe: 'Beden Eğitimi',
 };
 
-export const weekdays: Record<Weekday, string> = {
+const weekdays: Record<Weekday, string> = {
   mon: 'Pazartesi',
   tue: 'Salı',
   wed: 'Çarşamba',
@@ -25,7 +27,7 @@ export const weekdays: Record<Weekday, string> = {
   sun: 'Pazar',
 };
 
-export const tips: Record<TipKey, string> = {
+const tips: Record<TipKey, string> = {
   drag: 'Eşyayı sürükle, çantaya bırak. Hepsi yerleşince fermuarı sağa çek.',
   hint: 'Takılırsan 💡 ipucuna dokun. Acele yok, süre de yok.',
   rotate: 'Bir eşyaya dokunursan döner. Bazen yan yatması gerekir.',
@@ -39,7 +41,7 @@ export const tips: Record<TipKey, string> = {
 };
 
 /** Why the zipper got stuck — the first problem found, in plain words. */
-export const stuckReasons: Record<Issue['kind'], string> = {
+const stuckReasons: Record<Issue['kind'], string> = {
   missing: 'Fermuar takıldı: programdaki bir şey hâlâ masada.',
   extra: 'Fermuar takıldı: çantada bugün gerekmeyen bir şey var.',
   orientation: 'Fermuar takıldı: bir eşya yanlış yönde duruyor.',
@@ -47,17 +49,48 @@ export const stuckReasons: Record<Issue['kind'], string> = {
   pocket: 'Fermuar takıldı: bir eşya kendi cebinde değil.',
 };
 
-export const ui = {
+const weekNames: Record<number, string> = {
+  1: 'Okula Dönüş',
+  2: 'Beslenme Saati',
+  3: 'Spor Haftası',
+  4: 'Sınav Haftası',
+};
+
+const slots: Record<DecorSlot, string> = {
+  wall: 'Duvar',
+  curtain: 'Perde',
+  lamp: 'Lamba',
+  plant: 'Bitki',
+  rug: 'Halı',
+};
+
+const decor: Record<string, string> = {
+  wall_timetable: 'Ders programı',
+  wall_rainbow: 'Gökkuşağı posteri',
+  wall_cat: 'Kedi posteri',
+  curtain_mint: 'Nane perde',
+  curtain_lavender: 'Lavanta perde',
+  curtain_butter: 'Puantiyeli perde',
+  lamp_basic: 'Masa lambası',
+  lamp_mushroom: 'Mantar lamba',
+  lamp_moon: 'Ay lamba',
+  plant_none: 'Boş köşe',
+  plant_cactus: 'Minik kaktüs',
+  plant_monstera: 'Deve tabanı',
+  rug_round: 'Yuvarlak halı',
+  rug_rainbow: 'Gökkuşağı halı',
+  rug_cloud: 'Bulut halı',
+};
+
+const ui = {
   appName: 'Cozy Backpack',
   week: (n: number) => `${n}. Hafta`,
   pullZip: 'Hazır olunca fermuarı sağa çek →',
   hint: 'İpucu',
   closeTip: 'İpucunu kapat',
-  tapToRotate: 'Döndürmek için dokun',
   packed: 'Çanta hazır!',
   next: 'Sonraki gün',
   replay: 'Tekrar oyna',
-  back: 'Geri',
   levels: 'Günler',
   home: 'Odaya dön',
 
@@ -85,7 +118,7 @@ export const ui = {
 
   // map
   locked: 'Önceki günü bitirince açılır',
-  notPlayed: 'Henüz oynanmadı',
+  starsCount: (n: number) => `${n} yıldız`,
 
   // daily reward
   dailyReward: 'Günlük ödül',
@@ -106,17 +139,20 @@ export const ui = {
   // settings
   sound: 'Ses efektleri',
   haptics: 'Titreşim',
+  language: 'Dil',
+  languageSystem: 'Sistem',
   resetProgress: 'İlerlemeyi sıfırla',
   resetConfirm: 'Emin misin? Yıldızlar, düğmeler ve dekorlar silinir.',
   resetYes: 'Evet, sıfırla',
   resetDone: 'İlerleme sıfırlandı.',
   cancel: 'Vazgeç',
   version: (v: string) => `Sürüm ${v}`,
+
+  // accessibility
+  zipper: 'Fermuar',
+  zipperHint: 'Çantayı kapatmak için sağa çek',
 };
 
-export const weekNames: Record<number, string> = {
-  1: 'Okula Dönüş',
-  2: 'Beslenme Saati',
-  3: 'Spor Haftası',
-  4: 'Sınav Haftası',
-};
+export const tr = { subjects, weekdays, tips, stuckReasons, weekNames, slots, decor, ui };
+
+export type Strings = typeof tr;

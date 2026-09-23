@@ -25,7 +25,15 @@ const noise = () => {
 /** Adds a decaying sine with optional pitch glide. */
 function tone(
   b: Buf,
-  { at = 0, freq, to = freq, dur, amp = 1, attack = 0.004, decay = dur / 4 }: {
+  {
+    at = 0,
+    freq,
+    to = freq,
+    dur,
+    amp = 1,
+    attack = 0.004,
+    decay = dur / 4,
+  }: {
     at?: number;
     freq: number;
     to?: number;
@@ -57,7 +65,14 @@ function bell(b: Buf, at: number, freq: number, amp: number, dur = 0.9) {
 /** Filtered noise burst (one-pole low-pass then high-pass). */
 function hush(
   b: Buf,
-  { at = 0, dur, amp = 1, lp = 0.2, hp = 0.02, attack = dur / 2 }: {
+  {
+    at = 0,
+    dur,
+    amp = 1,
+    lp = 0.2,
+    hp = 0.02,
+    attack = dur / 2,
+  }: {
     at?: number;
     dur: number;
     amp?: number;

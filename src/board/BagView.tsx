@@ -53,7 +53,13 @@ export function BagView({ layout, level, palette }: Props) {
   return (
     <Canvas style={StyleSheet.absoluteFill} pointerEvents="none">
       {/* carry handle */}
-      <Path path={handlePath} style="stroke" strokeWidth={cell * 0.2} strokeCap="round" color={shade(palette.bagBody)} />
+      <Path
+        path={handlePath}
+        style="stroke"
+        strokeWidth={cell * 0.2}
+        strokeCap="round"
+        color={shade(palette.bagBody)}
+      />
       {/* body */}
       <Group transform={[{ translateY: 6 }]} opacity={0.16}>
         <RoundedRect x={bag.x} y={bag.y} width={bag.w} height={bag.h} r={cell * 0.6} color="#5B4636" />
@@ -81,7 +87,15 @@ export function BagView({ layout, level, palette }: Props) {
         <DashPathEffect intervals={[5, 6]} />
       </Path>
       {blocked.map((b, i) => (
-        <RoundedRect key={i} x={b.x + 3} y={b.y + 3} width={cell - 6} height={cell - 6} r={8} color={palette.bagBody} />
+        <RoundedRect
+          key={i}
+          x={b.x + 3}
+          y={b.y + 3}
+          width={cell - 6}
+          height={cell - 6}
+          r={8}
+          color={palette.bagBody}
+        />
       ))}
     </Canvas>
   );

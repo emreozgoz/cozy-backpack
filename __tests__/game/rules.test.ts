@@ -4,7 +4,12 @@ import { validateBag } from '@/game/rules';
 import { starsFor } from '@/game/scoring';
 import type { LevelDef, Placement } from '@/game/types';
 
-const at = (x: number, y: number, rotation: Placement['rotation'] = 0, compartmentId = 'main'): Placement => ({
+const at = (
+  x: number,
+  y: number,
+  rotation: Placement['rotation'] = 0,
+  compartmentId = 'main',
+): Placement => ({
   compartmentId,
   x,
   y,
@@ -12,7 +17,12 @@ const at = (x: number, y: number, rotation: Placement['rotation'] = 0, compartme
   shapeIndex: 0,
 });
 
-function level(items: LevelDef['items'], cols = 4, rows = 4, extra: LevelDef['bag']['compartments'] = []): LevelDef {
+function level(
+  items: LevelDef['items'],
+  cols = 4,
+  rows = 4,
+  extra: LevelDef['bag']['compartments'] = [],
+): LevelDef {
   return {
     id: 'test',
     week: 1,
@@ -47,7 +57,13 @@ describe('canPlace', () => {
   });
 
   it('respects blocked cells', () => {
-    const blocked = { ...lvl, bag: { ...lvl.bag, compartments: [{ ...lvl.bag.compartments[0], blocked: [[1, 1]] as [number, number][] }] } };
+    const blocked = {
+      ...lvl,
+      bag: {
+        ...lvl.bag,
+        compartments: [{ ...lvl.bag.compartments[0], blocked: [[1, 1]] as [number, number][] }],
+      },
+    };
     expect(canPlace(blocked, [book, pencil], {}, book, at(0, 0))).toBe(false);
   });
 });

@@ -16,6 +16,7 @@ import Animated, {
 import { scheduleOnRN } from 'react-native-worklets';
 
 import { feedback } from '@/features/feedback';
+import { useT } from '@/i18n';
 import { useGameStore } from '@/store/useGameStore';
 import type { Palette } from '@/ui/tokens';
 
@@ -40,6 +41,7 @@ export function Zipper({ layout, palette }: Props) {
   const { x0, x1, y } = layout.zip;
   const len = x1 - x0;
   const size = Math.max(10, layout.cell * 0.2);
+  const { ui } = useT();
   const status = useGameStore((s) => s.status);
   // Every required item is in the bag: nudge the tab now and then. This says
   // "you can try", not "it is correct" — rules are still checked on closing.
@@ -184,8 +186,8 @@ export function Zipper({ layout, palette }: Props) {
         <Animated.View
           accessible
           accessibilityRole="button"
-          accessibilityLabel="Fermuar"
-          accessibilityHint="Çantayı kapatmak için sağa çek"
+          accessibilityLabel={ui.zipper}
+          accessibilityHint={ui.zipperHint}
           style={[styles.tab, { width: size * 2, height: size * 3.4 }, tabStyle]}
         >
           <View

@@ -34,7 +34,11 @@ beforeEach(() => usePlayerStore.getState().resetProgress());
 describe('playing a level end to end', () => {
   it('a stuck zip costs a star, a correct bag saves progress', () => {
     game().load('w01-d1');
-    expect(game().zip().map((i) => i.kind)).toContain('missing');
+    expect(
+      game()
+        .zip()
+        .map((i) => i.kind),
+    ).toContain('missing');
     packLevel();
     expect(game().zip()).toEqual([]);
     expect(game().status).toBe('won');

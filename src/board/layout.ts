@@ -34,7 +34,8 @@ export interface BoardLayout {
 }
 
 const GUTTER = 16;
-const MAX_CELL = 68;
+/** Largest cell size: roomy on phones, bigger on iPad so the bag fills the screen. */
+const maxCell = (width: number) => (width >= 700 ? 104 : 68);
 const POCKET_GAP = 0.6; // in cells
 
 /**
@@ -64,7 +65,7 @@ export function computeLayout(
     Math.min(
       (width - GUTTER * 2) / (colsTotal + bagPad * 2),
       (bagAreaH - GUTTER) / (rowsTotal + bagPad * 2 + zipStrip + handle),
-      MAX_CELL,
+      maxCell(width),
     ),
   );
 
@@ -75,9 +76,7 @@ export function computeLayout(
   const gx = (width - gridW) / 2;
   const gy = (bagAreaH - totalH) / 2 + above;
 
-  const compartments: CompartmentFrame[] = [
-    { id: main.id, x: gx, y: gy, cols: main.cols, rows: main.rows },
-  ];
+  const compartments: CompartmentFrame[] = [{ id: main.id, x: gx, y: gy, cols: main.cols, rows: main.rows }];
   let py = gy;
   for (const p of pockets) {
     compartments.push({

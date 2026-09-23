@@ -6,23 +6,13 @@
  * reviewed without a device.
  */
 import fs from 'node:fs';
-import Module from 'node:module';
 import path from 'node:path';
 
-type Resolve = (request: string, ...rest: unknown[]) => string;
-const mod = Module as unknown as { _resolveFilename: Resolve };
-const resolve = mod._resolveFilename;
-mod._resolveFilename = function (request, ...rest) {
-  const target = request === '@shopify/react-native-skia' ? path.join(__dirname, 'skia-headless-shim.cjs') : request;
-  return resolve.call(this, target, ...rest);
-};
+import { loadSkia } from './skia-node';
 
 async function main() {
-  const CanvasKitInit = require('canvaskit-wasm/bin/full/canvaskit');
-  (globalThis as { CanvasKit?: unknown }).CanvasKit = await CanvasKitInit();
-
-  // Loaded only now: they need CanvasKit and the resolver hook.
-  const { drawOffscreen, makeOffscreenSurface, Group, Rect, RoundedRect } = require('@shopify/react-native-skia');
+  const { drawOffscreen, makeOffscreenSurface, Group, Rect, RoundedRect } = await loadSkia();
+  // Art modules are required (not imported) so they load after Skia is ready.
   const { ItemSkia, itemSize } = require('../src/art/ItemSkia') as typeof import('../src/art/ItemSkia');
   const items: Record<string, object> = require('../assets/data/items.json');
   type ItemDef = import('../src/game/types').ItemDef;
@@ -83,8 +73,21 @@ async function main() {
             <Rect x={0} y={0} width={WIDTH} height={p.layout.height} color={p.bg} />
             {p.layout.out.map((e, i) => (
               <Group key={i} transform={[{ translateX: e.x }, { translateY: e.y }]}>
-                <RoundedRect x={-4} y={-4} width={itemSize(e.def, 0, CELL).w + 8} height={itemSize(e.def, 0, CELL).h + 8} r={8} color={p.isDark ? 'rgba(255,255,255,0.04)' : 'rgba(91,70,54,0.04)'} />
-                <ItemSkia def={e.def} shapeIndex={0} cell={CELL} isDark={p.isDark} expression={e.expression} />
+                <RoundedRect
+                  x={-4}
+                  y={-4}
+                  width={itemSize(e.def, 0, CELL).w + 8}
+                  height={itemSize(e.def, 0, CELL).h + 8}
+                  r={8}
+                  color={p.isDark ? 'rgba(255,255,255,0.04)' : 'rgba(91,70,54,0.04)'}
+                />
+                <ItemSkia
+                  def={e.def}
+                  shapeIndex={0}
+                  cell={CELL}
+                  isDark={p.isDark}
+                  expression={e.expression}
+                />
               </Group>
             ))}
           </Group>
@@ -102,12 +105,22 @@ async function main() {
   // ---- room ------------------------------------------------------------
   const { RoomScene } = require('../src/art/room/RoomScene') as typeof import('../src/art/room/RoomScene');
   const { DEFAULT_ROOM } = require('../src/data/decor') as typeof import('../src/data/decor');
-  const fancy = { wall: 'wall_cat', curtain: 'curtain_butter', lamp: 'lamp_mushroom', plant: 'plant_monstera', rug: 'rug_rainbow' } as const;
+  const fancy = {
+    wall: 'wall_cat',
+    curtain: 'curtain_butter',
+    lamp: 'lamp_mushroom',
+    plant: 'plant_monstera',
+    rug: 'rug_rainbow',
+  } as const;
   const RW = 390;
   const RH = 720;
   const rooms = [
     { room: DEFAULT_ROOM, isDark: false, daylight: 'morning' as const },
-    { room: { ...DEFAULT_ROOM, plant: 'plant_cactus', wall: 'wall_rainbow', curtain: 'curtain_lavender' }, isDark: false, daylight: 'evening' as const },
+    {
+      room: { ...DEFAULT_ROOM, plant: 'plant_cactus', wall: 'wall_rainbow', curtain: 'curtain_lavender' },
+      isDark: false,
+      daylight: 'evening' as const,
+    },
     { room: fancy, isDark: true, daylight: 'night' as const },
     { room: { ...fancy, lamp: 'lamp_moon', rug: 'rug_cloud' }, isDark: false, daylight: 'day' as const },
   ];

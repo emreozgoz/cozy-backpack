@@ -67,7 +67,9 @@ for (const file of files) {
   }
   const parsed = levelSchema.safeParse(raw);
   if (!parsed.success) {
-    errors.push(`${where}:\n  ${parsed.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('\n  ')}`);
+    errors.push(
+      `${where}:\n  ${parsed.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('\n  ')}`,
+    );
     continue;
   }
   const level: LevelDef = parsed.data satisfies LevelDef;
@@ -80,7 +82,8 @@ for (const file of files) {
   seen.set(level.id, where);
   const [, w, d] = /^w(\d+)-d(\d)$/.exec(level.id)!;
   if (Number(w) !== level.week) err(`id says week ${Number(w)} but "week" is ${level.week}`);
-  if (DAYS[Number(d) - 1] !== level.day) err(`id says day ${d} (${DAYS[Number(d) - 1]}) but "day" is ${level.day}`);
+  if (DAYS[Number(d) - 1] !== level.day)
+    err(`id says day ${d} (${DAYS[Number(d) - 1]}) but "day" is ${level.day}`);
 
   // content consistency
   const unknown = level.items.filter((i) => !catalog[i.ref]).map((i) => i.ref);
@@ -122,7 +125,9 @@ for (const file of files) {
   const all = solve(level, instances, { maxSolutions: SOLUTION_CAP });
   const ms = Date.now() - t0;
   if (all.solutions.length === 0) {
-    err(all.exhaustive ? 'cannot be packed — no solution exists' : 'solver gave up before finding a solution');
+    err(
+      all.exhaustive ? 'cannot be packed — no solution exists' : 'solver gave up before finding a solution',
+    );
   }
   const flat = solve(level, instances, { allowRotation: false });
   const required = instances.filter((i) => i.role === 'required').length;
@@ -139,7 +144,9 @@ for (const file of files) {
     slack: `${Math.round(((usable - needed) / usable) * 100)}%`,
     rotation: flat.solutions.length ? 'optional' : 'needed',
     solutions:
-      all.solutions.length >= SOLUTION_CAP ? `${SOLUTION_CAP}+` : `${all.solutions.length}${all.exhaustive ? '' : '?'}`,
+      all.solutions.length >= SOLUTION_CAP
+        ? `${SOLUTION_CAP}+`
+        : `${all.solutions.length}${all.exhaustive ? '' : '?'}`,
     ms,
   });
 }

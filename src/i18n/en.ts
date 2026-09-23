@@ -1,0 +1,146 @@
+import type { Strings } from './tr';
+
+// English copy. Typed against the Turkish dictionary, so a missing or extra
+// key is a compile error.
+
+export const en: Strings = {
+  subjects: {
+    math: 'Math',
+    turkish: 'Reading',
+    science: 'Science',
+    life: 'Life Studies',
+    social: 'Social Studies',
+    history: 'History',
+    english: 'Languages',
+    art: 'Art',
+    music: 'Music',
+    pe: 'PE',
+  },
+
+  weekdays: {
+    mon: 'Monday',
+    tue: 'Tuesday',
+    wed: 'Wednesday',
+    thu: 'Thursday',
+    fri: 'Friday',
+    sat: 'Saturday',
+    sun: 'Sunday',
+  },
+
+  tips: {
+    drag: 'Drag an item into the bag. When everything is in, pull the zipper to the right.',
+    hint: 'Stuck? Tap 💡 for a hint. No rush, no timer.',
+    rotate: 'Tap an item to turn it. Sometimes things need to lie sideways.',
+    distractor: "Some things on the desk aren't on today's schedule. Leave them there.",
+    flute: "Music day: don't forget the flute! Long things may need to lie sideways.",
+    upright: 'The lunchbox has to stay upright, or lunch will spill.',
+    bottle: 'The water bottle can lie on its side, but never upside down.',
+    art: 'Art day! Crayons and the sketchbook go in the bag too.',
+    tight: 'The bag is quite full today. Every gap counts.',
+    finale: "Last day of the week: all of this week's rules at once.",
+  },
+
+  stuckReasons: {
+    missing: 'The zipper is stuck: something from the schedule is still on the desk.',
+    extra: "The zipper is stuck: there's something in the bag you don't need today.",
+    orientation: 'The zipper is stuck: something is facing the wrong way.',
+    fragile: 'The zipper is stuck: something is sitting on top of the gift.',
+    pocket: "The zipper is stuck: something isn't in its own pocket.",
+  },
+
+  weekNames: {
+    1: 'Back to School',
+    2: 'Lunchbox Week',
+    3: 'Sports Week',
+    4: 'Exam Week',
+  },
+
+  slots: {
+    wall: 'Wall',
+    curtain: 'Curtains',
+    lamp: 'Lamp',
+    plant: 'Plant',
+    rug: 'Rug',
+  },
+
+  decor: {
+    wall_timetable: 'Timetable',
+    wall_rainbow: 'Rainbow poster',
+    wall_cat: 'Cat poster',
+    curtain_mint: 'Mint curtains',
+    curtain_lavender: 'Lavender curtains',
+    curtain_butter: 'Polka-dot curtains',
+    lamp_basic: 'Desk lamp',
+    lamp_mushroom: 'Mushroom lamp',
+    lamp_moon: 'Moon lamp',
+    plant_none: 'Empty corner',
+    plant_cactus: 'Tiny cactus',
+    plant_monstera: 'Monstera',
+    rug_round: 'Round rug',
+    rug_rainbow: 'Rainbow rug',
+    rug_cloud: 'Cloud rug',
+  },
+
+  ui: {
+    appName: 'Cozy Backpack',
+    week: (n: number) => `Week ${n}`,
+    pullZip: 'When you’re ready, pull the zipper to the right →',
+    hint: 'Hint',
+    closeTip: 'Close tip',
+    packed: 'All packed!',
+    next: 'Next day',
+    replay: 'Play again',
+    levels: 'Days',
+    home: 'Back to my room',
+
+    packBag: 'Pack the bag',
+    stars: 'Stars',
+    buttons: 'Buttons',
+    hints: 'Hints',
+    settings: 'Settings',
+    decorate: 'Decorate',
+    dailyPuzzle: 'Daily Bag',
+    dailyTodo: (streak: number) =>
+      streak > 1 ? `Today's puzzle is ready · ${streak}-day streak` : "Today's puzzle is ready",
+    dailyDone: (streak: number) => `Done for today ✓ · ${streak}-day streak`,
+
+    earned: (n: number) => `+${n}`,
+    newDecor: (name: string) => `New decor unlocked: ${name}`,
+    dailyComplete: 'Daily Bag done!',
+    streak: (n: number) => `${n}-day streak`,
+
+    noHints: "You're out of hints. The daily gift brings new ones.",
+    nothingToHint: 'The bag looks ready — try the zipper!',
+
+    locked: 'Opens when you finish the day before',
+    starsCount: (n: number) => (n === 1 ? '1 star' : `${n} stars`),
+
+    dailyReward: 'Daily gift',
+    dailyRewardTitle: 'Your daily gift',
+    dailyRewardBody: "A small gift every day. Miss a day and nothing is lost — it'll wait for you.",
+    claim: 'Open',
+    claimed: 'Come back tomorrow!',
+    day: (n: number) => `Day ${n}`,
+    close: 'Close',
+
+    equipped: 'In use',
+    equip: 'Use',
+    buy: 'Buy',
+    needStars: (n: number) => `Unlocks at ${n} stars`,
+    notEnough: 'Not enough buttons',
+
+    sound: 'Sound effects',
+    haptics: 'Vibration',
+    language: 'Language',
+    languageSystem: 'System',
+    resetProgress: 'Reset progress',
+    resetConfirm: 'Are you sure? Stars, buttons and decor will be erased.',
+    resetYes: 'Yes, reset',
+    resetDone: 'Progress reset.',
+    cancel: 'Cancel',
+    version: (v: string) => `Version ${v}`,
+
+    zipper: 'Zipper',
+    zipperHint: 'Pull right to close the bag',
+  },
+};
