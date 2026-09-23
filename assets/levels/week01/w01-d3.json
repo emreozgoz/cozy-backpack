@@ -1,0 +1,14 @@
+{
+  "id": "w01-d3",
+  "week": 1,
+  "day": "wed",
+  "schedule": ["math", "english"],
+  "tip": "rotate",
+  "bag": { "type": "backpack", "compartments": [{ "id": "main", "kind": "main", "cols": 4, "rows": 5 }] },
+  "items": [
+    { "ref": "book_math", "role": "required" },
+    { "ref": "book_english", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "pencil_case", "role": "required" }
+  ]
+}

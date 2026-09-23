@@ -1,0 +1,13 @@
+{
+  "id": "w01-d1",
+  "week": 1,
+  "day": "mon",
+  "schedule": ["math", "turkish"],
+  "tip": "drag",
+  "bag": { "type": "backpack", "compartments": [{ "id": "main", "kind": "main", "cols": 4, "rows": 4 }] },
+  "items": [
+    { "ref": "book_math", "role": "required" },
+    { "ref": "book_turkish", "role": "required" },
+    { "ref": "pencil_case", "role": "required" }
+  ]
+}

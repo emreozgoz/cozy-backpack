@@ -1,0 +1,15 @@
+{
+  "id": "w01-d4",
+  "week": 1,
+  "day": "thu",
+  "schedule": ["turkish", "social"],
+  "tip": "distractor",
+  "bag": { "type": "backpack", "compartments": [{ "id": "main", "kind": "main", "cols": 5, "rows": 5 }] },
+  "items": [
+    { "ref": "book_turkish", "role": "required" },
+    { "ref": "book_social", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "toy_car", "role": "distractor" }
+  ]
+}

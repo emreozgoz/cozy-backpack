@@ -1,0 +1,19 @@
+{
+  "id": "w02-d5",
+  "week": 2,
+  "day": "fri",
+  "schedule": ["art", "music", "math"],
+  "tip": "finale",
+  "bag": { "type": "backpack", "compartments": [{ "id": "main", "kind": "main", "cols": 6, "rows": 6 }] },
+  "items": [
+    { "ref": "sketchbook", "role": "required" },
+    { "ref": "crayons", "role": "required" },
+    { "ref": "flute", "role": "required" },
+    { "ref": "book_math", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "ball", "role": "distractor" },
+    { "ref": "book_english", "role": "distractor" }
+  ]
+}

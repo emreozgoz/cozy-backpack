@@ -1,0 +1,339 @@
+<title>Cozy Backpack Stil Yönleri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap">
+<style>
+  :root {
+    --bg: #FFF6EC;
+    --surface: #FFFFFF;
+    --ink: #5B4636;
+    --muted: #8E7766;
+    --accent: #E9826C;
+    --line: rgba(91, 70, 54, 0.14);
+    --chip: #FDEFE0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #1E1924;
+      --surface: #2C2433;
+      --ink: #F5E9DC;
+      --muted: #B7A89C;
+      --accent: #F4A896;
+      --line: rgba(245, 233, 220, 0.14);
+      --chip: #3A3040;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #1E1924;
+    --surface: #2C2433;
+    --ink: #F5E9DC;
+    --muted: #B7A89C;
+    --accent: #F4A896;
+    --line: rgba(245, 233, 220, 0.14);
+    --chip: #3A3040;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Nunito", ui-rounded, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    padding-inline: 16px;
+    padding-block: 32px 56px;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; display: grid; gap: 40px; }
+
+  header { display: grid; gap: 10px; max-width: 62ch; }
+  .eyebrow {
+    font-family: "Fredoka", ui-rounded, sans-serif;
+    font-weight: 600; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  h1 {
+    font-family: "Fredoka", ui-rounded, sans-serif;
+    font-weight: 700; font-size: clamp(30px, 5vw, 44px); line-height: 1.1; margin: 0;
+    text-wrap: balance;
+  }
+  header p { margin: 0; color: var(--muted); }
+
+  .direction {
+    display: grid; gap: 18px;
+    padding-top: 28px;
+    border-top: 2px dashed var(--line);
+  }
+  .dir-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 16px; }
+  .letter {
+    font-family: "Fredoka", ui-rounded, sans-serif; font-weight: 700; font-size: 22px;
+    width: 44px; height: 44px; border-radius: 50%;
+    display: inline-grid; place-items: center;
+    background: var(--accent); color: #FFFFFF;
+    flex: none; align-self: center;
+  }
+  h2 {
+    font-family: "Fredoka", ui-rounded, sans-serif; font-weight: 600;
+    font-size: 26px; margin: 0; text-wrap: balance;
+  }
+  .dir-head p { margin: 0; color: var(--muted); flex-basis: 100%; max-width: 62ch; }
+
+  .scenes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  figure { margin: 0; display: grid; gap: 8px; }
+  figure svg { width: 100%; height: auto; max-width: 100%; display: block; border-radius: 22px; }
+  figcaption { font-size: 13px; color: var(--muted); font-weight: 600; }
+
+  .notes { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .notes li {
+    background: var(--chip); border-radius: 999px;
+    padding: 5px 12px; font-size: 14px; font-weight: 600;
+  }
+
+  footer {
+    background: var(--surface); border-radius: 22px; padding: 22px 24px;
+    display: grid; gap: 6px; max-width: 70ch;
+  }
+  footer strong { font-family: "Fredoka", ui-rounded, sans-serif; font-weight: 600; font-size: 19px; }
+  footer p { margin: 0; color: var(--muted); }
+
+  /* the items feel alive: blink + a small lift on hover */
+  .it { transform-box: fill-box; transform-origin: 50% 90%; transition: transform 260ms cubic-bezier(.34,1.56,.64,1); }
+  .it:hover { transform: scale(1.05) translateY(-2px); }
+  .eyes { transform-box: fill-box; transform-origin: center; animation: blink 5s infinite; }
+  .it:nth-of-type(2n) .eyes { animation-delay: 1.7s; }
+  .it:nth-of-type(3n) .eyes { animation-delay: 3.1s; }
+  @keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 96% { transform: scaleY(0.1); } }
+  @media (prefers-reduced-motion: reduce) {
+    .it, .eyes { animation: none; transition: none; }
+    .it:hover { transform: none; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">M1 · Görsel dil keşfi</span>
+    <h1>Hangi çanta senin çantan?</h1>
+    <p>Üç farklı çizim yönü, aynı sahne: 1. günün çantası (Matematik, Türkçe, kalem kutusu) ızgaraya yerleşmiş, masada da beslenme kutusu bekliyor. Her yön açık ve koyu modda. Hepsi kodla çizildi, yani oyunda aynen bu yöntemle üretilecek. Fareyle eşyaların üzerine gel.</p>
+  </header>
+
+  <section class="direction" id="a">
+    <div class="dir-head">
+      <span class="letter">A</span>
+      <h2>Pastel &amp; yüzlü</h2>
+      <p>Düz pastel renkler, yumuşak gölgeler, konturu olmayan tombul şekiller ve minik yüzler. En "sevimli" ve en sade yön; App Store'da çocuk-yetişkin herkese hitap eder.</p>
+    </div>
+    <div class="scenes">
+      <figure><div data-scene="A" data-mode="light"></div><figcaption>Açık mod</figcaption></figure>
+      <figure><div data-scene="A" data-mode="dark"></div><figcaption>Koyu mod · gece lambası</figcaption></figure>
+    </div>
+    <ul class="notes"><li>En sade ve okunaklı</li><li>Küçük ekranda net</li><li>Temalar eklemek çok kolay</li><li>Diğer oyunlara benzeme riski</li></ul>
+  </section>
+
+  <section class="direction" id="b">
+    <div class="dir-head">
+      <span class="letter">B</span>
+      <h2>Kâğıt &amp; kumaş</h2>
+      <p>Hafif gren dokusu, dikiş izleri, kâğıt etiketler; eşyaların yüzü yok. Daha nostaljik ve "gerçek okul çantası" hissi; yetişkin oyuncuya daha çok hitap eder.</p>
+    </div>
+    <div class="scenes">
+      <figure><div data-scene="B" data-mode="light"></div><figcaption>Açık mod</figcaption></figure>
+      <figure><div data-scene="B" data-mode="dark"></div><figcaption>Koyu mod · gece lambası</figcaption></figure>
+    </div>
+    <ul class="notes"><li>En nostaljik</li><li>Dokulu, sıcak</li><li>Karakter yok, duygu dokuda</li><li>Doku, performans için ince ayar ister</li></ul>
+  </section>
+
+  <section class="direction" id="c">
+    <div class="dir-head">
+      <span class="letter">C</span>
+      <h2>Kalın kontur &amp; çıkartma</h2>
+      <p>Kakao rengi kalın kontur, beyaz çıkartma kenarı, sert ofset gölge ve daha iri gözler. Karikatür / sticker estetiği; ekran görüntülerinde en çok "patlayan" yön.</p>
+    </div>
+    <div class="scenes">
+      <figure><div data-scene="C" data-mode="light"></div><figcaption>Açık mod</figcaption></figure>
+      <figure><div data-scene="C" data-mode="dark"></div><figcaption>Koyu mod · gece lambası</figcaption></figure>
+    </div>
+    <ul class="notes"><li>Mağazada en dikkat çekici</li><li>Güçlü karakter</li><li>Eşyalar birbirinden net ayrılır</li><li>Daha "oyuncak" hissi</li></ul>
+  </section>
+
+  <footer>
+    <strong>Seçimini bana yaz: A, B veya C</strong>
+    <p>Karışım da olur, ör. "B'nin dokusu + A'nın yüzleri" ya da "C ama kontur daha ince". Seçtiğin yön tüm eşyalara, çantalara ve odaya uygulanacak.</p>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const PAL = {
+    light: {
+      bg: '#FFF6EC', desk: '#E9CDAE', deskEdge: '#D9B893',
+      bag: '#F4B8A4', bagDark: '#E3A18C', inside: '#FBE3D6', grid: 'rgba(91,70,54,0.16)',
+      math: '#A8D8F0', turkish: '#F79E89', butter: '#FFE29A', mint: '#BDE7C9',
+      ink: '#5B4636', blush: '#F7A6A0', white: '#FFFFFF',
+    },
+    dark: {
+      bg: '#241E2B', desk: '#5A4638', deskEdge: '#4A382C',
+      bag: '#B97F72', bagDark: '#A06B5F', inside: '#4A3B4C', grid: 'rgba(245,233,220,0.12)',
+      math: '#86BCD8', turkish: '#E88F7B', butter: '#E8CB7E', mint: '#8FC8A2',
+      ink: '#3A2A26', blush: '#E38E88', white: '#F5E9DC',
+    },
+  };
+
+  function shade(hex, amt) {
+    const n = parseInt(hex.slice(1), 16);
+    const f = (v) => Math.max(0, Math.min(255, Math.round(v * (1 + amt))));
+    return '#' + ((f(n >> 16) << 16) | (f((n >> 8) & 255) << 8) | f(n & 255)).toString(16).padStart(6, '0');
+  }
+
+  const rr = (x, y, w, h, r, fill, extra = '') =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${fill}" ${extra}/>`;
+
+  // Per-style drawing knobs.
+  const STYLE = {
+    A: { stroke: 0, face: 'soft', texture: false, stitch: false, shadow: 'soft', sticker: false, r: 12 },
+    B: { stroke: 0, face: null, texture: true, stitch: true, shadow: 'soft', sticker: false, r: 9 },
+    C: { stroke: 3, face: 'big', texture: false, stitch: false, shadow: 'hard', sticker: true, r: 11 },
+  };
+
+  function face(cx, cy, s, st, p) {
+    if (!st.face) return '';
+    const big = st.face === 'big';
+    const er = big ? s * 0.11 : s * 0.075;
+    const gap = s * (big ? 0.2 : 0.18);
+    const eyes = `<g class="eyes">
+      <circle cx="${cx - gap}" cy="${cy}" r="${er}" fill="${p.ink}"/>
+      <circle cx="${cx + gap}" cy="${cy}" r="${er}" fill="${p.ink}"/>
+      ${big ? `<circle cx="${cx - gap + er * 0.35}" cy="${cy - er * 0.35}" r="${er * 0.35}" fill="#fff"/>
+               <circle cx="${cx + gap + er * 0.35}" cy="${cy - er * 0.35}" r="${er * 0.35}" fill="#fff"/>` : ''}
+    </g>`;
+    const blush = `<ellipse cx="${cx - gap * 1.75}" cy="${cy + er * 1.9}" rx="${s * 0.08}" ry="${s * 0.05}" fill="${p.blush}" opacity="0.7"/>
+      <ellipse cx="${cx + gap * 1.75}" cy="${cy + er * 1.9}" rx="${s * 0.08}" ry="${s * 0.05}" fill="${p.blush}" opacity="0.7"/>`;
+    const m = s * 0.07;
+    const smile = `<path d="M ${cx - m} ${cy + er * 1.5} q ${m} ${m * 1.1} ${m * 2} 0" fill="none" stroke="${p.ink}" stroke-width="${big ? 2.2 : 1.8}" stroke-linecap="round"/>`;
+    return eyes + blush + smile;
+  }
+
+  function outline(st, p) {
+    return st.stroke ? `stroke="${p.ink}" stroke-width="${st.stroke}" stroke-linejoin="round"` : '';
+  }
+
+  // Wraps an item: shadow + optional sticker edge + optional grain filter.
+  function item(id, x, y, w, h, st, p, body) {
+    let out = `<g class="it">`;
+    if (st.shadow === 'soft') out += rr(x + 1, y + 4, w - 2, h - 2, st.r, p.ink, 'opacity="0.14"');
+    if (st.shadow === 'hard') out += rr(x + 3, y + 4, w, h, st.r, p.ink, 'opacity="0.35"');
+    if (st.sticker) out += rr(x - 3, y - 3, w + 6, h + 6, st.r + 3, p.white);
+    out += `<g ${st.texture ? `filter="url(#grain-${id})"` : ''}>${body}</g></g>`;
+    return out;
+  }
+
+  function book(id, x, y, w, h, color, glyph, st, p) {
+    const spine = w * 0.22;
+    let b = rr(x, y, w, h, st.r, color, outline(st, p));
+    b += `<path d="M ${x + spine} ${y + (st.stroke ? 1.5 : 0)} V ${y + h - (st.stroke ? 1.5 : 0)}" stroke="${shade(color, -0.2)}" stroke-width="${spine * 0.9}" opacity="0.55"/>`;
+    b += rr(x + w - 7, y + 8, 3, h - 16, 1.5, 'rgba(255,255,255,0.7)');
+    if (st.stitch) {
+      b += `<path d="M ${x + spine + spine * 0.55} ${y + 6} V ${y + h - 6}" stroke="rgba(255,255,255,0.75)" stroke-width="1.6" stroke-dasharray="4 4" stroke-linecap="round"/>`;
+      b += rr(x + spine + 12, y + 16, w - spine - 24, 26, 4, '#FFFBEF', 'opacity="0.95"');
+      b += `<text x="${x + spine + (w - spine) / 2}" y="${y + 34}" text-anchor="middle" font-family="Fredoka, ui-rounded, sans-serif" font-weight="600" font-size="15" fill="#5B4636">${glyph}</text>`;
+      b += rr(x + spine + 12, y + h - 30, (w - spine) * 0.55, 3, 1.5, 'rgba(255,255,255,0.6)');
+      b += rr(x + spine + 12, y + h - 22, (w - spine) * 0.35, 3, 1.5, 'rgba(255,255,255,0.6)');
+    } else {
+      b += `<text x="${x + spine + (w - spine) / 2}" y="${y + 30}" text-anchor="middle" font-family="Fredoka, ui-rounded, sans-serif" font-weight="700" font-size="16" fill="${p.ink}" opacity="0.7">${glyph}</text>`;
+      b += face(x + spine + (w - spine) / 2, y + h * 0.58, w, st, p);
+    }
+    return item(id, x, y, w, h, st, p, b);
+  }
+
+  function pencilCase(id, x, y, w, h, color, st, p) {
+    let b = rr(x, y, w, h, h / 2, color, outline(st, p));
+    b += `<path d="M ${x + 12} ${y + h * 0.36} H ${x + w - 26}" stroke="${shade(color, -0.3)}" stroke-width="2.4" stroke-linecap="round" ${st.stitch ? '' : ''}/>`;
+    if (st.stitch) b += `<path d="M ${x + 10} ${y + h * 0.36 + 5} H ${x + w - 26}" stroke="${shade(color, -0.3)}" stroke-width="1" stroke-dasharray="2 3"/>`;
+    b += `<circle cx="${x + w - 20}" cy="${y + h * 0.36}" r="4.2" fill="${shade(color, -0.3)}" ${outline(st, p).replace(/stroke-width="\d+"/, 'stroke-width="1.5"')}/>`;
+    b += `<path d="M ${x + w - 20} ${y + h * 0.36} v 9" stroke="${shade(color, -0.3)}" stroke-width="2.4" stroke-linecap="round"/>`;
+    b += face(x + w * 0.42, y + h * 0.66, h * 1.35, st, p);
+    return item(id, x, y, w, h, st, p, b);
+  }
+
+  function lunchbox(id, x, y, w, h, color, st, p) {
+    const lid = h * 0.3;
+    let b = `<path d="M ${x + w * 0.32} ${y + 2} q 0 -${h * 0.2} ${w * 0.18} -${h * 0.2} q ${w * 0.18} 0 ${w * 0.18} ${h * 0.2}" fill="none" stroke="${shade(color, -0.32)}" stroke-width="${st.stroke ? 4 : 3.5}" stroke-linecap="round"/>`;
+    b += rr(x, y, w, h, st.r, color, outline(st, p));
+    b += rr(x + (st.stroke ? 1.5 : 0), y + lid, w - (st.stroke ? 3 : 0), 4, 0, shade(color, -0.2));
+    if (st.stitch) {
+      // gingham lid
+      for (let i = 0; i < 4; i++) b += rr(x + 6 + i * (w - 12) / 4, y + 5, (w - 12) / 8, lid - 8, 1, '#FFFFFF', 'opacity="0.4"');
+      b += `<path d="M ${x + w / 2} ${y + h * 0.56} l -6 8 h 12 z" fill="rgba(255,255,255,0.8)"/>`;
+    } else {
+      b += face(x + w / 2, y + lid + (h - lid) * 0.45, w * 0.9, st, p);
+    }
+    return item(id, x, y, w, h, st, p, b);
+  }
+
+  function bag(id, bx, by, bw, bh, gx, gy, cell, cols, rows, st, p) {
+    let s = '';
+    // straps behind + handle
+    s += `<path d="M ${bx + bw * 0.36} ${by + 6} q 0 -26 ${bw * 0.14} -26 q ${bw * 0.14} 0 ${bw * 0.14} 26" fill="none" stroke="${p.bagDark}" stroke-width="9" stroke-linecap="round" ${st.stroke ? '' : ''}/>`;
+    if (st.stroke) s += `<path d="M ${bx + bw * 0.36} ${by + 6} q 0 -26 ${bw * 0.14} -26 q ${bw * 0.14} 0 ${bw * 0.14} 26" fill="none" stroke="${p.ink}" stroke-width="2.5" stroke-linecap="round" transform="translate(0,-4.5)"/>`;
+    if (st.shadow === 'hard') s += rr(bx + 4, by + 6, bw, bh, 30, p.ink, 'opacity="0.3"');
+    else s += rr(bx + 2, by + 8, bw - 4, bh - 4, 30, p.ink, 'opacity="0.16"');
+    if (st.sticker) s += rr(bx - 4, by - 4, bw + 8, bh + 8, 34, p.white);
+    s += `<g ${st.texture ? `filter="url(#grain-${id})"` : ''}>`;
+    s += rr(bx, by, bw, bh, 30, `url(#bagGrad-${id})`, outline(st, p));
+    if (st.stitch) s += rr(bx + 7, by + 7, bw - 14, bh - 14, 24, 'none', `stroke="rgba(255,255,255,0.55)" stroke-width="1.6" stroke-dasharray="5 5"`);
+    // zipper band + teeth
+    s += rr(bx + 16, by + 12, bw - 32, 10, 5, 'rgba(91,70,54,0.24)');
+    for (let t = bx + 22; t < bx + bw - 22; t += 8) s += rr(t, by + 14, 4.5, 6, 1.4, 'rgba(255,255,255,0.65)');
+    s += `<circle cx="${bx + bw - 24}" cy="${by + 17}" r="5" fill="${p.butter}" ${outline(st, p).replace(/stroke-width="\d+"/, 'stroke-width="1.8"')}/>`;
+    s += rr(bx + bw - 26.5, by + 20, 5, 12, 2.5, p.butter, outline(st, p).replace(/stroke-width="\d+"/, 'stroke-width="1.8"'));
+    s += `</g>`;
+    // inside
+    s += rr(gx - 4, gy - 4, cols * cell + 8, rows * cell + 8, 12, p.inside);
+    let grid = '';
+    for (let c = 1; c < cols; c++) grid += `M ${gx + c * cell} ${gy + 4} V ${gy + rows * cell - 4} `;
+    for (let r = 1; r < rows; r++) grid += `M ${gx + 4} ${gy + r * cell} H ${gx + cols * cell - 4} `;
+    s += `<path d="${grid}" stroke="${p.grid}" stroke-width="1.4" stroke-dasharray="4 5" stroke-linecap="round"/>`;
+    return s;
+  }
+
+  function scene(styleKey, mode) {
+    const st = STYLE[styleKey];
+    const p = PAL[mode];
+    const id = styleKey + mode;
+    const W = 320, H = 330, cell = 40, cols = 4, rows = 4;
+    const gx = (W - cols * cell) / 2, gy = 74;
+    const bx = gx - 20, by = gy - 42, bw = cols * cell + 40, bh = rows * cell + 62;
+    const deskY = 262;
+    const inset = 3;
+
+    let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Stil ${styleKey}, ${mode === 'light' ? 'açık' : 'koyu'} mod: 1. günün çantası">
+      <defs>
+        <linearGradient id="bagGrad-${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="${shade(p.bag, 0.04)}"/><stop offset="1" stop-color="${p.bagDark}"/>
+        </linearGradient>
+        <radialGradient id="lamp-${id}"><stop offset="0" stop-color="#FFE29A" stop-opacity="0.22"/><stop offset="1" stop-color="#FFE29A" stop-opacity="0"/></radialGradient>
+        <filter id="grain-${id}" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="${styleKey.charCodeAt(0)}" stitchTiles="stitch" result="n"/>
+          <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.36  0 0 0 0 0.27  0 0 0 0 0.21  0 0 0 0.45 0" result="c"/>
+          <feComposite in="c" in2="SourceGraphic" operator="in" result="t"/>
+          <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="t"/></feMerge>
+        </filter>
+      </defs>
+      <rect width="${W}" height="${H}" fill="${p.bg}"/>
+      ${mode === 'dark' ? `<circle cx="${W - 30}" cy="30" r="120" fill="url(#lamp-${id})"/>` : ''}
+      <rect x="0" y="${deskY}" width="${W}" height="${H - deskY}" fill="${p.desk}"/>
+      <rect x="0" y="${deskY}" width="${W}" height="6" fill="${p.deskEdge}"/>`;
+
+    svg += bag(id, bx, by, bw, bh, gx, gy, cell, cols, rows, st, p);
+    svg += book(id, gx + inset, gy + inset, 2 * cell - inset * 2, 3 * cell - inset * 2, p.math, 'π', st, p);
+    svg += book(id, gx + 2 * cell + inset, gy + inset, 2 * cell - inset * 2, 3 * cell - inset * 2, p.turkish, 'Aa', st, p);
+    svg += pencilCase(id, gx + inset, gy + 3 * cell + inset, 3 * cell - inset * 2, cell - inset * 2, p.butter, st, p);
+    svg += lunchbox(id, 26, deskY + 16, 54, 46, p.mint, st, p);
+    svg += `</svg>`;
+    return svg;
+  }
+
+  document.querySelectorAll('[data-scene]').forEach((el) => {
+    el.innerHTML = scene(el.dataset.scene, el.dataset.mode);
+  });
+})();
+</script>

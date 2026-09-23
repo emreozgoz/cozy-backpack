@@ -1,0 +1,16 @@
+{
+  "id": "w01-d5",
+  "week": 1,
+  "day": "fri",
+  "schedule": ["math", "science", "music"],
+  "tip": "flute",
+  "bag": { "type": "backpack", "compartments": [{ "id": "main", "kind": "main", "cols": 5, "rows": 5 }] },
+  "items": [
+    { "ref": "book_math", "role": "required" },
+    { "ref": "book_science", "role": "required" },
+    { "ref": "flute", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "comic", "role": "distractor" }
+  ]
+}

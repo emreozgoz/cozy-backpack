@@ -1,0 +1,33 @@
+{
+  "book_math":     { "shape": ["XX", "XX", "XX"], "sprite": "book", "color": "math",     "subject": "math" },
+  "book_turkish":  { "shape": ["XX", "XX", "XX"], "sprite": "book", "color": "turkish",  "subject": "turkish" },
+  "book_science":  { "shape": ["XX", "XX", "XX"], "sprite": "book", "color": "science",  "subject": "science" },
+  "book_life":     { "shape": ["XX", "XX", "XX"], "sprite": "book", "color": "life",     "subject": "life" },
+  "book_social":   { "shape": ["XX", "XX", "XX"], "sprite": "book", "color": "social",   "subject": "social" },
+  "book_history":  { "shape": ["XX", "XX", "XX"], "sprite": "book", "color": "history",  "subject": "history" },
+  "book_english":  { "shape": ["XX", "XX", "XX"], "sprite": "book", "color": "english",  "subject": "english" },
+  "book_music":    { "shape": ["XX", "XX", "XX"], "sprite": "book", "color": "music",    "subject": "music" },
+
+  "notebook":      { "shape": ["X", "X", "X"],    "sprite": "notebook",    "color": "sky",   "tags": ["daily"] },
+  "pencil_case":   { "shape": ["XXX"],            "sprite": "pencilCase",  "color": "coral", "tags": ["daily"] },
+  "lunchbox":      { "shape": ["XX", "XX"],       "sprite": "lunchbox",    "color": "mint",  "tags": ["daily"], "allowedRotations": [0] },
+  "water_bottle":  { "shape": ["X", "X", "X"],    "sprite": "bottle",      "color": "sky",   "tags": ["daily"], "allowedRotations": [0, 90, 270] },
+
+  "crayons":       { "shape": ["XX"],             "sprite": "crayons",     "color": "art",   "subject": "art" },
+  "sketchbook":    { "shape": ["XXX", "XXX", "XXX"], "sprite": "sketchbook", "color": "art", "subject": "art" },
+  "flute":         { "shape": ["X", "X", "X", "X"], "sprite": "flute",     "color": "music", "subject": "music" },
+  "pe_clothes":    { "shape": ["XX", "XX"], "altShapes": [["X", "X", "X", "X"]], "sprite": "clothes", "color": "pe", "subject": "pe", "tags": ["soft"] },
+  "shoe_bag":      { "shape": ["X", "X"],         "sprite": "shoeBag",     "color": "pe",    "subject": "pe", "pocket": "side" },
+  "set_square":    { "shape": ["X.", "XX"],       "sprite": "setSquare",   "color": "math",  "subject": "math" },
+  "calculator":    { "shape": ["X", "X"],         "sprite": "calculator",  "color": "lavender" },
+
+  "permission_slip": { "shape": ["X"],            "sprite": "slip",        "color": "butter", "tags": ["surprise"], "pocket": "front" },
+  "gift":          { "shape": ["XX", "XX"],       "sprite": "gift",        "color": "pink",  "tags": ["surprise"], "fragile": true },
+  "homework":      { "shape": ["X", "X"],         "sprite": "homework",    "color": "butter", "tags": ["surprise"] },
+
+  "toy_car":       { "shape": ["XX"],             "sprite": "toyCar",      "color": "coral", "tags": ["toy"] },
+  "ball":          { "shape": ["XX", "XX"],       "sprite": "ball",        "color": "butter", "tags": ["toy"] },
+  "comic":         { "shape": ["XX", "XX"],       "sprite": "comic",       "color": "lavender", "tags": ["toy"] },
+  "plush":         { "shape": ["X", "X"],         "sprite": "plush",       "color": "pink",  "tags": ["toy"] },
+  "cards":         { "shape": ["X"],              "sprite": "cards",       "color": "mint",  "tags": ["toy"] }
+}

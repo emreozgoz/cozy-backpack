@@ -1,0 +1,14 @@
+{
+  "id": "w01-d2",
+  "week": 1,
+  "day": "tue",
+  "schedule": ["science", "life"],
+  "tip": "hint",
+  "bag": { "type": "backpack", "compartments": [{ "id": "main", "kind": "main", "cols": 5, "rows": 4 }] },
+  "items": [
+    { "ref": "book_science", "role": "required" },
+    { "ref": "book_life", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "pencil_case", "role": "required" }
+  ]
+}

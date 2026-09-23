@@ -1,0 +1,16 @@
+{
+  "id": "w02-d1",
+  "week": 2,
+  "day": "mon",
+  "schedule": ["math", "turkish"],
+  "tip": "upright",
+  "bag": { "type": "backpack", "compartments": [{ "id": "main", "kind": "main", "cols": 5, "rows": 5 }] },
+  "items": [
+    { "ref": "book_math", "role": "required" },
+    { "ref": "book_turkish", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "ball", "role": "distractor" }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "w02-d3",
+  "week": 2,
+  "day": "wed",
+  "schedule": ["art", "turkish"],
+  "tip": "art",
+  "bag": { "type": "backpack", "compartments": [{ "id": "main", "kind": "main", "cols": 5, "rows": 6 }] },
+  "items": [
+    { "ref": "book_turkish", "role": "required" },
+    { "ref": "sketchbook", "role": "required" },
+    { "ref": "crayons", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "toy_car", "role": "distractor" }
+  ]
+}

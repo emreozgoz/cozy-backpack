@@ -1,0 +1,17 @@
+{
+  "id": "w02-d2",
+  "week": 2,
+  "day": "tue",
+  "schedule": ["science", "english"],
+  "tip": "bottle",
+  "bag": { "type": "backpack", "compartments": [{ "id": "main", "kind": "main", "cols": 5, "rows": 6 }] },
+  "items": [
+    { "ref": "book_science", "role": "required" },
+    { "ref": "book_english", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "plush", "role": "distractor" }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "w02-d4",
+  "week": 2,
+  "day": "thu",
+  "schedule": ["history", "math", "science"],
+  "tip": "tight",
+  "bag": { "type": "backpack", "compartments": [{ "id": "main", "kind": "main", "cols": 5, "rows": 6 }] },
+  "items": [
+    { "ref": "book_history", "role": "required" },
+    { "ref": "book_math", "role": "required" },
+    { "ref": "book_science", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "cards", "role": "distractor" },
+    { "ref": "comic", "role": "distractor" }
+  ]
+}
