@@ -20,6 +20,9 @@ Gerçeğe geçmek için aşağıdakileri sırayla yap, anahtarları `.env` dosya
    | `cb.hints.10` | Consumable | $0.99 |
    | `cb.hints.30` | Consumable | $2.49 |
    | `cb.hints.80` | Consumable | $4.99 |
+   | `cb.theme.autumn` | Non-Consumable | $1.99 |
+   | `cb.theme.sweets` | Non-Consumable | $1.99 |
+   | `cb.theme.bundle` | Non-Consumable | $2.99 |
 
 4. **Subscriptions** → "VIP" grubu:
    - `cb.vip.monthly`: 1 ay, $2.99.
@@ -30,10 +33,12 @@ Gerçeğe geçmek için aşağıdakileri sırayla yap, anahtarları `.env` dosya
 ## 2. RevenueCat
 
 1. Proje oluştur → App Store uygulaması ekle. App Store Connect'te **In-App Purchase Key** üret ve RevenueCat'e yükle.
-2. **Products**: yukarıdaki 7 ürünü içe aktar.
+2. **Products**: yukarıdaki 10 ürünü içe aktar.
 3. **Entitlements**:
    - `no_ads` ← `cb.removeads`, `cb.starter`
    - `vip` ← `cb.vip.monthly`, `cb.vip.yearly`
+   - `theme_autumn` ← `cb.theme.autumn`, `cb.theme.bundle`
+   - `theme_sweets` ← `cb.theme.sweets`, `cb.theme.bundle`
 4. **API keys** → iOS public SDK key'i `.env` dosyasına yaz: `EXPO_PUBLIC_REVENUECAT_IOS_KEY=appl_...`
 5. Test: App Store Connect'te **Sandbox tester** oluştur. Dev build'i iPhone'a kur ve o hesapla satın al.
 

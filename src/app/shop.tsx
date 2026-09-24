@@ -1,10 +1,14 @@
+import { Canvas } from '@shopify/react-native-skia';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { RoomScene } from '@/art/room/RoomScene';
+import { DEFAULT_ROOM, decorById } from '@/data/decor';
+import { skinById, themeById, type ThemeId } from '@/data/themes';
 import { feedback } from '@/features/feedback';
-import { HINT_PACKS, productById, type ProductId } from '@/features/monetization/products';
+import { HINT_PACKS, productById, THEME_PACKS, type ProductId } from '@/features/monetization/products';
 import { useT } from '@/i18n';
 import { isAdFree, starterOffered, useShopStore } from '@/store/useShopStore';
 import { usePlayerStore } from '@/store/usePlayerStore';
@@ -13,7 +17,7 @@ import { radius, usePalette } from '@/ui/tokens';
 import { Text } from '@/ui/Text';
 
 export default function Shop() {
-  const { ui } = useT();
+  const { ui, themes: themeNames } = useT();
   const palette = usePalette();
   const insets = useSafeAreaInsets();
   const shop = useShopStore();
@@ -94,6 +98,35 @@ export default function Shop() {
         onBuy={() => buy('cb.removeads')}
       />
 
+      <Text style={[styles.section, { color: palette.textMuted }]}>{ui.themesTitle}</Text>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.themes}>
+        {THEME_PACKS.map((id) => {
+          const themes = productById(id).grant.themes ?? [];
+          const ownedAll = themes.every((t) => shop.entitlements.themes.includes(t));
+          return (
+            <View key={id} style={[styles.themeCard, { backgroundColor: palette.surface }]}>
+              <ThemePreview themes={themes} isDark={palette.isDark} />
+              <Text style={[styles.cardTitle, { color: palette.text }]}>
+                {themes.length > 1 ? ui.bundleTitle : themeNames[themes[0]]}
+              </Text>
+              <Text style={[styles.cardBody, { color: palette.textMuted }]}>
+                {themes.length > 1 ? themes.map((t) => themeNames[t]).join(' + ') : ui.themeIncludes}
+              </Text>
+              {ownedAll ? (
+                <Text style={[styles.done, { color: palette.success }]}>✓ {ui.owned}</Text>
+              ) : (
+                <SoftButton
+                  label={shop.busy === id ? '…' : (shop.prices[id] ?? '')}
+                  onPress={() => buy(id)}
+                  disabled={!!shop.busy}
+                  style={styles.priceButton}
+                />
+              )}
+            </View>
+          );
+        })}
+      </ScrollView>
+
       <Text style={[styles.section, { color: palette.textMuted }]}>{ui.hintPacks}</Text>
       <View style={styles.packs}>
         {HINT_PACKS.map((id) => (
@@ -120,6 +153,27 @@ export default function Shop() {
 
       <SoftButton label={ui.restore} kind="ghost" onPress={restore} disabled={!!shop.busy} />
     </ScrollView>
+  );
+}
+
+/** A tiny room dressed in the pack's decor, with its bag pattern on the desk. */
+function ThemePreview({ themes, isDark }: { themes: ThemeId[]; isDark: boolean }) {
+  const room = { ...DEFAULT_ROOM };
+  for (const t of themes) for (const d of themeById(t).decor) room[decorById(d)!.slot] = d;
+  const skin = skinById(themeById(themes[0]).bagSkin);
+  return (
+    <View style={styles.themePreview}>
+      <Canvas style={StyleSheet.absoluteFill}>
+        <RoomScene
+          w={148}
+          h={190}
+          room={room}
+          skin={skin}
+          isDark={isDark}
+          daylight={isDark ? 'night' : 'day'}
+        />
+      </Canvas>
+    </View>
   );
 }
 
@@ -177,6 +231,9 @@ const styles = StyleSheet.create({
   vipBody: { color: '#FFFFFF', fontSize: 15, fontWeight: '700', opacity: 0.95 },
   section: { fontSize: 14, fontWeight: '800', letterSpacing: 0.5, textTransform: 'uppercase', marginTop: 4 },
   packs: { flexDirection: 'row', gap: 10 },
+  themes: { gap: 12 },
+  themeCard: { width: 172, borderRadius: radius.l, padding: 12, gap: 6 },
+  themePreview: { width: 148, height: 190, borderRadius: radius.m, overflow: 'hidden' },
   pack: { flex: 1, borderRadius: radius.m, paddingVertical: 16, alignItems: 'center', gap: 6 },
   packIcon: { fontSize: 26 },
   packName: { fontSize: 15, fontWeight: '800' },

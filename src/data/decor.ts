@@ -2,6 +2,8 @@
 // from the start. `stars` = total stars needed before it can be bought,
 // `price` = buttons it costs. All art is drawn in src/art/room/.
 
+import type { ThemeId } from './themes';
+
 export type DecorSlot = 'wall' | 'curtain' | 'lamp' | 'plant' | 'rug';
 
 export interface DecorItem {
@@ -9,6 +11,8 @@ export interface DecorItem {
   slot: DecorSlot;
   stars: number;
   price: number;
+  /** Theme decor comes with a theme pack or VIP instead of buttons. */
+  theme?: ThemeId;
 }
 
 export const DECOR_SLOTS: DecorSlot[] = ['wall', 'curtain', 'lamp', 'plant', 'rug'];
@@ -33,6 +37,16 @@ export const DECOR: DecorItem[] = [
   { id: 'rug_round', slot: 'rug', stars: 0, price: 0 },
   { id: 'rug_rainbow', slot: 'rug', stars: 14, price: 60 },
   { id: 'rug_cloud', slot: 'rug', stars: 58, price: 200 },
+
+  // theme decor: unlocked by a theme pack or VIP, never bought with buttons
+  { id: 'curtain_autumn', slot: 'curtain', stars: 0, price: 0, theme: 'autumn' },
+  { id: 'rug_leaf', slot: 'rug', stars: 0, price: 0, theme: 'autumn' },
+  { id: 'wall_cupcake', slot: 'wall', stars: 0, price: 0, theme: 'sweets' },
+  { id: 'lamp_candy', slot: 'lamp', stars: 0, price: 0, theme: 'sweets' },
+  { id: 'wall_constellation', slot: 'wall', stars: 0, price: 0, theme: 'starry' },
+  { id: 'rug_moon', slot: 'rug', stars: 0, price: 0, theme: 'starry' },
+  { id: 'curtain_floral', slot: 'curtain', stars: 0, price: 0, theme: 'garden' },
+  { id: 'plant_flowers', slot: 'plant', stars: 0, price: 0, theme: 'garden' },
 ];
 
 export const DEFAULT_ROOM: Record<DecorSlot, string> = {
@@ -49,5 +63,5 @@ export function decorById(id: string): DecorItem | undefined {
 
 /** Decor that becomes buyable when total stars go from `before` to `after`. */
 export function newlyUnlocked(before: number, after: number): DecorItem[] {
-  return DECOR.filter((d) => d.stars > 0 && d.stars > before && d.stars <= after);
+  return DECOR.filter((d) => !d.theme && d.stars > 0 && d.stars > before && d.stars <= after);
 }

@@ -14,7 +14,10 @@ import { Celebration } from '@/art/fx/Celebration';
 import { canPlace } from '@/game/placement';
 import { orientedCells } from '@/game/shapes';
 import type { Cell } from '@/game/types';
+import { skinById } from '@/data/themes';
 import { useGameStore, visibleInstances } from '@/store/useGameStore';
+import { effectiveSkin, usePlayerStore } from '@/store/usePlayerStore';
+import { useShopStore } from '@/store/useShopStore';
 import { usePalette } from '@/ui/tokens';
 
 import { solve } from '@/game/solver';
@@ -52,6 +55,14 @@ export function Board({ width, height }: { width: number; height: number }) {
   const [ghost, setGhost] = useState<Ghost | null>(null);
   const status = useGameStore((s) => s.status);
   const { ui } = useT();
+  const vip = useShopStore((s) => s.entitlements.vip);
+  const skin = skinById(
+    effectiveSkin(
+      usePlayerStore((s) => s.bagSkin),
+      usePlayerStore((s) => s.ownedSkins),
+      vip,
+    ),
+  );
 
   // The desk cat: on cat levels she curls up on a desk item shortly after the
   // first move and stays until petted.
@@ -182,7 +193,7 @@ export function Board({ width, height }: { width: number; height: number }) {
             },
           ]}
         />
-        <BagView layout={layout} level={level} palette={palette} />
+        <BagView layout={layout} level={level} palette={palette} skin={skin} />
         {shownGhost ? (
           <GhostPreview
             cells={shownGhost.cells}

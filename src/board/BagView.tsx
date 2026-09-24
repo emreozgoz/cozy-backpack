@@ -11,19 +11,25 @@ import {
 import { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 
+import { BagPattern } from '@/art/bagSkins';
+import type { BagSkin } from '@/data/themes';
 import type { LevelDef } from '@/game/types';
 import type { Palette } from '@/ui/tokens';
 
 import type { BoardLayout } from './layout';
 
 interface Props {
+  skin: BagSkin;
   layout: BoardLayout;
   level: LevelDef;
   palette: Palette;
 }
 
 /** Static bag body: fabric, zipper band, and a faint dashed grid per compartment. */
-export function BagView({ layout, level, palette }: Props) {
+export function BagView({ layout, level, palette, skin }: Props) {
+  // The chosen bag pattern colours the fabric; the grid stays calm and light.
+  const bodyColor = palette.isDark ? skin.body.dark : skin.body.light;
+  const insideColor = palette.isDark ? skin.inside.dark : skin.inside.light;
   const { bag, cell, compartments } = layout;
 
   const grid = useMemo(() => {
@@ -58,7 +64,7 @@ export function BagView({ layout, level, palette }: Props) {
         style="stroke"
         strokeWidth={cell * 0.2}
         strokeCap="round"
-        color={shade(palette.bagBody)}
+        color={shade(bodyColor)}
       />
       {/* body */}
       <Group transform={[{ translateY: 6 }]} opacity={0.16}>
@@ -68,9 +74,19 @@ export function BagView({ layout, level, palette }: Props) {
         <LinearGradient
           start={vec(0, bag.y)}
           end={vec(0, bag.y + bag.h)}
-          colors={[palette.bagBody, shade(palette.bagBody)]}
+          colors={[bodyColor, shade(bodyColor)]}
         />
       </RoundedRect>
+      <BagPattern
+        skin={skin}
+        x={bag.x}
+        y={bag.y}
+        w={bag.w}
+        h={bag.h}
+        r={cell * 0.6}
+        step={cell * 0.9}
+        isDark={palette.isDark}
+      />
       {/* compartments (the zipper itself is drawn by <Zipper>) */}
       {compartments.map((f) => {
         const isPocket = level.bag.compartments.find((c) => c.id === f.id)?.kind !== 'main';
@@ -86,7 +102,7 @@ export function BagView({ layout, level, palette }: Props) {
                   width={f.cols * cell + pad * 2}
                   height={f.rows * cell + pad * 2}
                   r={cell * 0.3}
-                  color={shade(palette.bagBody)}
+                  color={shade(bodyColor)}
                 />
                 <RoundedRect
                   x={f.x - pad + 4}
@@ -108,7 +124,7 @@ export function BagView({ layout, level, palette }: Props) {
               width={f.cols * cell + 6}
               height={f.rows * cell + 6}
               r={cell * 0.25}
-              color={palette.bagInside}
+              color={insideColor}
             />
           </Group>
         );
@@ -124,7 +140,7 @@ export function BagView({ layout, level, palette }: Props) {
           width={cell - 6}
           height={cell - 6}
           r={8}
-          color={palette.bagBody}
+          color={bodyColor}
         />
       ))}
     </Canvas>

@@ -17,7 +17,9 @@ import { getLevel } from '@/data/levels';
 import { dailyId } from '@/game/daily';
 import { dayKey } from '@/game/economy';
 import { useT } from '@/i18n';
-import { nextToPlay, totalStars, usePlayerStore } from '@/store/usePlayerStore';
+import { skinById } from '@/data/themes';
+import { effectiveRoom, effectiveSkin, nextToPlay, totalStars, usePlayerStore } from '@/store/usePlayerStore';
+import { useShopStore } from '@/store/useShopStore';
 import { Chip, Coin, RoundButton, SoftButton, StarGlyph } from '@/ui/kit';
 import { radius, usePalette } from '@/ui/tokens';
 import { Text } from '@/ui/Text';
@@ -33,6 +35,10 @@ export default function Home() {
   const buttons = usePlayerStore((s) => s.buttons);
   const hints = usePlayerStore((s) => s.hints);
   const room = usePlayerStore((s) => s.room);
+  const ownedDecor = usePlayerStore((s) => s.ownedDecor);
+  const ownedSkins = usePlayerStore((s) => s.ownedSkins);
+  const bagSkin = usePlayerStore((s) => s.bagSkin);
+  const vip = useShopStore((s) => s.entitlements.vip);
   const dailyPuzzle = usePlayerStore((s) => s.dailyPuzzle);
   const canClaim = usePlayerStore((s) => s.dailyReward.lastClaim !== dayKey());
   const [size, setSize] = useState<{ w: number; h: number } | null>(null);
@@ -65,7 +71,8 @@ export default function Home() {
             <RoomScene
               w={size.w}
               h={size.h}
-              room={room}
+              room={effectiveRoom(room, ownedDecor, vip)}
+              skin={skinById(effectiveSkin(bagSkin, ownedSkins, vip))}
               isDark={palette.isDark}
               daylight={daylightFor(new Date().getHours(), palette.isDark)}
             />

@@ -2,6 +2,8 @@
 // `fallbackPrice` is only shown in mock mode (Expo Go / no store keys);
 // real prices always come from the store, localized for the player.
 
+import type { ThemeId } from '@/data/themes';
+
 export type ProductId =
   | 'cb.removeads'
   | 'cb.starter'
@@ -9,17 +11,25 @@ export type ProductId =
   | 'cb.hints.30'
   | 'cb.hints.80'
   | 'cb.vip.monthly'
-  | 'cb.vip.yearly';
+  | 'cb.vip.yearly'
+  | 'cb.theme.autumn'
+  | 'cb.theme.sweets'
+  | 'cb.theme.bundle';
 
 export type ProductKind = 'consumable' | 'nonConsumable' | 'subscription';
 
 /** RevenueCat entitlement identifiers. */
-export const ENTITLEMENTS = { vip: 'vip', noAds: 'no_ads' } as const;
+export const ENTITLEMENTS = {
+  vip: 'vip',
+  noAds: 'no_ads',
+  themes: { autumn: 'theme_autumn', sweets: 'theme_sweets' },
+} as const;
 
 export interface Grant {
   hints?: number;
   buttons?: number;
   noAds?: boolean;
+  themes?: ThemeId[];
 }
 
 export interface ProductDef {
@@ -43,6 +53,14 @@ export const PRODUCTS: ProductDef[] = [
   { id: 'cb.hints.10', kind: 'consumable', grant: { hints: 10 }, fallbackPrice: '$0.99' },
   { id: 'cb.hints.30', kind: 'consumable', grant: { hints: 30 }, fallbackPrice: '$2.49' },
   { id: 'cb.hints.80', kind: 'consumable', grant: { hints: 80 }, fallbackPrice: '$4.99' },
+  { id: 'cb.theme.autumn', kind: 'nonConsumable', grant: { themes: ['autumn'] }, fallbackPrice: '$1.99' },
+  { id: 'cb.theme.sweets', kind: 'nonConsumable', grant: { themes: ['sweets'] }, fallbackPrice: '$1.99' },
+  {
+    id: 'cb.theme.bundle',
+    kind: 'nonConsumable',
+    grant: { themes: ['autumn', 'sweets'] },
+    fallbackPrice: '$2.99',
+  },
   { id: 'cb.vip.monthly', kind: 'subscription', grant: {}, fallbackPrice: '$2.99', period: 'month' },
   {
     id: 'cb.vip.yearly',
@@ -56,6 +74,7 @@ export const PRODUCTS: ProductDef[] = [
 
 export const HINT_PACKS: ProductId[] = ['cb.hints.10', 'cb.hints.30', 'cb.hints.80'];
 export const VIP_PLANS: ProductId[] = ['cb.vip.yearly', 'cb.vip.monthly'];
+export const THEME_PACKS: ProductId[] = ['cb.theme.autumn', 'cb.theme.sweets', 'cb.theme.bundle'];
 
 /** Hints VIP members get every day with the daily gift. */
 export const VIP_DAILY_HINTS = 3;

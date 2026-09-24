@@ -11,8 +11,11 @@ import {
 } from '@shopify/react-native-skia';
 
 import type { DecorSlot } from '@/data/decor';
+import { BAG_SKINS, type BagSkin } from '@/data/themes';
 
-import { shade } from '../color';
+import { BagPattern } from '../bagSkins';
+
+import { luminance, shade } from '../color';
 import { Face } from '../primitives/Face';
 
 import { roomLayout, type Daylight, type RoomLayout } from './layout';
@@ -35,10 +38,11 @@ interface Props {
   room: Record<DecorSlot, string>;
   isDark: boolean;
   daylight: Daylight;
-  /** Next level's weekday label is drawn by React; this only draws the scene. */
+  /** Bag pattern for the backpack on the desk. */
+  skin?: BagSkin;
 }
 
-export function RoomScene({ w, h, room, isDark, daylight }: Props) {
+export function RoomScene({ w, h, room, isDark, daylight, skin = BAG_SKINS[0] }: Props) {
   const L = roomLayout(w, h);
   const night = daylight === 'night';
   const wall = isDark ? '#3A2F42' : '#FBE9DA';
@@ -71,7 +75,7 @@ export function RoomScene({ w, h, room, isDark, daylight }: Props) {
       <Desk L={L} isDark={isDark} />
       <Lamp L={L} id={room.lamp} on={night || daylight === 'evening'} />
       <PencilCup L={L} />
-      <Backpack L={L} ink={ink} isDark={isDark} />
+      <Backpack L={L} ink={ink} isDark={isDark} skin={skin} />
       <Plant L={L} id={room.plant} ink={ink} />
       {night ? <Rect x={0} y={0} width={w} height={h} color="rgba(20,16,40,0.18)" /> : null}
     </Group>
@@ -95,7 +99,14 @@ function Window({ L, daylight, curtain }: { L: RoomLayout; daylight: Daylight; c
   const [top, bottom] = SKY[daylight];
   const frame = '#FFFFFF';
   const curtainColor =
-    curtain === 'curtain_lavender' ? '#CDB4F0' : curtain === 'curtain_butter' ? '#FFE29A' : '#BDE7C9';
+    (
+      {
+        curtain_lavender: '#CDB4F0',
+        curtain_butter: '#FFE29A',
+        curtain_autumn: '#E8A87C',
+        curtain_floral: '#F7C6D3',
+      } as Record<string, string>
+    )[curtain] ?? '#BDE7C9';
   const cw = w * 0.2;
   return (
     <Group>
@@ -157,17 +168,44 @@ function Window({ L, daylight, curtain }: { L: RoomLayout; daylight: Daylight; c
       {[x - 12 * u, x + w - cw + 12 * u].map((cx, i) => (
         <Group key={i}>
           <RoundedRect x={cx} y={y - 8 * u} width={cw} height={h + 26 * u} r={12 * u} color={curtainColor} />
-          {curtain === 'curtain_butter'
-            ? Array.from({ length: 6 }, (_, k) => (
-                <Circle
-                  key={k}
-                  cx={cx + cw * (k % 2 ? 0.65 : 0.35)}
-                  cy={y + (h * (k + 0.5)) / 6}
-                  r={2.6 * u}
-                  color="#FFFFFF"
-                  opacity={0.8}
-                />
-              ))
+          {curtain === 'curtain_butter' || curtain === 'curtain_autumn' || curtain === 'curtain_floral'
+            ? Array.from({ length: 6 }, (_, k) => {
+                const mx = cx + cw * (k % 2 ? 0.65 : 0.35);
+                const my = y + (h * (k + 0.5)) / 6;
+                if (curtain === 'curtain_autumn') {
+                  return (
+                    <Group
+                      key={k}
+                      transform={[{ translateX: mx }, { translateY: my }, { rotate: k % 2 ? 0.6 : -0.5 }]}
+                    >
+                      <Oval
+                        x={-5 * u}
+                        y={-2.4 * u}
+                        width={10 * u}
+                        height={4.8 * u}
+                        color={k % 3 ? '#F6C177' : '#C97B4F'}
+                      />
+                    </Group>
+                  );
+                }
+                if (curtain === 'curtain_floral') {
+                  return (
+                    <Group key={k}>
+                      {[0, 1, 2, 3, 4].map((p) => (
+                        <Circle
+                          key={p}
+                          cx={mx + Math.cos((p / 5) * Math.PI * 2) * 2.6 * u}
+                          cy={my + Math.sin((p / 5) * Math.PI * 2) * 2.6 * u}
+                          r={2 * u}
+                          color="#FFFFFF"
+                        />
+                      ))}
+                      <Circle cx={mx} cy={my} r={1.6 * u} color="#FFE29A" />
+                    </Group>
+                  );
+                }
+                return <Circle key={k} cx={mx} cy={my} r={2.6 * u} color="#FFFFFF" opacity={0.8} />;
+              })
             : null}
           <RoundedRect
             x={cx + cw * 0.15}
@@ -220,6 +258,56 @@ function WallArt({ L, id, isDark }: { L: RoomLayout; id: string; isDark: boolean
         />
         <Circle cx={cx} cy={cy} r={r} color="#F9B97C" />
         <Face cx={cx} cy={cy} size={r * 2} expression="happy" ink="#5B4636" blush="#F7A6A0" />
+      </Group>
+    );
+  } else if (id === 'wall_cupcake') {
+    const cx = x + w / 2;
+    const base = y + h * 0.86;
+    const cw = h * 0.5;
+    content = (
+      <Group>
+        {/* wrapper */}
+        <Path
+          path={`M ${cx - cw / 2} ${base - h * 0.3} L ${cx + cw / 2} ${base - h * 0.3} L ${cx + cw * 0.38} ${base} L ${cx - cw * 0.38} ${base} Z`}
+          color="#A8D8F0"
+        />
+        {/* frosting */}
+        <Circle cx={cx - cw * 0.25} cy={base - h * 0.36} r={cw * 0.28} color="#F7B6C8" />
+        <Circle cx={cx + cw * 0.25} cy={base - h * 0.36} r={cw * 0.28} color="#F7B6C8" />
+        <Circle cx={cx} cy={base - h * 0.5} r={cw * 0.32} color="#F7B6C8" />
+        <Circle cx={cx} cy={base - h * 0.74} r={cw * 0.1} color="#F79E89" />
+        <Face cx={cx} cy={base - h * 0.15} size={cw * 0.7} expression="happy" ink="#5B4636" blush="#F7A6A0" />
+      </Group>
+    );
+  } else if (id === 'wall_constellation') {
+    const pts: [number, number][] = [
+      [0.18, 0.62],
+      [0.34, 0.38],
+      [0.52, 0.5],
+      [0.7, 0.28],
+      [0.84, 0.56],
+    ];
+    content = (
+      <Group>
+        <RoundedRect
+          x={x + 3 * u}
+          y={y + 3 * u}
+          width={w - 6 * u}
+          height={h - 6 * u}
+          r={6 * u}
+          color="#3E4A78"
+        />
+        <Path
+          path={pts.map(([px, py], i) => `${i ? 'L' : 'M'} ${x + w * px} ${y + h * py}`).join(' ')}
+          style="stroke"
+          strokeWidth={1.5 * u}
+          color="rgba(255,255,255,0.5)"
+        />
+        {pts.map(([px, py], i) => (
+          <Circle key={i} cx={x + w * px} cy={y + h * py} r={(i % 2 ? 2.4 : 3.2) * u} color="#FFE29A" />
+        ))}
+        <Circle cx={x + w * 0.86} cy={y + h * 0.26} r={h * 0.1} color="#FFF3C4" />
+        <Circle cx={x + w * 0.89} cy={y + h * 0.22} r={h * 0.09} color="#3E4A78" />
       </Group>
     );
   } else {
@@ -347,7 +435,24 @@ function Lamp({ L, id, on }: { L: RoomLayout; id: string; on: boolean }) {
   const base = y + h;
   const glowAt = id === 'lamp_basic' ? vec(x + w * 0.62, y + h * 0.3) : vec(x + w / 2, y + h * 0.45);
   let body;
-  if (id === 'lamp_mushroom') {
+  if (id === 'lamp_candy') {
+    const cx = x + w / 2;
+    const cy = y + h * 0.36;
+    const r = w * 0.34;
+    body = (
+      <Group>
+        <RoundedRect x={cx - w * 0.04} y={cy} width={w * 0.08} height={h * 0.62} r={3} color="#FFFFFF" />
+        <Circle cx={cx} cy={cy} r={r} color="#F7B6C8" />
+        <Path
+          path={`M ${cx} ${cy} m ${-r * 0.15} 0 a ${r * 0.15} ${r * 0.15} 0 1 1 ${r * 0.3} 0 a ${r * 0.3} ${r * 0.3} 0 1 1 ${-r * 0.6} 0 a ${r * 0.45} ${r * 0.45} 0 1 1 ${r * 0.9} 0 a ${r * 0.6} ${r * 0.6} 0 1 1 ${-r * 1.2} 0`}
+          style="stroke"
+          strokeWidth={r * 0.14}
+          strokeCap="round"
+          color="#FFFFFF"
+        />
+      </Group>
+    );
+  } else if (id === 'lamp_mushroom') {
     body = (
       <Group>
         <RoundedRect
@@ -451,9 +556,9 @@ function PencilCup({ L }: { L: RoomLayout }) {
   );
 }
 
-function Backpack({ L, ink, isDark }: { L: RoomLayout; ink: string; isDark: boolean }) {
+function Backpack({ L, ink, isDark, skin }: { L: RoomLayout; ink: string; isDark: boolean; skin: BagSkin }) {
   const { x, y, w, h } = L.backpack;
-  const body = isDark ? '#B97F72' : '#F4B8A4';
+  const body = isDark ? skin.body.dark : skin.body.light;
   const dark = shade(body, -0.12);
   return (
     <Group>
@@ -468,6 +573,7 @@ function Backpack({ L, ink, isDark }: { L: RoomLayout; ink: string; isDark: bool
         <RoundedRect x={x} y={y} width={w} height={h} r={w * 0.26} color="#5B4636" />
       </Group>
       <RoundedRect x={x} y={y} width={w} height={h} r={w * 0.26} color={body} />
+      <BagPattern skin={skin} x={x} y={y} w={w} h={h} r={w * 0.26} step={w * 0.24} isDark={isDark} />
       <RoundedRect
         x={x + w * 0.1}
         y={y + h * 0.12}
@@ -499,7 +605,7 @@ function Backpack({ L, ink, isDark }: { L: RoomLayout; ink: string; isDark: bool
         cy={y + h * 0.38}
         size={w * 0.55}
         expression="idle"
-        ink={ink}
+        ink={luminance(body) < 0.35 ? '#FFF6EC' : ink}
         blush={isDark ? '#E38E88' : '#F7A6A0'}
       />
     </Group>
@@ -508,6 +614,47 @@ function Backpack({ L, ink, isDark }: { L: RoomLayout; ink: string; isDark: bool
 
 function Rug({ L, id, isDark }: { L: RoomLayout; id: string; isDark: boolean }) {
   const { cx, cy, rx, ry } = L.rug;
+  if (id === 'rug_leaf') {
+    const leaf = `M ${cx - rx} ${cy} Q ${cx} ${cy - ry * 2.2} ${cx + rx} ${cy} Q ${cx} ${cy + ry * 2.2} ${cx - rx} ${cy} Z`;
+    return (
+      <Group opacity={isDark ? 0.85 : 1}>
+        <Path path={leaf} color="#E8A87C" />
+        <Path
+          path={`M ${cx - rx * 0.85} ${cy} L ${cx + rx * 0.85} ${cy}`}
+          style="stroke"
+          strokeWidth={3 * L.u}
+          color="#C97B4F"
+        />
+        {[-0.5, -0.1, 0.3].map((t) => (
+          <Path
+            key={t}
+            path={`M ${cx + rx * t} ${cy} l ${rx * 0.18} ${-ry * 0.55} M ${cx + rx * t} ${cy} l ${rx * 0.18} ${ry * 0.55}`}
+            style="stroke"
+            strokeWidth={2 * L.u}
+            color="#C97B4F"
+          />
+        ))}
+      </Group>
+    );
+  }
+  if (id === 'rug_moon') {
+    return (
+      <Group opacity={isDark ? 0.9 : 1}>
+        <Oval x={cx - rx} y={cy - ry} width={rx * 2} height={ry * 2} color="#4B5A8C" />
+        <Circle cx={cx - rx * 0.35} cy={cy} r={ry * 0.6} color="#FFF3C4" />
+        <Circle cx={cx - rx * 0.28} cy={cy - ry * 0.12} r={ry * 0.52} color="#4B5A8C" />
+        {[0.1, 0.35, 0.6, 0.25, 0.5].map((t, i) => (
+          <Circle
+            key={i}
+            cx={cx + rx * t}
+            cy={cy + ry * (i % 2 ? 0.3 : -0.35)}
+            r={2.2 * L.u}
+            color="#FFE29A"
+          />
+        ))}
+      </Group>
+    );
+  }
   if (id === 'rug_rainbow') {
     const colors = ['#F79E89', '#FFE29A', '#BDE7C9', '#A8D8F0', '#CDB4F0'];
     return (
@@ -589,6 +736,31 @@ function Plant({ L, id, ink }: { L: RoomLayout; id: string; ink: string }) {
       />
     </Group>
   );
+  if (id === 'plant_flowers') {
+    const tulip = (tx: number, top: number, color: string) => (
+      <Group key={tx}>
+        <Path
+          path={`M ${tx} ${potTop} L ${tx} ${top}`}
+          style="stroke"
+          strokeWidth={3 * L.u}
+          strokeCap="round"
+          color="#8FC8A2"
+        />
+        <Path
+          path={`M ${tx - w * 0.09} ${top - h * 0.02} L ${tx - w * 0.09} ${top - h * 0.12} L ${tx - w * 0.03} ${top - h * 0.07} L ${tx} ${top - h * 0.13} L ${tx + w * 0.03} ${top - h * 0.07} L ${tx + w * 0.09} ${top - h * 0.12} L ${tx + w * 0.09} ${top - h * 0.02} Q ${tx} ${top + h * 0.05} ${tx - w * 0.09} ${top - h * 0.02} Z`}
+          color={color}
+        />
+      </Group>
+    );
+    return (
+      <Group>
+        {tulip(x + w * 0.32, potTop - h * 0.32, '#F79E89')}
+        {tulip(x + w * 0.5, potTop - h * 0.44, '#F7B6C8')}
+        {tulip(x + w * 0.68, potTop - h * 0.3, '#FFE29A')}
+        {pot}
+      </Group>
+    );
+  }
   if (id === 'plant_cactus') {
     return (
       <Group>

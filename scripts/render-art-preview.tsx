@@ -114,7 +114,19 @@ async function main() {
   } as const;
   const RW = 390;
   const RH = 720;
+  const { BAG_SKINS, THEMES } = require('../src/data/themes') as typeof import('../src/data/themes');
+  const themed = (id: string) => {
+    const t = THEMES.find((x) => x.id === id)!;
+    const room = { ...DEFAULT_ROOM } as Record<string, string>;
+    for (const d of t.decor) room[d.split('_')[0]] = d;
+    return { room: room as typeof DEFAULT_ROOM, skin: BAG_SKINS.find((s) => s.id === t.bagSkin) };
+  };
   const rooms = [
+    { ...themed('autumn'), isDark: false, daylight: 'evening' as const },
+    { ...themed('sweets'), isDark: false, daylight: 'day' as const },
+    { ...themed('starry'), isDark: true, daylight: 'night' as const },
+    { ...themed('garden'), isDark: false, daylight: 'morning' as const },
+
     { room: DEFAULT_ROOM, isDark: false, daylight: 'morning' as const },
     {
       room: { ...DEFAULT_ROOM, plant: 'plant_cactus', wall: 'wall_rainbow', curtain: 'curtain_lavender' },
@@ -130,7 +142,7 @@ async function main() {
     <Group>
       {rooms.map((r, i) => (
         <Group key={i} transform={[{ translateX: i * (RW + 10) }]}>
-          <RoomScene w={RW} h={RH} room={r.room} isDark={r.isDark} daylight={r.daylight} />
+          <RoomScene w={RW} h={RH} room={r.room} isDark={r.isDark} daylight={r.daylight} skin={'skin' in r ? r.skin : undefined} />
         </Group>
       ))}
     </Group>,

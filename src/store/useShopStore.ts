@@ -90,17 +90,23 @@ export const useShopStore = create<ShopState>()(
         const player = usePlayerStore.getState();
         if (def.grant.hints) player.addHints(def.grant.hints);
         if (def.grant.buttons) player.addButtons(def.grant.buttons);
+        if (def.grant.themes) player.unlockThemes(def.grant.themes);
         if (oneTime) set({ granted: [...get().granted, id] });
       };
 
       // Ad-free is permanent only through a one-time product (remove ads, starter
       // pack). VIP's ad-free follows the subscription and ends with it.
       const ownsNoAdsProduct = () => get().granted.some((id) => productById(id).grant.noAds);
-      const mergeEntitlements = (e: Entitlements) =>
-        set({ entitlements: { vip: e.vip, noAds: e.noAds || ownsNoAdsProduct() } });
+      const mergeEntitlements = (e: Entitlements) => {
+        // Theme packs are one-time purchases: once seen (bought or restored)
+        // they stay unlocked in the player's collection.
+        const themes = [...new Set([...get().entitlements.themes, ...e.themes])];
+        if (e.themes.length) usePlayerStore.getState().unlockThemes(e.themes);
+        set({ entitlements: { vip: e.vip, noAds: e.noAds || ownsNoAdsProduct(), themes } });
+      };
 
       return {
-        entitlements: { vip: false, noAds: false },
+        entitlements: { vip: false, noAds: false, themes: [] },
         granted: [],
         counters: initialCounters,
         vipHintsDay: null,
@@ -140,6 +146,15 @@ export const useShopStore = create<ShopState>()(
               grant(id);
               if (result.entitlements) mergeEntitlements(result.entitlements);
               if (productById(id).grant.noAds) set({ entitlements: { ...get().entitlements, noAds: true } });
+              const themes = productById(id).grant.themes;
+              if (themes) {
+                set({
+                  entitlements: {
+                    ...get().entitlements,
+                    themes: [...new Set([...get().entitlements.themes, ...themes])],
+                  },
+                });
+              }
             }
             return result.outcome;
           } finally {
@@ -204,7 +219,18 @@ export const useShopStore = create<ShopState>()(
     },
     {
       name: 'cozy-backpack/shop',
-      version: 1,
+      version: 2,
+      migrate: (persisted) => persisted as ShopState,
+      // Older saves lack newer fields (e.g. entitlements.themes): merge key by key.
+      merge: (persisted, current) => {
+        const saved = (persisted ?? {}) as Partial<ShopState>;
+        return {
+          ...current,
+          ...saved,
+          entitlements: { ...current.entitlements, ...saved.entitlements },
+          counters: { ...current.counters, ...saved.counters },
+        };
+      },
       storage: createJSONStorage(() => kvStorage),
       partialize: (s) => ({
         entitlements: s.entitlements,

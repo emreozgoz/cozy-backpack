@@ -1,4 +1,5 @@
 import type { DecorSlot } from '@/data/decor';
+import type { BagSkinId, ThemeId } from '@/data/themes';
 import type { Issue } from '@/game/rules';
 import type { Subject, TipKey, Weekday } from '@/game/types';
 
@@ -101,6 +102,30 @@ const decor: Record<string, string> = {
   rug_round: 'Yuvarlak halı',
   rug_rainbow: 'Gökkuşağı halı',
   rug_cloud: 'Bulut halı',
+  curtain_autumn: 'Yapraklı perde',
+  rug_leaf: 'Yaprak halı',
+  wall_cupcake: 'Cupcake posteri',
+  lamp_candy: 'Lolipop lamba',
+  wall_constellation: 'Takımyıldız posteri',
+  rug_moon: 'Ay halısı',
+  curtain_floral: 'Çiçekli perde',
+  plant_flowers: 'Lale saksısı',
+};
+
+const themes: Record<ThemeId, string> = {
+  autumn: 'Sonbahar',
+  sweets: 'Şekerleme',
+  starry: 'Yıldızlı Gece',
+  garden: 'Bahçe',
+};
+
+const skins: Record<BagSkinId, string> = {
+  peach: 'Şeftali',
+  sky: 'Gök mavisi',
+  autumn: 'Sonbahar yaprakları',
+  candy: 'Şeker serpintisi',
+  starry: 'Yıldızlı gece',
+  garden: 'Bahar bahçesi',
 };
 
 const ui = {
@@ -159,6 +184,9 @@ const ui = {
 
   // settings
   sound: 'Ses efektleri',
+  music: 'Müzik',
+  leftHanded: 'Solak modu',
+  leftHandedHint: 'Fermuar sağdan sola çekilir',
   haptics: 'Titreşim',
   language: 'Dil',
   languageSystem: 'Sistem',
@@ -168,6 +196,15 @@ const ui = {
   resetDone: 'İlerleme sıfırlandı.',
   cancel: 'Vazgeç',
   version: (v: string) => `Sürüm ${v}`,
+
+  // themes
+  bagTab: 'Çanta',
+  themesTitle: 'Temalar',
+  themeIncludes: 'Çanta deseni + 2 oda dekoru',
+  bundleTitle: 'İki tema bir arada',
+  packLabel: 'Tema paketi',
+  vipLabel: 'VIP',
+  getTheme: 'Temaya bak',
 
   // shop
   shop: 'Dükkân',
@@ -179,7 +216,7 @@ const ui = {
   hintPacks: 'İpucu paketleri',
   hintPack: (n: number) => `${n} ipucu`,
   vipTitle: 'VIP Kulübü',
-  vipBody: 'Reklamsız oyun, her gün 3 ipucu ve özel temalar.',
+  vipBody: 'Reklamsız oyun, her gün 3 ipucu ve VIP’e özel iki tema.',
   vipActive: 'VIP üyesisin 💛',
   adFreeActive: 'Reklamsız ✓',
   owned: 'Alındı',
@@ -192,7 +229,12 @@ const ui = {
 
   // VIP paywall
   vipHeadline: 'Çantan hep hazır olsun',
-  vipBenefits: ['Hiç reklam yok', 'Her gün 3 ipucu', 'Her ay yeni özel tema', 'Oyunun büyümesine destek'],
+  vipBenefits: [
+    'Hiç reklam yok',
+    'Her gün 3 ipucu',
+    'VIP’e özel iki tema: Yıldızlı Gece ve Bahçe',
+    'Oyunun büyümesine destek',
+  ],
   planYearly: 'Yıllık',
   planMonthly: 'Aylık',
   perYear: (price: string) => `${price} / yıl`,
@@ -227,6 +269,18 @@ const ui = {
   petCat: 'Kediyi sev',
 };
 
-export const tr = { subjects, weekdays, tips, surprises, stuckReasons, weekNames, slots, decor, ui };
+export const tr = {
+  subjects,
+  weekdays,
+  tips,
+  surprises,
+  stuckReasons,
+  weekNames,
+  slots,
+  decor,
+  themes,
+  skins,
+  ui,
+};
 
 export type Strings = typeof tr;

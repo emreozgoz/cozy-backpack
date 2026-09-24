@@ -99,6 +99,30 @@ export const en: Strings = {
     rug_round: 'Round rug',
     rug_rainbow: 'Rainbow rug',
     rug_cloud: 'Cloud rug',
+    curtain_autumn: 'Leafy curtains',
+    rug_leaf: 'Leaf rug',
+    wall_cupcake: 'Cupcake poster',
+    lamp_candy: 'Lollipop lamp',
+    wall_constellation: 'Constellation poster',
+    rug_moon: 'Moon rug',
+    curtain_floral: 'Floral curtains',
+    plant_flowers: 'Tulip pot',
+  },
+
+  themes: {
+    autumn: 'Autumn',
+    sweets: 'Sweets',
+    starry: 'Starry Night',
+    garden: 'Garden',
+  },
+
+  skins: {
+    peach: 'Peach',
+    sky: 'Sky blue',
+    autumn: 'Autumn leaves',
+    candy: 'Sprinkles',
+    starry: 'Starry night',
+    garden: 'Spring garden',
   },
 
   ui: {
@@ -150,6 +174,9 @@ export const en: Strings = {
     notEnough: 'Not enough buttons',
 
     sound: 'Sound effects',
+    music: 'Music',
+    leftHanded: 'Left-handed mode',
+    leftHandedHint: 'The zipper pulls from right to left',
     haptics: 'Vibration',
     language: 'Language',
     languageSystem: 'System',
@@ -160,6 +187,14 @@ export const en: Strings = {
     cancel: 'Cancel',
     version: (v: string) => `Version ${v}`,
 
+    bagTab: 'Bag',
+    themesTitle: 'Themes',
+    themeIncludes: 'Bag pattern + 2 room decor pieces',
+    bundleTitle: 'Both themes together',
+    packLabel: 'Theme pack',
+    vipLabel: 'VIP',
+    getTheme: 'See theme',
+
     shop: 'Shop',
     shopTestMode: 'Test mode: purchases are simulated and nothing is charged.',
     removeAdsTitle: 'Remove ads',
@@ -169,7 +204,7 @@ export const en: Strings = {
     hintPacks: 'Hint packs',
     hintPack: (n: number) => `${n} hints`,
     vipTitle: 'VIP Club',
-    vipBody: 'Ad-free play, 3 hints every day and exclusive themes.',
+    vipBody: 'Ad-free play, 3 hints every day and two VIP-only themes.',
     vipActive: "You're a VIP 💛",
     adFreeActive: 'Ad-free ✓',
     owned: 'Owned',
@@ -184,7 +219,7 @@ export const en: Strings = {
     vipBenefits: [
       'No ads, ever',
       '3 hints every day',
-      'A new exclusive theme every month',
+      'Two VIP-only themes: Starry Night & Garden',
       'Help the game grow',
     ],
     planYearly: 'Yearly',

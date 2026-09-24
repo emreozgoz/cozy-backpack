@@ -1,3 +1,5 @@
+import type { ThemeId } from '@/data/themes';
+
 import { isExpoGo, revenueCatKey } from './config';
 import { ENTITLEMENTS, PRODUCTS, productById, type ProductId } from './products';
 
@@ -10,6 +12,8 @@ export interface StoreProduct {
 export interface Entitlements {
   vip: boolean;
   noAds: boolean;
+  /** Theme packs owned (non-consumables, restorable). */
+  themes: ThemeId[];
 }
 
 export type PurchaseOutcome = 'ok' | 'cancelled' | 'pending' | 'failed';
@@ -36,7 +40,10 @@ type RCProduct = import('react-native-purchases').PurchasesStoreProduct;
 function toEntitlements(info: RCCustomerInfo): Entitlements {
   const active = info.entitlements.active;
   const vip = !!active[ENTITLEMENTS.vip];
-  return { vip, noAds: vip || !!active[ENTITLEMENTS.noAds] };
+  const themes = (Object.entries(ENTITLEMENTS.themes) as [ThemeId, string][])
+    .filter(([, key]) => !!active[key])
+    .map(([id]) => id);
+  return { vip, noAds: vip || !!active[ENTITLEMENTS.noAds], themes };
 }
 
 function revenueCat(Purchases: RC, apiKey: string): PurchaseService {
@@ -94,7 +101,7 @@ function revenueCat(Purchases: RC, apiKey: string): PurchaseService {
 // ---- Mock (Expo Go, no keys) ---------------------------------------------
 
 function mock(): PurchaseService {
-  let current: Entitlements = { vip: false, noAds: false };
+  let current: Entitlements = { vip: false, noAds: false, themes: [] };
   const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
   return {
     mode: 'mock',
@@ -110,6 +117,7 @@ function mock(): PurchaseService {
       current = {
         vip: current.vip || def.kind === 'subscription',
         noAds: current.noAds || def.kind === 'subscription' || !!def.grant.noAds,
+        themes: [...new Set([...current.themes, ...(def.grant.themes ?? [])])],
       };
       return { outcome: 'ok', entitlements: current };
     },

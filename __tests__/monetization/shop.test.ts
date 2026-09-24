@@ -32,7 +32,7 @@ const player = () => usePlayerStore.getState();
 beforeEach(async () => {
   player().resetProgress();
   useShopStore.setState({
-    entitlements: { vip: false, noAds: false },
+    entitlements: { vip: false, noAds: false, themes: [] },
     granted: [],
     counters: {
       ...shop().counters,
@@ -82,7 +82,7 @@ describe('purchases (mock store)', () => {
     await shop().buy('cb.vip.monthly');
     expect(shop().entitlements.noAds).toBe(true);
     // the store reports the subscription has lapsed
-    useShopStore.setState({ entitlements: { vip: false, noAds: false } });
+    useShopStore.setState({ entitlements: { vip: false, noAds: false, themes: [] } });
     expect(shop().entitlements.noAds).toBe(false);
     await shop().buy('cb.removeads');
     expect(shop().entitlements.noAds).toBe(true);
@@ -91,7 +91,7 @@ describe('purchases (mock store)', () => {
   it('VIP gives daily hints once a day', async () => {
     expect(shop().claimVipHints('2026-09-21')).toBe(0);
     await shop().buy('cb.vip.yearly');
-    expect(shop().entitlements).toEqual({ vip: true, noAds: true });
+    expect(shop().entitlements).toMatchObject({ vip: true, noAds: true });
     expect(shop().claimVipHints('2026-09-21')).toBe(3);
     expect(shop().claimVipHints('2026-09-21')).toBe(0);
   });
