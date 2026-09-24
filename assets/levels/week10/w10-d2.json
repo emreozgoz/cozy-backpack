@@ -1,0 +1,39 @@
+{
+  "id": "w10-d2",
+  "week": 10,
+  "day": "tue",
+  "schedule": ["report", "gym"],
+  "bag": {
+    "type": "briefcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 4,
+        "blocked": [
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "id": "sleeve",
+        "kind": "sleeve",
+        "cols": 3,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "laptop", "role": "required" },
+    { "ref": "report_folder", "role": "required" },
+    { "ref": "gym_kit", "role": "required" },
+    { "ref": "thermos", "role": "required" },
+    { "ref": "charger", "role": "required" },
+    { "ref": "umbrella", "role": "required", "appearsAfter": 4 },
+    { "ref": "comic", "role": "distractor" },
+    { "ref": "game_console", "role": "distractor" }
+  ]
+}

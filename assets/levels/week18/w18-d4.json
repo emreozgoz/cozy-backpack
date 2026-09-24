@@ -1,0 +1,37 @@
+{
+  "id": "w18-d4",
+  "week": 18,
+  "day": "thu",
+  "schedule": ["beach", "city", "hiking"],
+  "cat": true,
+  "bag": {
+    "type": "suitcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 4
+      },
+      {
+        "id": "pouch",
+        "kind": "pouch",
+        "cols": 2,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "straw_hat", "role": "required" },
+    { "ref": "camera", "role": "required" },
+    { "ref": "hiking_boots", "role": "required" },
+    { "ref": "guidebook", "role": "required" },
+    { "ref": "beach_towel", "role": "required" },
+    { "ref": "tshirt", "role": "required" },
+    { "ref": "sunscreen", "role": "required" },
+    { "ref": "shampoo", "role": "required" },
+    { "ref": "swim_ring", "role": "distractor" },
+    { "ref": "sand_bucket", "role": "distractor" },
+    { "ref": "magazine", "role": "distractor" }
+  ]
+}

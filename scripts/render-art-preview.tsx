@@ -102,6 +102,56 @@ async function main() {
   fs.writeFileSync(out, image.encodeToBytes());
   console.log(`✔ wrote ${path.relative(process.cwd(), out)} (${defs.length} items)`);
 
+  // ---- bags ------------------------------------------------------------
+  const { BagSkia } = require('../src/art/BagSkia') as typeof import('../src/art/BagSkia');
+  const { BAG_SKINS: SKINS } = require('../src/data/themes') as typeof import('../src/data/themes');
+  type BagFrame = import('../src/art/BagSkia').BagFrame;
+  const BC = 40;
+  const bagTypes = [
+    { type: 'backpack', pockets: [{ kind: 'side', cols: 1, rows: 2 }] },
+    { type: 'briefcase', pockets: [{ kind: 'sleeve', cols: 3, rows: 2 }] },
+    { type: 'college', pockets: [{ kind: 'front', cols: 2, rows: 1 }, { kind: 'side', cols: 1, rows: 2 }] },
+    { type: 'suitcase', pockets: [{ kind: 'pouch', cols: 2, rows: 2 }] },
+  ] as const;
+  const BW = 420;
+  const BH = 440;
+  const bagSurface = makeOffscreenSurface(BW * 4, BH * 2);
+  const bagScene = (
+    <Group>
+      <Rect x={0} y={0} width={BW * 4} height={BH} color="#FFF6EC" />
+      <Rect x={0} y={BH} width={BW * 4} height={BH} color="#241E2B" />
+      {[false, true].map((isDark) =>
+        bagTypes.map((b, i) => {
+          const gx = i * BW + 30;
+          const gy = (isDark ? BH : 0) + 110;
+          const frames: BagFrame[] = [{ id: 'main', kind: 'main', x: gx, y: gy, cols: 5, rows: 6, blocked: [[0, 0]] }];
+          let py = gy;
+          for (const p of b.pockets) {
+            frames.push({ id: p.kind, kind: p.kind, x: gx + 5.6 * BC, y: py, cols: p.cols, rows: p.rows, blocked: [] });
+            py += (p.rows + 0.6) * BC;
+          }
+          const cols = 5.6 + Math.max(...b.pockets.map((p) => p.cols));
+          const bag = { x: gx - 0.45 * BC, y: gy - 1.25 * BC, w: (cols + 0.9) * BC, h: (6 + 1.7) * BC };
+          return (
+            <BagSkia
+              key={`${b.type}${isDark}`}
+              type={b.type}
+              skin={SKINS[0]}
+              bag={bag}
+              cell={BC}
+              frames={frames}
+              isDark={isDark}
+              gridLine={isDark ? 'rgba(245,233,220,0.12)' : 'rgba(91,70,54,0.14)'}
+            />
+          );
+        }),
+      )}
+    </Group>
+  );
+  const bagImage = await drawOffscreen(bagSurface, bagScene);
+  fs.writeFileSync(path.resolve(__dirname, '../design/previews/bags.png'), bagImage.encodeToBytes());
+  console.log('✔ wrote design/previews/bags.png');
+
   // ---- room ------------------------------------------------------------
   const { RoomScene } = require('../src/art/room/RoomScene') as typeof import('../src/art/room/RoomScene');
   const { DEFAULT_ROOM } = require('../src/data/decor') as typeof import('../src/data/decor');
@@ -132,9 +182,10 @@ async function main() {
       room: { ...DEFAULT_ROOM, plant: 'plant_cactus', wall: 'wall_rainbow', curtain: 'curtain_lavender' },
       isDark: false,
       daylight: 'evening' as const,
+      bagType: 'briefcase' as const,
     },
-    { room: fancy, isDark: true, daylight: 'night' as const },
-    { room: { ...fancy, lamp: 'lamp_moon', rug: 'rug_cloud' }, isDark: false, daylight: 'day' as const },
+    { room: fancy, isDark: true, daylight: 'night' as const, bagType: 'college' as const },
+    { room: { ...fancy, lamp: 'lamp_moon', rug: 'rug_cloud' }, isDark: false, daylight: 'day' as const, bagType: 'suitcase' as const },
   ];
   const roomSurface = makeOffscreenSurface(RW * rooms.length + 10 * (rooms.length - 1), RH);
   const roomImage = await drawOffscreen(
@@ -142,7 +193,7 @@ async function main() {
     <Group>
       {rooms.map((r, i) => (
         <Group key={i} transform={[{ translateX: i * (RW + 10) }]}>
-          <RoomScene w={RW} h={RH} room={r.room} isDark={r.isDark} daylight={r.daylight} skin={'skin' in r ? r.skin : undefined} />
+          <RoomScene w={RW} h={RH} room={r.room} isDark={r.isDark} daylight={r.daylight} skin={'skin' in r ? r.skin : undefined} bagType={'bagType' in r ? r.bagType : undefined} />
         </Group>
       ))}
     </Group>,

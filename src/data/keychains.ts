@@ -10,7 +10,10 @@ export type KeychainId =
   | 'rainbow'
   | 'sun'
   | 'pencil'
-  | 'trophy';
+  | 'trophy'
+  | 'tie'
+  | 'mortarboard'
+  | 'plane';
 
 export interface PlayerStats {
   totalStars: number;
@@ -43,6 +46,10 @@ export const KEYCHAINS: Keychain[] = [
   { id: 'sun', goal: { kind: 'daily', count: 15 } },
   { id: 'pencil', goal: { kind: 'level', levelId: 'w06-d5' } },
   { id: 'trophy', goal: { kind: 'stars', count: 90 } },
+  // one for finishing each bag season
+  { id: 'tie', goal: { kind: 'level', levelId: 'w10-d5' } },
+  { id: 'mortarboard', goal: { kind: 'level', levelId: 'w14-d5' } },
+  { id: 'plane', goal: { kind: 'level', levelId: 'w18-d5' } },
 ];
 
 export function goalMet(goal: KeychainGoal, s: PlayerStats): boolean {

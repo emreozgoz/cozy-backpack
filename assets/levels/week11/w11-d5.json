@@ -1,0 +1,40 @@
+{
+  "id": "w11-d5",
+  "week": 11,
+  "day": "fri",
+  "schedule": ["history", "english", "gym"],
+  "tip": "finale",
+  "bag": {
+    "type": "college",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 5
+      },
+      {
+        "id": "front",
+        "kind": "front",
+        "cols": 2,
+        "rows": 1
+      },
+      {
+        "id": "side",
+        "kind": "side",
+        "cols": 1,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "book_history", "role": "required" },
+    { "ref": "book_english", "role": "required" },
+    { "ref": "gym_kit", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "coffee_cup", "role": "required" },
+    { "ref": "game_console", "role": "distractor" },
+    { "ref": "ball", "role": "distractor" }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "id": "w14-d3",
+  "week": 14,
+  "day": "wed",
+  "schedule": ["lab", "design"],
+  "bag": {
+    "type": "college",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 5,
+        "rows": 4
+      },
+      {
+        "id": "sleeve",
+        "kind": "sleeve",
+        "cols": 3,
+        "rows": 2
+      },
+      {
+        "id": "side",
+        "kind": "side",
+        "cols": 1,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "lab_coat", "role": "required" },
+    { "ref": "goggles", "role": "required" },
+    { "ref": "design_roll", "role": "required" },
+    { "ref": "laptop", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "coffee_cup", "role": "required" },
+    { "ref": "magazine", "role": "distractor" },
+    { "ref": "cards", "role": "distractor" }
+  ]
+}

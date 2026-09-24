@@ -1,0 +1,29 @@
+{
+  "id": "w17-d2",
+  "week": 17,
+  "day": "tue",
+  "schedule": ["hiking", "city"],
+  "tip": "souvenir",
+  "bag": {
+    "type": "suitcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 7,
+        "rows": 5
+      }
+    ]
+  },
+  "items": [
+    { "ref": "hiking_boots", "role": "required" },
+    { "ref": "camera", "role": "required" },
+    { "ref": "guidebook", "role": "required" },
+    { "ref": "sweater", "role": "required" },
+    { "ref": "thermos", "role": "required" },
+    { "ref": "toiletry_kit", "role": "required" },
+    { "ref": "souvenir", "role": "required", "appearsAfter": 4 },
+    { "ref": "sand_bucket", "role": "distractor" },
+    { "ref": "magazine", "role": "distractor" }
+  ]
+}

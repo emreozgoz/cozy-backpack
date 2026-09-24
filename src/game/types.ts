@@ -9,12 +9,41 @@ export interface Cell {
   y: number;
 }
 
-export type Subject =
-  'math' | 'turkish' | 'science' | 'life' | 'social' | 'history' | 'english' | 'art' | 'music' | 'pe';
+export const SUBJECTS = [
+  // school and university
+  'math',
+  'turkish',
+  'science',
+  'life',
+  'social',
+  'history',
+  'english',
+  'art',
+  'music',
+  'pe',
+  'lab',
+  // work (briefcase season)
+  'meeting',
+  'report',
+  'presentation',
+  'design',
+  'gym',
+  // holiday (suitcase season)
+  'beach',
+  'hiking',
+  'city',
+  'dinner',
+] as const;
+/** A timetable entry: a lesson, a work appointment or a holiday plan. */
+export type Subject = (typeof SUBJECTS)[number];
 
 export type Weekday = 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';
 
-export type CompartmentKind = 'main' | 'front' | 'side';
+/** 'sleeve' = padded laptop sleeve, 'pouch' = clear toiletry pouch for liquids. */
+export const COMPARTMENT_KINDS = ['main', 'front', 'side', 'sleeve', 'pouch'] as const;
+export type CompartmentKind = (typeof COMPARTMENT_KINDS)[number];
+
+export type BagType = 'backpack' | 'briefcase' | 'college' | 'suitcase';
 
 /** An item as defined in the catalog (items.json). */
 export interface ItemDef {
@@ -69,6 +98,19 @@ export const TIP_KEYS = [
   'library',
   'kit',
   'poster',
+  'briefcase',
+  'sleeve',
+  'thermos',
+  'umbrella',
+  'college',
+  'coffee',
+  'lab',
+  'portfolio',
+  'suitcase',
+  'liquids',
+  'folding',
+  'hat',
+  'souvenir',
 ] as const;
 export type TipKey = (typeof TIP_KEYS)[number];
 
@@ -87,7 +129,7 @@ export interface LevelDef {
   day: Weekday;
   schedule: Subject[];
   bag: {
-    type: 'backpack' | 'briefcase' | 'college' | 'suitcase';
+    type: BagType;
     compartments: CompartmentDef[];
   };
   items: LevelItemRef[];

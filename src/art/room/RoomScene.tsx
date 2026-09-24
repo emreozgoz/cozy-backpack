@@ -14,7 +14,9 @@ import type { DecorSlot } from '@/data/decor';
 import { BAG_SKINS, type BagSkin } from '@/data/themes';
 
 import type { KeychainId } from '@/data/keychains';
+import type { BagType } from '@/game/types';
 
+import { BAG_LOOKS } from '../BagSkia';
 import { BagPattern } from '../bagSkins';
 import { KeychainCharm } from '../keychains';
 
@@ -44,9 +46,20 @@ interface Props {
   /** Bag pattern for the backpack on the desk. */
   skin?: BagSkin;
   keychain?: KeychainId | null;
+  /** Bag waiting on the desk: the next level's bag type. */
+  bagType?: BagType;
 }
 
-export function RoomScene({ w, h, room, isDark, daylight, skin = BAG_SKINS[0], keychain }: Props) {
+export function RoomScene({
+  w,
+  h,
+  room,
+  isDark,
+  daylight,
+  skin = BAG_SKINS[0],
+  keychain,
+  bagType = 'backpack',
+}: Props) {
   const L = roomLayout(w, h);
   const night = daylight === 'night';
   const wall = isDark ? '#3A2F42' : '#FBE9DA';
@@ -79,7 +92,11 @@ export function RoomScene({ w, h, room, isDark, daylight, skin = BAG_SKINS[0], k
       <Desk L={L} isDark={isDark} />
       <Lamp L={L} id={room.lamp} on={night || daylight === 'evening'} />
       <PencilCup L={L} />
-      <Backpack L={L} ink={ink} isDark={isDark} skin={skin} />
+      {bagType === 'backpack' ? (
+        <Backpack L={L} ink={ink} isDark={isDark} skin={skin} />
+      ) : (
+        <DeskBag L={L} ink={ink} isDark={isDark} type={bagType} />
+      )}
       {keychain ? (
         <KeychainCharm
           id={keychain}
@@ -620,6 +637,95 @@ function Backpack({ L, ink, isDark, skin }: { L: RoomLayout; ink: string; isDark
         ink={luminance(body) < 0.35 ? '#FFF6EC' : ink}
         blush={isDark ? '#E38E88' : '#F7A6A0'}
       />
+    </Group>
+  );
+}
+
+/** The work, campus and holiday bags as they wait on the desk. */
+function DeskBag({ L, ink, isDark, type }: { L: RoomLayout; ink: string; isDark: boolean; type: Exclude<BagType, 'backpack'> }) {
+  const { x, y, w, h } = L.backpack;
+  const look = BAG_LOOKS[type];
+  const body = isDark ? look.body.dark : look.body.light;
+  const dark = shade(body, -0.16);
+  const face = (cy: number, size: number) => (
+    <Face
+      cx={x + w / 2}
+      cy={cy}
+      size={size}
+      expression="idle"
+      ink={luminance(body) < 0.35 ? '#FFF6EC' : ink}
+      blush={isDark ? '#E38E88' : '#F7A6A0'}
+    />
+  );
+  const shadow = (bx: number, by: number, bw: number, bh: number, r: number) => (
+    <Group transform={[{ translateY: 4 * L.u }]} opacity={0.15}>
+      <RoundedRect x={bx} y={by} width={bw} height={bh} r={r} color="#5B4636" />
+    </Group>
+  );
+
+  if (type === 'briefcase') {
+    // wide and low, sitting on the desk
+    const by = y + h * 0.36;
+    const bh = h * 0.64;
+    return (
+      <Group>
+        <Path
+          path={`M ${x + w * 0.36} ${by + 2} q 0 ${-h * 0.16} ${w * 0.14} ${-h * 0.16} q ${w * 0.14} 0 ${w * 0.14} ${h * 0.16}`}
+          style="stroke"
+          strokeWidth={w * 0.07}
+          strokeCap="round"
+          color={shade(body, -0.28)}
+        />
+        {shadow(x - w * 0.08, by, w * 1.16, bh, w * 0.1)}
+        <RoundedRect x={x - w * 0.08} y={by} width={w * 1.16} height={bh} r={w * 0.1} color={body} />
+        <RoundedRect x={x - w * 0.08} y={by + bh * 0.2} width={w * 1.16} height={bh * 0.06} r={2} color={dark} />
+        {[0.2, 0.8].map((t) => (
+          <RoundedRect key={t} x={x + w * t - w * 0.07} y={by + bh * 0.16} width={w * 0.14} height={bh * 0.14} r={3} color="#E8C06A" />
+        ))}
+        {face(by + bh * 0.6, w * 0.5)}
+      </Group>
+    );
+  }
+  if (type === 'college') {
+    // messenger bag: long strap, big flap
+    const by = y + h * 0.24;
+    const bh = h * 0.76;
+    return (
+      <Group>
+        <Path
+          path={`M ${x + w * 0.08} ${by + 4} C ${x - w * 0.02} ${y - h * 0.08} ${x + w * 1.02} ${y - h * 0.08} ${x + w * 0.92} ${by + 4}`}
+          style="stroke"
+          strokeWidth={w * 0.06}
+          strokeCap="round"
+          color={dark}
+        />
+        {shadow(x, by, w, bh, w * 0.16)}
+        <RoundedRect x={x} y={by} width={w} height={bh} r={w * 0.16} color={body} />
+        <RoundedRect x={x} y={by} width={w} height={bh * 0.56} r={w * 0.16} color={shade(body, -0.08)} />
+        {[0.3, 0.7].map((t) => (
+          <RoundedRect key={t} x={x + w * t - w * 0.05} y={by + bh * 0.42} width={w * 0.1} height={bh * 0.22} r={3} color={shade(body, -0.28)} />
+        ))}
+        {face(by + bh * 0.27, w * 0.5)}
+      </Group>
+    );
+  }
+  // suitcase: tall hard shell with a telescopic handle and wheels
+  const by = y + h * 0.1;
+  const bh = h * 0.84;
+  return (
+    <Group>
+      <RoundedRect x={x + w * 0.3} y={y - h * 0.1} width={w * 0.05} height={h * 0.22} r={2} color="#9AA3AE" />
+      <RoundedRect x={x + w * 0.65} y={y - h * 0.1} width={w * 0.05} height={h * 0.22} r={2} color="#9AA3AE" />
+      <RoundedRect x={x + w * 0.27} y={y - h * 0.13} width={w * 0.46} height={h * 0.06} r={h * 0.03} color={ink} />
+      {shadow(x, by, w, bh, w * 0.2)}
+      <RoundedRect x={x} y={by} width={w} height={bh} r={w * 0.2} color={body} />
+      {[0.25, 0.5, 0.75].map((t) => (
+        <RoundedRect key={t} x={x + w * t - 1.5} y={by + bh * 0.08} width={3} height={bh * 0.84} r={1.5} color="rgba(255,255,255,0.3)" />
+      ))}
+      {[0.2, 0.8].map((t) => (
+        <Circle key={t} cx={x + w * t} cy={by + bh + w * 0.03} r={w * 0.07} color={ink} />
+      ))}
+      {face(by + bh * 0.42, w * 0.55)}
     </Group>
   );
 }

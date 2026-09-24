@@ -1,0 +1,34 @@
+{
+  "id": "w16-d2",
+  "week": 16,
+  "day": "tue",
+  "schedule": ["beach", "dinner"],
+  "bag": {
+    "type": "suitcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 5,
+        "rows": 4
+      },
+      {
+        "id": "pouch",
+        "kind": "pouch",
+        "cols": 2,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "straw_hat", "role": "required" },
+    { "ref": "dress", "role": "required" },
+    { "ref": "swimsuit", "role": "required" },
+    { "ref": "shoes", "role": "required" },
+    { "ref": "tshirt", "role": "required" },
+    { "ref": "sunscreen", "role": "required" },
+    { "ref": "shampoo", "role": "required" },
+    { "ref": "swim_ring", "role": "distractor" },
+    { "ref": "game_console", "role": "distractor" }
+  ]
+}

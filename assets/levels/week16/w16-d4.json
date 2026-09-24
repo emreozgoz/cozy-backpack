@@ -1,0 +1,36 @@
+{
+  "id": "w16-d4",
+  "week": 16,
+  "day": "thu",
+  "schedule": ["beach", "city"],
+  "tip": "cat",
+  "cat": true,
+  "bag": {
+    "type": "suitcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 5,
+        "rows": 4
+      },
+      {
+        "id": "pouch",
+        "kind": "pouch",
+        "cols": 2,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "straw_hat", "role": "required" },
+    { "ref": "camera", "role": "required" },
+    { "ref": "beach_towel", "role": "required" },
+    { "ref": "guidebook", "role": "required" },
+    { "ref": "tshirt", "role": "required" },
+    { "ref": "sunscreen", "role": "required" },
+    { "ref": "shampoo", "role": "required" },
+    { "ref": "sand_bucket", "role": "distractor" },
+    { "ref": "swim_ring", "role": "distractor" }
+  ]
+}

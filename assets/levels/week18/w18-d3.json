@@ -1,0 +1,29 @@
+{
+  "id": "w18-d3",
+  "week": 18,
+  "day": "wed",
+  "schedule": ["city", "dinner"],
+  "tip": "full",
+  "bag": {
+    "type": "suitcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 5
+      }
+    ]
+  },
+  "items": [
+    { "ref": "camera", "role": "required" },
+    { "ref": "guidebook", "role": "required" },
+    { "ref": "dress", "role": "required" },
+    { "ref": "sweater", "role": "required" },
+    { "ref": "shoes", "role": "required" },
+    { "ref": "toiletry_kit", "role": "required" },
+    { "ref": "souvenir", "role": "required", "appearsAfter": 5 },
+    { "ref": "game_console", "role": "distractor" },
+    { "ref": "plush", "role": "distractor" }
+  ]
+}

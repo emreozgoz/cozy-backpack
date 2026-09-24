@@ -1,0 +1,46 @@
+{
+  "id": "w14-d4",
+  "week": 14,
+  "day": "thu",
+  "schedule": ["art", "math"],
+  "tip": "shapes",
+  "cat": true,
+  "bag": {
+    "type": "college",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 5,
+        "blocked": [
+          [
+            0,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      },
+      {
+        "id": "side",
+        "kind": "side",
+        "cols": 1,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "portfolio", "role": "required" },
+    { "ref": "book_math", "role": "required" },
+    { "ref": "set_square", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "coffee_cup", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "game_console", "role": "distractor" },
+    { "ref": "comic", "role": "distractor" },
+    { "ref": "plush", "role": "distractor" }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "w15-d5",
+  "week": 15,
+  "day": "fri",
+  "schedule": ["beach", "dinner", "city"],
+  "tip": "finale",
+  "bag": {
+    "type": "suitcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 4
+      },
+      {
+        "id": "pouch",
+        "kind": "pouch",
+        "cols": 2,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "beach_towel", "role": "required" },
+    { "ref": "swimsuit", "role": "required" },
+    { "ref": "dress", "role": "required" },
+    { "ref": "guidebook", "role": "required" },
+    { "ref": "shoes", "role": "required" },
+    { "ref": "tshirt", "role": "required" },
+    { "ref": "toiletry_kit", "role": "required" },
+    { "ref": "sunscreen", "role": "required" },
+    { "ref": "shampoo", "role": "required" },
+    { "ref": "swim_ring", "role": "distractor" },
+    { "ref": "sand_bucket", "role": "distractor" }
+  ]
+}

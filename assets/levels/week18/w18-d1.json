@@ -1,0 +1,33 @@
+{
+  "id": "w18-d1",
+  "week": 18,
+  "day": "mon",
+  "schedule": ["city"],
+  "bag": {
+    "type": "suitcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 7,
+        "rows": 4
+      },
+      {
+        "id": "pouch",
+        "kind": "pouch",
+        "cols": 2,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "camera", "role": "required" },
+    { "ref": "guidebook", "role": "required" },
+    { "ref": "sweater", "role": "required" },
+    { "ref": "shoes", "role": "required" },
+    { "ref": "tshirt", "role": "required" },
+    { "ref": "toiletry_kit", "role": "required" },
+    { "ref": "shampoo", "role": "required" },
+    { "ref": "magazine", "role": "distractor" }
+  ]
+}

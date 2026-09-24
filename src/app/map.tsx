@@ -92,7 +92,8 @@ function WeekPage({
   rush: boolean;
   rushBest: Record<string, number>;
 }) {
-  const { ui, weekdays, subjects, weekNames } = useT();
+  const { ui, weekdays, subjects, weekNames, bagTypes } = useT();
+  const bag = levels[0]?.bag.type ?? 'backpack';
   return (
     <View style={[styles.page, { backgroundColor: palette.note, shadowColor: palette.shadow }]}>
       {/* notebook rings and ruled lines */}
@@ -101,7 +102,7 @@ function WeekPage({
           <View key={i} style={[styles.ring, { backgroundColor: palette.bg }]} />
         ))}
       </View>
-      <Text style={styles.weekLabel}>{ui.week(week)}</Text>
+      <Text style={styles.weekLabel}>{`${ui.week(week)} · ${bagTypes[bag]}`}</Text>
       <Text style={styles.weekName}>{weekNames[week] ?? ''}</Text>
       <View style={styles.days}>
         {levels.map((level) => {

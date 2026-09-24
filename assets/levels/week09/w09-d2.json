@@ -1,0 +1,33 @@
+{
+  "id": "w09-d2",
+  "week": 9,
+  "day": "tue",
+  "schedule": ["presentation", "report"],
+  "tip": "tight",
+  "bag": {
+    "type": "briefcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 4
+      },
+      {
+        "id": "sleeve",
+        "kind": "sleeve",
+        "cols": 3,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "laptop", "role": "required" },
+    { "ref": "slides_tablet", "role": "required" },
+    { "ref": "report_folder", "role": "required" },
+    { "ref": "thermos", "role": "required" },
+    { "ref": "charger", "role": "required" },
+    { "ref": "game_console", "role": "distractor" },
+    { "ref": "magazine", "role": "distractor" }
+  ]
+}

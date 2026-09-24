@@ -124,6 +124,29 @@ describe('validateBag', () => {
     expect(validateBag(lvl, [slip], { [slip.uid]: at(0, 0) })).toEqual([{ kind: 'pocket', uid: slip.uid }]);
     expect(validateBag(lvl, [slip], { [slip.uid]: at(1, 0, 0, 'front') })).toEqual([]);
   });
+
+  it('keeps the laptop in its sleeve and liquids in the clear pouch', () => {
+    const lvl = level(
+      [
+        { ref: 'laptop', role: 'required' },
+        { ref: 'shampoo', role: 'required' },
+      ],
+      6,
+      4,
+      [
+        { id: 'sleeve', kind: 'sleeve', cols: 3, rows: 2 },
+        { id: 'pouch', kind: 'pouch', cols: 2, rows: 2 },
+      ],
+    );
+    const [laptop, shampoo] = createInstances(lvl, catalog);
+    const wrong = { [laptop.uid]: at(0, 0), [shampoo.uid]: at(0, 0, 0, 'sleeve') };
+    expect(validateBag(lvl, [laptop, shampoo], wrong)).toEqual([
+      { kind: 'pocket', uid: laptop.uid },
+      { kind: 'pocket', uid: shampoo.uid },
+    ]);
+    const right = { [laptop.uid]: at(0, 0, 0, 'sleeve'), [shampoo.uid]: at(0, 0, 0, 'pouch') };
+    expect(validateBag(lvl, [laptop, shampoo], right)).toEqual([]);
+  });
 });
 
 describe('starsFor', () => {

@@ -1,0 +1,40 @@
+{
+  "id": "w18-d5",
+  "week": 18,
+  "day": "fri",
+  "schedule": ["beach", "hiking", "city", "dinner"],
+  "tip": "finale",
+  "bag": {
+    "type": "suitcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 7,
+        "rows": 5
+      },
+      {
+        "id": "pouch",
+        "kind": "pouch",
+        "cols": 2,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "straw_hat", "role": "required" },
+    { "ref": "camera", "role": "required" },
+    { "ref": "hiking_boots", "role": "required" },
+    { "ref": "guidebook", "role": "required" },
+    { "ref": "dress", "role": "required" },
+    { "ref": "beach_towel", "role": "required" },
+    { "ref": "tshirt", "role": "required" },
+    { "ref": "toiletry_kit", "role": "required" },
+    { "ref": "sunscreen", "role": "required" },
+    { "ref": "shampoo", "role": "required" },
+    { "ref": "souvenir", "role": "required", "appearsAfter": 8 },
+    { "ref": "swim_ring", "role": "distractor" },
+    { "ref": "sand_bucket", "role": "distractor" },
+    { "ref": "game_console", "role": "distractor" }
+  ]
+}

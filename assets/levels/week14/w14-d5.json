@@ -1,0 +1,43 @@
+{
+  "id": "w14-d5",
+  "week": 14,
+  "day": "fri",
+  "schedule": ["math", "science", "history"],
+  "tip": "finale",
+  "bag": {
+    "type": "college",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 7,
+        "rows": 5
+      },
+      {
+        "id": "sleeve",
+        "kind": "sleeve",
+        "cols": 3,
+        "rows": 2
+      },
+      {
+        "id": "side",
+        "kind": "side",
+        "cols": 1,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "book_math", "role": "required" },
+    { "ref": "book_science", "role": "required" },
+    { "ref": "book_history", "role": "required" },
+    { "ref": "calculator", "role": "required" },
+    { "ref": "laptop", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "coffee_cup", "role": "required" },
+    { "ref": "gift", "role": "required", "appearsAfter": 6 },
+    { "ref": "magazine", "role": "distractor" },
+    { "ref": "game_console", "role": "distractor" },
+    { "ref": "ball", "role": "distractor" }
+  ]
+}

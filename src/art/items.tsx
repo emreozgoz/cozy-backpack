@@ -2,6 +2,7 @@ import { Circle, Group, Oval, Path, RoundedRect } from '@shopify/react-native-sk
 import type { ReactNode } from 'react';
 
 import { shade, WHITE_SOFT } from './color';
+import { seasonDrawers } from './itemsSeasons';
 
 // Style A item drawings: flat pastel, no outlines, a few soft details.
 // Each drawer returns the details to paint over (or instead of) the shared
@@ -522,6 +523,7 @@ const drawers: Record<string, Drawer> = {
   libraryBook,
   experimentKit,
   posterRoll,
+  ...seasonDrawers,
 };
 
 export function drawItem(sprite: string, ctx: DrawCtx): Drawing {

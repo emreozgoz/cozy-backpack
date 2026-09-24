@@ -1,0 +1,34 @@
+{
+  "id": "w12-d4",
+  "week": 12,
+  "day": "thu",
+  "schedule": ["science", "english"],
+  "cat": true,
+  "bag": {
+    "type": "college",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 5
+      },
+      {
+        "id": "side",
+        "kind": "side",
+        "cols": 1,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "book_science", "role": "required" },
+    { "ref": "book_english", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "coffee_cup", "role": "required" },
+    { "ref": "library_book", "role": "required", "appearsAfter": 4 },
+    { "ref": "game_console", "role": "distractor" },
+    { "ref": "cards", "role": "distractor" }
+  ]
+}

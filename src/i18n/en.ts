@@ -15,6 +15,16 @@ export const en: Strings = {
     art: 'Art',
     music: 'Music',
     pe: 'PE',
+    lab: 'Lab',
+    meeting: 'Meeting',
+    report: 'Report',
+    presentation: 'Presentation',
+    design: 'Design',
+    gym: 'Gym',
+    beach: 'Beach',
+    hiking: 'Hiking',
+    city: 'City tour',
+    dinner: 'Dinner out',
   },
 
   weekdays: {
@@ -49,12 +59,34 @@ export const en: Strings = {
     library: 'Don’t forget to take the library book back.',
     kit: 'The science kit has glass tubes: nothing on top of it.',
     poster: 'The poster roll is really long. Think about how it fits.',
+    briefcase: 'Welcome to work! The briefcase is wide but shallow.',
+    sleeve: 'The laptop only goes in its own padded sleeve.',
+    thermos: 'The thermos never goes upside down, or the tea spills.',
+    umbrella: 'The sky is getting dark… You may need an umbrella, watch the desk!',
+    college: 'Welcome to campus! The canvas bag has plenty of pockets.',
+    coffee: 'The coffee cup has to stay upright, or the coffee spills.',
+    lab: 'Lab day: the lab coat folds, the safety goggles are fragile.',
+    portfolio: 'The drawing portfolio is really wide. Where will it fit?',
+    suitcase: 'Holiday time! The suitcase is big, and packing it is half the fun.',
+    liquids: 'Liquids (sunscreen, shampoo) go in the clear toiletry pouch.',
+    folding: 'Clothes are soft: tap them to fold into another shape.',
+    hat: 'The straw hat squashes easily: nothing on top of it.',
+    souvenir: 'Holidays mean shopping — leave some room for the way home!',
   },
 
   surprises: {
     permission_slip: 'A note from the teacher: the permission slip goes in the front pocket!',
     gift: "It's your friend's birthday today! The gift is fragile.",
     homework: 'Mum calls out: “You left your homework on the desk!”',
+    umbrella: "Clouds are rolling in: don't forget your umbrella!",
+    souvenir: "You bought a lovely souvenir! It's fragile.",
+  },
+
+  bagTypes: {
+    backpack: 'Backpack',
+    briefcase: 'Briefcase',
+    college: 'College bag',
+    suitcase: 'Suitcase',
   },
 
   stuckReasons: {
@@ -73,6 +105,18 @@ export const en: Strings = {
     4: 'Exam Week',
     5: 'Library Week',
     6: 'Science Fair',
+    7: 'First Week at Work',
+    8: 'Meeting Week',
+    9: 'Presentation Week',
+    10: 'Rainy Days',
+    11: 'Hello, Campus',
+    12: 'Lab Week',
+    13: 'Project Deadline',
+    14: 'Finals Week',
+    15: 'Off We Go',
+    16: 'By the Sea',
+    17: 'Mountain Trail',
+    18: 'City Break',
   },
 
   slots: {
@@ -119,6 +163,9 @@ export const en: Strings = {
     sun: 'Sunshine',
     pencil: 'Pencil',
     trophy: 'Trophy',
+    tie: 'Necktie',
+    mortarboard: 'Grad cap',
+    plane: 'Little plane',
   },
 
   themes: {

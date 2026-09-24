@@ -1,0 +1,37 @@
+{
+  "id": "w14-d1",
+  "week": 14,
+  "day": "mon",
+  "schedule": ["math", "science"],
+  "bag": {
+    "type": "college",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 5,
+        "rows": 5,
+        "blocked": [
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "id": "side",
+        "kind": "side",
+        "cols": 1,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "book_math", "role": "required" },
+    { "ref": "book_science", "role": "required" },
+    { "ref": "calculator", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "coffee_cup", "role": "required" },
+    { "ref": "comic", "role": "distractor" }
+  ]
+}

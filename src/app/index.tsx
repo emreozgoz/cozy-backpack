@@ -76,6 +76,7 @@ export default function Home() {
               room={effectiveRoom(room, ownedDecor, vip)}
               skin={skinById(effectiveSkin(bagSkin, ownedSkins, vip))}
               keychain={keychain as KeychainId | null}
+              bagType={next.bag.type}
               isDark={palette.isDark}
               daylight={daylightFor(new Date().getHours(), palette.isDark)}
             />

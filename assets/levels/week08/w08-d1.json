@@ -1,0 +1,56 @@
+{
+  "id": "w08-d1",
+  "week": 8,
+  "day": "mon",
+  "schedule": ["design"],
+  "tip": "poster",
+  "bag": {
+    "type": "briefcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 4,
+        "blocked": [
+          [
+            0,
+            0
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            4,
+            0
+          ]
+        ]
+      },
+      {
+        "id": "sleeve",
+        "kind": "sleeve",
+        "cols": 3,
+        "rows": 2
+      },
+      {
+        "id": "front",
+        "kind": "front",
+        "cols": 2,
+        "rows": 1
+      }
+    ]
+  },
+  "items": [
+    { "ref": "laptop", "role": "required" },
+    { "ref": "design_roll", "role": "required" },
+    { "ref": "thermos", "role": "required" },
+    { "ref": "charger", "role": "required" },
+    { "ref": "business_cards", "role": "required" },
+    { "ref": "magazine", "role": "distractor" }
+  ]
+}

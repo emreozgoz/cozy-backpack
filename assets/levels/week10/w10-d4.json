@@ -1,0 +1,35 @@
+{
+  "id": "w10-d4",
+  "week": 10,
+  "day": "thu",
+  "schedule": ["presentation", "report"],
+  "cat": true,
+  "bag": {
+    "type": "briefcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 4
+      },
+      {
+        "id": "sleeve",
+        "kind": "sleeve",
+        "cols": 3,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "laptop", "role": "required" },
+    { "ref": "slides_tablet", "role": "required" },
+    { "ref": "report_folder", "role": "required" },
+    { "ref": "thermos", "role": "required" },
+    { "ref": "charger", "role": "required" },
+    { "ref": "umbrella", "role": "required", "appearsAfter": 3 },
+    { "ref": "game_console", "role": "distractor" },
+    { "ref": "magazine", "role": "distractor" },
+    { "ref": "comic", "role": "distractor" }
+  ]
+}

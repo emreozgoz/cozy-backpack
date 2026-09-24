@@ -1,0 +1,45 @@
+{
+  "id": "w11-d2",
+  "week": 11,
+  "day": "tue",
+  "schedule": ["english", "history"],
+  "tip": "coffee",
+  "bag": {
+    "type": "college",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 5,
+        "blocked": [
+          [
+            0,
+            0
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "id": "side",
+        "kind": "side",
+        "cols": 1,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "book_english", "role": "required" },
+    { "ref": "book_history", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "coffee_cup", "role": "required" },
+    { "ref": "magazine", "role": "distractor" }
+  ]
+}

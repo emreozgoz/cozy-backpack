@@ -1,0 +1,51 @@
+{
+  "id": "w15-d2",
+  "week": 15,
+  "day": "tue",
+  "schedule": ["beach"],
+  "tip": "liquids",
+  "bag": {
+    "type": "suitcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 5,
+        "rows": 4,
+        "blocked": [
+          [
+            0,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ]
+      },
+      {
+        "id": "pouch",
+        "kind": "pouch",
+        "cols": 2,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "beach_towel", "role": "required" },
+    { "ref": "swimsuit", "role": "required" },
+    { "ref": "sunscreen", "role": "required" },
+    { "ref": "shampoo", "role": "required" },
+    { "ref": "tshirt", "role": "required" },
+    { "ref": "toiletry_kit", "role": "required" },
+    { "ref": "swim_ring", "role": "distractor" }
+  ]
+}

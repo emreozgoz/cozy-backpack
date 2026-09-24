@@ -1,0 +1,41 @@
+{
+  "id": "w14-d2",
+  "week": 14,
+  "day": "tue",
+  "schedule": ["history", "english", "turkish"],
+  "tip": "tight",
+  "bag": {
+    "type": "college",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 5,
+        "blocked": [
+          [
+            0,
+            0
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    ]
+  },
+  "items": [
+    { "ref": "book_history", "role": "required" },
+    { "ref": "book_english", "role": "required" },
+    { "ref": "book_turkish", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "coffee_cup", "role": "required" },
+    { "ref": "magazine", "role": "distractor" },
+    { "ref": "game_console", "role": "distractor" }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "w17-d4",
+  "week": 17,
+  "day": "thu",
+  "schedule": ["city", "dinner"],
+  "cat": true,
+  "bag": {
+    "type": "suitcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 7,
+        "rows": 4
+      }
+    ]
+  },
+  "items": [
+    { "ref": "camera", "role": "required" },
+    { "ref": "guidebook", "role": "required" },
+    { "ref": "dress", "role": "required" },
+    { "ref": "shoes", "role": "required" },
+    { "ref": "tshirt", "role": "required" },
+    { "ref": "toiletry_kit", "role": "required" },
+    { "ref": "souvenir", "role": "required", "appearsAfter": 5 },
+    { "ref": "swim_ring", "role": "distractor" },
+    { "ref": "magazine", "role": "distractor" }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "id": "w07-d1",
+  "week": 7,
+  "day": "mon",
+  "schedule": ["meeting"],
+  "tip": "briefcase",
+  "bag": {
+    "type": "briefcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 4,
+        "blocked": [
+          [
+            0,
+            0
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            4,
+            0
+          ]
+        ]
+      },
+      {
+        "id": "sleeve",
+        "kind": "sleeve",
+        "cols": 3,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "laptop", "role": "required" },
+    { "ref": "agenda", "role": "required" },
+    { "ref": "charger", "role": "required" },
+    { "ref": "thermos", "role": "required" }
+  ]
+}

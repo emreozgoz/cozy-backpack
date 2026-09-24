@@ -1,22 +1,11 @@
 import { z } from 'zod';
 
-import { TIP_KEYS } from '@/game/types';
+import { COMPARTMENT_KINDS, SUBJECTS, TIP_KEYS } from '@/game/types';
 
 // Runtime shape of the JSON content files. Kept in sync with src/game/types.ts
 // (the `satisfies` checks in scripts/validate-levels.ts fail if they drift).
 
-const subject = z.enum([
-  'math',
-  'turkish',
-  'science',
-  'life',
-  'social',
-  'history',
-  'english',
-  'art',
-  'music',
-  'pe',
-]);
+const subject = z.enum(SUBJECTS);
 const rotation = z.union([z.literal(0), z.literal(90), z.literal(180), z.literal(270)]);
 const shapeRows = z
   .array(z.string().regex(/^[X.]+$/, 'shape rows use only "X" and "."'))
@@ -33,14 +22,14 @@ export const itemDefSchema = z.strictObject({
   tags: z.array(z.string()).optional(),
   allowedRotations: z.array(rotation).min(1).optional(),
   fragile: z.boolean().optional(),
-  pocket: z.enum(['front', 'side']).nullable().optional(),
+  pocket: z.enum(COMPARTMENT_KINDS.filter((k) => k !== 'main') as ['front', 'side', 'sleeve', 'pouch']).nullable().optional(),
 });
 
 export const catalogSchema = z.record(z.string(), itemDefSchema);
 
 const compartment = z.strictObject({
   id: z.string(),
-  kind: z.enum(['main', 'front', 'side']),
+  kind: z.enum(COMPARTMENT_KINDS),
   cols: z.number().int().min(1).max(10),
   rows: z.number().int().min(1).max(10),
   blocked: z.array(z.tuple([z.number().int(), z.number().int()])).optional(),

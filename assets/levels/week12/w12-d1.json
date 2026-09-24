@@ -1,0 +1,26 @@
+{
+  "id": "w12-d1",
+  "week": 12,
+  "day": "mon",
+  "schedule": ["lab"],
+  "tip": "lab",
+  "bag": {
+    "type": "college",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 4
+      }
+    ]
+  },
+  "items": [
+    { "ref": "lab_coat", "role": "required" },
+    { "ref": "goggles", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "coffee_cup", "role": "required" },
+    { "ref": "magazine", "role": "distractor" }
+  ]
+}

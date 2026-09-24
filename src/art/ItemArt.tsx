@@ -30,6 +30,16 @@ const LABELS: Record<Subject, string> = {
   art: '✎',
   music: '♪',
   pe: '●',
+  lab: '⚗',
+  meeting: '✉',
+  report: '≡',
+  presentation: '▶',
+  design: '✎',
+  gym: '●',
+  beach: '☀',
+  hiking: '▲',
+  city: '⌂',
+  dinner: '✦',
 };
 
 interface Props {

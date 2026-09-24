@@ -1,0 +1,39 @@
+{
+  "id": "w17-d5",
+  "week": 17,
+  "day": "fri",
+  "schedule": ["hiking", "city", "dinner"],
+  "tip": "finale",
+  "bag": {
+    "type": "suitcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 8,
+        "rows": 5
+      },
+      {
+        "id": "pouch",
+        "kind": "pouch",
+        "cols": 2,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "hiking_boots", "role": "required" },
+    { "ref": "camera", "role": "required" },
+    { "ref": "guidebook", "role": "required" },
+    { "ref": "dress", "role": "required" },
+    { "ref": "sweater", "role": "required" },
+    { "ref": "thermos", "role": "required" },
+    { "ref": "tshirt", "role": "required" },
+    { "ref": "toiletry_kit", "role": "required" },
+    { "ref": "shampoo", "role": "required" },
+    { "ref": "souvenir", "role": "required", "appearsAfter": 6 },
+    { "ref": "sand_bucket", "role": "distractor" },
+    { "ref": "swim_ring", "role": "distractor" },
+    { "ref": "game_console", "role": "distractor" }
+  ]
+}

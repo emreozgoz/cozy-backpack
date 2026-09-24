@@ -1,0 +1,45 @@
+{
+  "id": "w09-d4",
+  "week": 9,
+  "day": "thu",
+  "schedule": ["meeting", "report", "design"],
+  "cat": true,
+  "bag": {
+    "type": "briefcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 4,
+        "blocked": [
+          [
+            0,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      },
+      {
+        "id": "sleeve",
+        "kind": "sleeve",
+        "cols": 3,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "laptop", "role": "required" },
+    { "ref": "agenda", "role": "required" },
+    { "ref": "report_folder", "role": "required" },
+    { "ref": "design_roll", "role": "required" },
+    { "ref": "thermos", "role": "required" },
+    { "ref": "charger", "role": "required" },
+    { "ref": "game_console", "role": "distractor" },
+    { "ref": "cards", "role": "distractor" },
+    { "ref": "magazine", "role": "distractor" }
+  ]
+}

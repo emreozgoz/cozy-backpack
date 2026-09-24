@@ -1,0 +1,41 @@
+{
+  "id": "w13-d5",
+  "week": 13,
+  "day": "fri",
+  "schedule": ["art", "lab", "english"],
+  "tip": "finale",
+  "bag": {
+    "type": "college",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 5
+      },
+      {
+        "id": "front",
+        "kind": "front",
+        "cols": 2,
+        "rows": 1
+      },
+      {
+        "id": "side",
+        "kind": "side",
+        "cols": 1,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "portfolio", "role": "required" },
+    { "ref": "lab_coat", "role": "required" },
+    { "ref": "goggles", "role": "required" },
+    { "ref": "book_english", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "coffee_cup", "role": "required" },
+    { "ref": "magazine", "role": "distractor" },
+    { "ref": "game_console", "role": "distractor" },
+    { "ref": "ball", "role": "distractor" }
+  ]
+}

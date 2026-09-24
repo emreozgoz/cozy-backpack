@@ -1,0 +1,38 @@
+{
+  "id": "w13-d3",
+  "week": 13,
+  "day": "wed",
+  "schedule": ["design", "art"],
+  "bag": {
+    "type": "college",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 5,
+        "rows": 5,
+        "blocked": [
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "id": "side",
+        "kind": "side",
+        "cols": 1,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "design_roll", "role": "required" },
+    { "ref": "portfolio", "role": "required" },
+    { "ref": "crayons", "role": "required" },
+    { "ref": "coffee_cup", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "magazine", "role": "distractor" },
+    { "ref": "plush", "role": "distractor" }
+  ]
+}

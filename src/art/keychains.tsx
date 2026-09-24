@@ -182,6 +182,72 @@ export function KeychainCharm({ id, cx, cy, size, locked = false, withChain = tr
         </Group>
       );
       break;
+    case 'tie':
+      charm = (
+        <Group>
+          <Path
+            path={`M ${cx - s * 0.13} ${cy - s * 0.48} L ${cx + s * 0.13} ${cy - s * 0.48} L ${cx + s * 0.07} ${cy - s * 0.3} L ${cx - s * 0.07} ${cy - s * 0.3} Z`}
+            color={c('#E57F6C')}
+          />
+          <Path
+            path={`M ${cx - s * 0.08} ${cy - s * 0.3} L ${cx + s * 0.08} ${cy - s * 0.3} L ${cx + s * 0.24} ${cy + s * 0.3} L ${cx} ${cy + s * 0.5} L ${cx - s * 0.24} ${cy + s * 0.3} Z`}
+            color={c('#F79E89')}
+          />
+          {locked ? null : (
+            <Group>
+              <RoundedRect x={cx - s * 0.16} y={cy + s * 0.34} width={s * 0.32} height={s * 0.05} r={2} color="rgba(255,255,255,0.6)" />
+              <Face cx={cx} cy={cy + s * 0.08} size={s * 0.3} expression="happy" ink={INK} blush={BLUSH} />
+            </Group>
+          )}
+        </Group>
+      );
+      break;
+    case 'mortarboard':
+      charm = (
+        <Group>
+          <RoundedRect x={cx - s * 0.26} y={cy - s * 0.12} width={s * 0.52} height={s * 0.5} r={s * 0.16} color={c('#8D93A8')} />
+          <Path
+            path={`M ${cx} ${cy - s * 0.46} L ${cx + s * 0.52} ${cy - s * 0.22} L ${cx} ${cy + s * 0.02} L ${cx - s * 0.52} ${cy - s * 0.22} Z`}
+            color={c('#6F7590')}
+          />
+          <Path
+            path={`M ${cx} ${cy - s * 0.22} L ${cx + s * 0.4} ${cy - s * 0.12} L ${cx + s * 0.4} ${cy + s * 0.14}`}
+            style="stroke"
+            strokeWidth={s * 0.04}
+            color={c('#FFE29A')}
+          />
+          <Circle cx={cx + s * 0.4} cy={cy + s * 0.18} r={s * 0.06} color={c('#FFE29A')} />
+          {face(cy + s * 0.2, 0.34)}
+        </Group>
+      );
+      break;
+    case 'plane':
+      charm = (
+        <Group>
+          <Path
+            path={`M ${cx - s * 0.04} ${cy - s * 0.02} L ${cx - s * 0.36} ${cy + s * 0.34} L ${cx - s * 0.2} ${cy + s * 0.36} L ${cx + s * 0.16} ${cy + s * 0.04} Z`}
+            color={c('#86BCD8')}
+          />
+          <Path
+            path={`M ${cx - s * 0.04} ${cy - s * 0.02} L ${cx - s * 0.36} ${cy - s * 0.36} L ${cx - s * 0.2} ${cy - s * 0.38} L ${cx + s * 0.16} ${cy - s * 0.02} Z`}
+            color={c('#86BCD8')}
+          />
+          <RoundedRect x={cx - s * 0.5} y={cy - s * 0.13} width={s} height={s * 0.26} r={s * 0.13} color={c('#A8D8F0')} />
+          <Path
+            path={`M ${cx - s * 0.5} ${cy - s * 0.05} L ${cx - s * 0.56} ${cy - s * 0.32} L ${cx - s * 0.4} ${cy - s * 0.1} Z`}
+            color={c('#F79E89')}
+          />
+          {locked ? null : (
+            <Group>
+              {[0.12, 0.26].map((t) => (
+                <Circle key={t} cx={cx + s * t} cy={cy - s * 0.02} r={s * 0.035} color="#FFFFFF" />
+              ))}
+              <Face cx={cx - s * 0.12} cy={cy + s * 0.01} size={s * 0.22} expression="happy" ink={INK} blush={BLUSH} />
+            </Group>
+          )}
+        </Group>
+      );
+      break;
     case 'trophy':
       charm = (
         <Group>

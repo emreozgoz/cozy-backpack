@@ -18,6 +18,8 @@ export const itemColors: Record<string, { light: string; dark: string }> = {
   butter: { light: '#FFE29A', dark: '#E8CB7E' },
   lavender: { light: '#CDB4F0', dark: '#AE95D6' },
   pink: { light: '#F7B6C8', dark: '#DC98AC' },
+  slate: { light: '#B8C4D6', dark: '#8C98AA' },
+  cloud: { light: '#F4F1FA', dark: '#C9C3D6' },
 };
 
 export function itemColor(name: string, isDark: boolean): string {

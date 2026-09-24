@@ -2,7 +2,7 @@ import type { DecorSlot } from '@/data/decor';
 import type { KeychainId } from '@/data/keychains';
 import type { BagSkinId, ThemeId } from '@/data/themes';
 import type { Issue } from '@/game/rules';
-import type { Subject, TipKey, Weekday } from '@/game/types';
+import type { BagType, Subject, TipKey, Weekday } from '@/game/types';
 
 // Turkish copy — the source dictionary. en.ts must match its shape exactly.
 
@@ -17,6 +17,16 @@ const subjects: Record<Subject, string> = {
   art: 'Resim',
   music: 'Müzik',
   pe: 'Beden Eğitimi',
+  lab: 'Laboratuvar',
+  meeting: 'Toplantı',
+  report: 'Rapor',
+  presentation: 'Sunum',
+  design: 'Tasarım',
+  gym: 'Spor salonu',
+  beach: 'Plaj',
+  hiking: 'Doğa yürüyüşü',
+  city: 'Şehir turu',
+  dinner: 'Akşam yemeği',
 };
 
 const weekdays: Record<Weekday, string> = {
@@ -51,6 +61,19 @@ const tips: Record<TipKey, string> = {
   library: 'Kütüphane kitabını geri götürmeyi unutma.',
   kit: 'Deney setinde cam tüpler var: üstüne bir şey koyma.',
   poster: 'Poster rulosu çok uzun. Nasıl sığar, bir düşün.',
+  briefcase: 'İş hayatına hoş geldin! Evrak çantası geniş ama alçak.',
+  sleeve: 'Laptop yalnızca kendi yastıklı kılıfına girer.',
+  thermos: 'Termos ters konmaz, yoksa çay dökülür.',
+  umbrella: 'Hava kararıyor… Şemsiye gerekebilir, masaya göz kulak ol!',
+  college: 'Kampüse hoş geldin! Kanvas çantanın cepleri bol.',
+  coffee: 'Kahve bardağı dik durmalı, yoksa kahve dökülür.',
+  lab: 'Laboratuvar günü: önlük katlanır, koruyucu gözlük kırılabilir.',
+  portfolio: 'Çizim portfolyosu çok geniş. Nereye sığar?',
+  suitcase: 'Tatil zamanı! Bavul büyük, ama doldurması da o kadar keyifli.',
+  liquids: 'Sıvılar (güneş kremi, şampuan) şeffaf makyaj çantasına girer.',
+  folding: 'Kıyafetler yumuşak: dokununca katlanıp şekil değiştirir.',
+  hat: 'Hasır şapka ezilebilir, üstüne hiçbir şey koyma.',
+  souvenir: 'Tatilde alışveriş yapılır; dönüşte yer kalsın!',
 };
 
 /** What a surprise item says when it drops onto the desk. */
@@ -58,6 +81,15 @@ const surprises: Record<string, string> = {
   permission_slip: 'Öğretmenden not: izin kâğıdını ön cebe koymayı unutma!',
   gift: 'Bugün arkadaşının doğum günü! Hediye kırılabilir.',
   homework: 'Annen seslendi: “Ödevini masada unuttun!”',
+  umbrella: 'Hava bozdu: şemsiyeni almayı unutma!',
+  souvenir: 'Güzel bir hediyelik eşya aldın! Kırılabilir.',
+};
+
+const bagTypes: Record<BagType, string> = {
+  backpack: 'Sırt çantası',
+  briefcase: 'Evrak çantası',
+  college: 'Üniversite çantası',
+  suitcase: 'Tatil bavulu',
 };
 
 /** Why the zipper got stuck — the first problem found, in plain words. */
@@ -77,6 +109,18 @@ const weekNames: Record<number, string> = {
   4: 'Sınav Haftası',
   5: 'Kütüphane Haftası',
   6: 'Bilim Şenliği',
+  7: 'İlk İş Haftası',
+  8: 'Toplantı Haftası',
+  9: 'Sunum Haftası',
+  10: 'Yağmurlu Günler',
+  11: 'Kampüse Merhaba',
+  12: 'Laboratuvar Haftası',
+  13: 'Proje Teslimi',
+  14: 'Final Haftası',
+  15: 'Yola Çıkış',
+  16: 'Deniz Kenarı',
+  17: 'Dağ Yolu',
+  18: 'Şehir Tatili',
 };
 
 const slots: Record<DecorSlot, string> = {
@@ -123,6 +167,9 @@ const keychains: Record<KeychainId, string> = {
   sun: 'Güneş',
   pencil: 'Kurşun kalem',
   trophy: 'Kupa',
+  tie: 'Kravat',
+  mortarboard: 'Mezuniyet kepi',
+  plane: 'Uçakçık',
 };
 
 const themes: Record<ThemeId, string> = {
@@ -313,6 +360,7 @@ export const tr = {
   weekdays,
   tips,
   surprises,
+  bagTypes,
   stuckReasons,
   weekNames,
   slots,

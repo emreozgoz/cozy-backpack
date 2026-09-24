@@ -1,0 +1,48 @@
+{
+  "id": "w17-d3",
+  "week": 17,
+  "day": "wed",
+  "schedule": ["hiking", "dinner"],
+  "bag": {
+    "type": "suitcase",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 5,
+        "blocked": [
+          [
+            0,
+            0
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "id": "pouch",
+        "kind": "pouch",
+        "cols": 2,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "hiking_boots", "role": "required" },
+    { "ref": "dress", "role": "required" },
+    { "ref": "sweater", "role": "required" },
+    { "ref": "tshirt", "role": "required" },
+    { "ref": "thermos", "role": "required" },
+    { "ref": "shampoo", "role": "required" },
+    { "ref": "toiletry_kit", "role": "required" },
+    { "ref": "plush", "role": "distractor" },
+    { "ref": "game_console", "role": "distractor" }
+  ]
+}

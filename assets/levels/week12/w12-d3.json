@@ -1,0 +1,27 @@
+{
+  "id": "w12-d3",
+  "week": 12,
+  "day": "wed",
+  "schedule": ["science", "math"],
+  "tip": "kit",
+  "bag": {
+    "type": "college",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 5,
+        "rows": 5
+      }
+    ]
+  },
+  "items": [
+    { "ref": "experiment_kit", "role": "required" },
+    { "ref": "book_math", "role": "required" },
+    { "ref": "calculator", "role": "required" },
+    { "ref": "coffee_cup", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "magazine", "role": "distractor" },
+    { "ref": "ball", "role": "distractor" }
+  ]
+}
