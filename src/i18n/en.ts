@@ -141,6 +141,7 @@ export const en: Strings = {
     appName: 'Cozy Backpack',
     week: (n: number) => `Week ${n}`,
     pullZip: 'When you’re ready, pull the zipper to the right →',
+    pullZipLeft: '← When you’re ready, pull the zipper to the left',
     hint: 'Hint',
     closeTip: 'Close tip',
     packed: 'All packed!',
@@ -284,6 +285,7 @@ export const en: Strings = {
 
     zipper: 'Zipper',
     zipperHint: 'Pull right to close the bag',
+    zipperHintLeft: 'Pull left to close the bag',
     cat: 'Cat',
     petCat: 'Pet the cat',
   },

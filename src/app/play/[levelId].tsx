@@ -160,7 +160,9 @@ export default function Play() {
             </Pressable>
           </Animated.View>
         ) : (
-          <Text style={[styles.stuck, { color: palette.textMuted }]}>{ui.pullZip}</Text>
+          <Text style={[styles.stuck, { color: palette.textMuted }]}>
+            {usePlayerStore.getState().settings.leftHanded ? ui.pullZipLeft : ui.pullZip}
+          </Text>
         )}
       </View>
 

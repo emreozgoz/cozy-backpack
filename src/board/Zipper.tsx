@@ -18,6 +18,7 @@ import { scheduleOnRN } from 'react-native-worklets';
 import { feedback } from '@/features/feedback';
 import { useT } from '@/i18n';
 import { useGameStore } from '@/store/useGameStore';
+import { usePlayerStore } from '@/store/usePlayerStore';
 import type { Palette } from '@/ui/tokens';
 
 import type { BoardLayout } from './layout';
@@ -39,6 +40,9 @@ interface Props {
  */
 export function Zipper({ layout, palette }: Props) {
   const { x0, x1, y } = layout.zip;
+  // Left-handed mode mirrors the zipper: it pulls from right to left.
+  const leftHanded = usePlayerStore((s) => s.settings.leftHanded);
+  const dir = leftHanded ? -1 : 1;
   const len = x1 - x0;
   const size = Math.max(10, layout.cell * 0.2);
   const { ui } = useT();
@@ -96,7 +100,7 @@ export function Zipper({ layout, palette }: Props) {
       startP.set(p.get());
     })
     .onUpdate((e) => {
-      const next = Math.max(0, Math.min(1, startP.get() + e.translationX / len));
+      const next = Math.max(0, Math.min(1, startP.get() + (dir * e.translationX) / len));
       p.set(next);
       const t = Math.floor(next * TICKS);
       if (t !== lastTick.get()) {
@@ -116,16 +120,26 @@ export function Zipper({ layout, palette }: Props) {
       scheduleOnRN(attempt);
     });
 
-  const closedClip = useDerivedValue(() => rect(x0 - 6, y - size, len * p.get() + 6, size * 2));
+  // Closed teeth grow from the start edge; open teeth fill the rest.
+  const closedClip = useDerivedValue(() =>
+    dir > 0
+      ? rect(x0 - 6, y - size, len * p.get() + 6, size * 2)
+      : rect(x1 - len * p.get(), y - size, len * p.get() + 6, size * 2),
+  );
   const openClip = useDerivedValue(() =>
-    rect(x0 + len * p.get(), y - size, len * (1 - p.get()) + 6, size * 2),
+    dir > 0
+      ? rect(x0 + len * p.get(), y - size, len * (1 - p.get()) + 6, size * 2)
+      : rect(x0 - 6, y - size, len * (1 - p.get()) + 6, size * 2),
   );
 
   const tabStyle = useAnimatedStyle(() => ({
     transform: [
-      { translateX: x0 + len * p.get() - size + nudge.get() * size * 0.9 },
+      {
+        translateX:
+          (dir > 0 ? x0 + len * p.get() : x1 - len * p.get()) - size + dir * nudge.get() * size * 0.9,
+      },
       { translateY: y - size },
-      { rotate: `${nudge.get() * -8}deg` },
+      { rotate: `${dir * nudge.get() * -8}deg` },
     ],
   }));
 
@@ -187,7 +201,7 @@ export function Zipper({ layout, palette }: Props) {
           accessible
           accessibilityRole="button"
           accessibilityLabel={ui.zipper}
-          accessibilityHint={ui.zipperHint}
+          accessibilityHint={leftHanded ? ui.zipperHintLeft : ui.zipperHint}
           style={[styles.tab, { width: size * 2, height: size * 3.4 }, tabStyle]}
         >
           <View

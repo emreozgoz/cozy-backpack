@@ -145,6 +145,7 @@ const ui = {
   appName: 'Cozy Backpack',
   week: (n: number) => `${n}. Hafta`,
   pullZip: 'Hazır olunca fermuarı sağa çek →',
+  pullZipLeft: '← Hazır olunca fermuarı sola çek',
   hint: 'İpucu',
   closeTip: 'İpucunu kapat',
   packed: 'Çanta hazır!',
@@ -302,6 +303,7 @@ const ui = {
   // accessibility
   zipper: 'Fermuar',
   zipperHint: 'Çantayı kapatmak için sağa çek',
+  zipperHintLeft: 'Çantayı kapatmak için sola çek',
   cat: 'Kedi',
   petCat: 'Kediyi sev',
 };
