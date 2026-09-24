@@ -14,6 +14,7 @@ import { Celebration } from '@/art/fx/Celebration';
 import { canPlace } from '@/game/placement';
 import { orientedCells } from '@/game/shapes';
 import type { Cell } from '@/game/types';
+import type { KeychainId } from '@/data/keychains';
 import { skinById } from '@/data/themes';
 import { useGameStore, visibleInstances } from '@/store/useGameStore';
 import { effectiveSkin, usePlayerStore } from '@/store/usePlayerStore';
@@ -193,7 +194,13 @@ export function Board({ width, height }: { width: number; height: number }) {
             },
           ]}
         />
-        <BagView layout={layout} level={level} palette={palette} skin={skin} />
+        <BagView
+          layout={layout}
+          level={level}
+          palette={palette}
+          skin={skin}
+          keychain={usePlayerStore.getState().keychain as KeychainId | null}
+        />
         {shownGhost ? (
           <GhostPreview
             cells={shownGhost.cells}

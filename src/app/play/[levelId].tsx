@@ -199,7 +199,7 @@ const STAR_DELAY = 650;
 const STAR_STEP = 220;
 
 function WinCard({ palette, levelId }: { palette: Palette; levelId: string }) {
-  const { ui, decor } = useT();
+  const { ui, decor, keychains: keychainNames } = useT();
   const completion = useGameStore((s) => s.completion);
   const stars = useGameStore((s) => s.stars) ?? 1;
   const load = useGameStore((s) => s.load);
@@ -272,6 +272,11 @@ function WinCard({ palette, levelId }: { palette: Palette; levelId: string }) {
             {daily && streak > 1 ? (
               <Text style={[styles.rewardLine, { color: palette.textMuted }]}>{ui.streak(streak)}</Text>
             ) : null}
+            {completion.keychains.map((k) => (
+              <Text key={k} style={[styles.rewardLine, { color: palette.primary }]}>
+                🔑 {ui.newKeychain(keychainNames[k])}
+              </Text>
+            ))}
             {completion.unlocked.map((d) => (
               <Text key={d.id} style={[styles.rewardLine, { color: palette.primary }]}>
                 ✨ {ui.newDecor(decor[d.id])}

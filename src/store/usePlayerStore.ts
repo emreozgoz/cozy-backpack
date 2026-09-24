@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 import { DECOR, DEFAULT_ROOM, decorById, newlyUnlocked, type DecorItem, type DecorSlot } from '@/data/decor';
+import { newKeychains, type KeychainId, type PlayerStats } from '@/data/keychains';
 import { allLevels } from '@/data/levels';
 import { BAG_SKINS, THEMES, skinById, themeOfDecor, type BagSkinId, type ThemeId } from '@/data/themes';
 import {
@@ -33,6 +34,8 @@ export interface Completion {
   firstClear: boolean;
   /** Decor that just became buyable thanks to the new stars. */
   unlocked: DecorItem[];
+  /** Keychains this finish earned. */
+  keychains: KeychainId[];
 }
 
 interface PlayerState {
@@ -89,6 +92,15 @@ const initial = {
   settings: { sound: true, music: true, haptics: true, language: 'system', leftHanded: false } as Settings,
 };
 
+export function statsOf(s: Pick<PlayerState, 'progress' | 'dailyPuzzle'>): PlayerStats {
+  return {
+    totalStars: totalStars(s.progress),
+    progress: s.progress,
+    bestStreak: s.dailyPuzzle.best ?? s.dailyPuzzle.streak,
+    dailySolved: Object.keys(s.dailyPuzzle.results).length,
+  };
+}
+
 export function totalStars(progress: Record<string, number>): number {
   return Object.values(progress).reduce((n, s) => n + s, 0);
 }
@@ -99,6 +111,7 @@ export const usePlayerStore = create<PlayerState>()(
       ...initial,
 
       completeLevel(levelId, stars) {
+        const before = statsOf(get());
         const { progress, buttons } = get();
         const prev = progress[levelId];
         const earned = levelReward(prev, stars);
@@ -108,10 +121,12 @@ export const usePlayerStore = create<PlayerState>()(
           buttons: earned,
           firstClear: prev === undefined,
           unlocked: newlyUnlocked(totalStars(progress), totalStars(next)),
+          keychains: newKeychains(before, statsOf(get())),
         };
       },
 
       completeDaily(day, stars) {
+        const before = statsOf(get());
         const { dailyPuzzle, buttons } = get();
         const prev = dailyPuzzle.results[day];
         if (prev !== undefined) {
@@ -123,7 +138,7 @@ export const usePlayerStore = create<PlayerState>()(
             },
             buttons: buttons + 2,
           });
-          return { buttons: 2, firstClear: false, unlocked: [] };
+          return { buttons: 2, firstClear: false, unlocked: [], keychains: [] };
         }
         const continues = dailyPuzzle.lastDay !== null && daysBetween(dailyPuzzle.lastDay, day) === 1;
         const streak = continues ? dailyPuzzle.streak + 1 : 1;
@@ -137,7 +152,7 @@ export const usePlayerStore = create<PlayerState>()(
           },
           buttons: buttons + earned,
         });
-        return { buttons: earned, firstClear: true, unlocked: [] };
+        return { buttons: earned, firstClear: true, unlocked: [], keychains: newKeychains(before, statsOf(get())) };
       },
 
       canClaimDailyReward(today) {

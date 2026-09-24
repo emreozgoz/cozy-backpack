@@ -109,6 +109,18 @@ export const en: Strings = {
     plant_flowers: 'Tulip pot',
   },
 
+  keychains: {
+    star: 'Little star',
+    heart: 'Little heart',
+    cloud: 'Cloud',
+    apple: 'Apple',
+    cat: 'Tiny Cotton',
+    rainbow: 'Rainbow',
+    sun: 'Sunshine',
+    pencil: 'Pencil',
+    trophy: 'Trophy',
+  },
+
   themes: {
     autumn: 'Autumn',
     sweets: 'Sweets',
@@ -186,6 +198,18 @@ export const en: Strings = {
     resetDone: 'Progress reset.',
     cancel: 'Cancel',
     version: (v: string) => `Version ${v}`,
+
+    collection: 'Collection',
+    keychainsTitle: 'Keychains',
+    keychainsBody: 'They unlock as you play. Pick one to hang on your bag.',
+    goalStars: (n: number) => `Collect ${n} stars`,
+    goalLevel: (week: number, day: string) => `Finish ${day} of week ${week}`,
+    goalStreak: (n: number) => `Keep a ${n}-day Daily Bag streak`,
+    goalDaily: (n: number) => `Finish ${n} Daily Bags`,
+    hang: 'Hang on bag',
+    unhang: 'Take off',
+    onBag: 'On your bag',
+    newKeychain: (name: string) => `New keychain: ${name}`,
 
     bagTab: 'Bag',
     themesTitle: 'Themes',

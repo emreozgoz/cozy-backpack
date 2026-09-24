@@ -12,6 +12,8 @@ import { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 
 import { BagPattern } from '@/art/bagSkins';
+import { KeychainCharm } from '@/art/keychains';
+import type { KeychainId } from '@/data/keychains';
 import type { BagSkin } from '@/data/themes';
 import type { LevelDef } from '@/game/types';
 import type { Palette } from '@/ui/tokens';
@@ -20,13 +22,14 @@ import type { BoardLayout } from './layout';
 
 interface Props {
   skin: BagSkin;
+  keychain?: KeychainId | null;
   layout: BoardLayout;
   level: LevelDef;
   palette: Palette;
 }
 
 /** Static bag body: fabric, zipper band, and a faint dashed grid per compartment. */
-export function BagView({ layout, level, palette, skin }: Props) {
+export function BagView({ layout, level, palette, skin, keychain }: Props) {
   // The chosen bag pattern colours the fabric; the grid stays calm and light.
   const bodyColor = palette.isDark ? skin.body.dark : skin.body.light;
   const insideColor = palette.isDark ? skin.inside.dark : skin.inside.light;
@@ -143,6 +146,14 @@ export function BagView({ layout, level, palette, skin }: Props) {
           color={bodyColor}
         />
       ))}
+      {keychain ? (
+        <KeychainCharm
+          id={keychain}
+          cx={bag.x + bag.w + cell * 0.1}
+          cy={bag.y + cell * 1.3}
+          size={cell * 0.62}
+        />
+      ) : null}
     </Canvas>
   );
 }

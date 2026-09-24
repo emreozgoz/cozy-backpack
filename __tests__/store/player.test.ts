@@ -91,3 +91,20 @@ describe('hints', () => {
     expect(store().spendHint()).toBe(false);
   });
 });
+
+describe('keychains', () => {
+  it('are reported once, on the finish that earns them', () => {
+    expect(store().completeLevel('w01-d1', 3).keychains).toEqual([]);
+    expect(store().completeLevel('w01-d2', 3).keychains).toEqual(['star']); // 6 stars ≥ 5
+    expect(store().completeLevel('w01-d2', 3).keychains).toEqual([]);
+  });
+
+  it('follow Daily Bag streaks', () => {
+    store().completeDaily('2026-09-20', 3);
+    store().completeDaily('2026-09-21', 3);
+    expect(store().completeDaily('2026-09-22', 3).keychains).toEqual(['cloud']);
+    // breaking the streak keeps what was earned
+    store().completeDaily('2026-09-30', 3);
+    expect(store().dailyPuzzle.best).toBe(3);
+  });
+});

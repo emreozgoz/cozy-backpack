@@ -147,6 +147,25 @@ async function main() {
       ))}
     </Group>,
   );
+  // ---- keychains -----------------------------------------------------------
+  const { KeychainCharm } = require('../src/art/keychains') as typeof import('../src/art/keychains');
+  const { KEYCHAINS } = require('../src/data/keychains') as typeof import('../src/data/keychains');
+  const kcSurface = makeOffscreenSurface(KEYCHAINS.length * 110 + 20, 260);
+  const kcImage = await drawOffscreen(
+    kcSurface,
+    <Group>
+      <Rect x={0} y={0} width={KEYCHAINS.length * 110 + 20} height={260} color="#FDEFE0" />
+      {KEYCHAINS.map((k, i) => (
+        <Group key={k.id}>
+          <KeychainCharm id={k.id} cx={65 + i * 110} cy={80} size={70} />
+          <KeychainCharm id={k.id} cx={65 + i * 110} cy={200} size={70} locked withChain={false} />
+        </Group>
+      ))}
+    </Group>,
+  );
+  fs.writeFileSync(path.resolve(__dirname, '../design/previews/keychains.png'), kcImage.encodeToBytes());
+  console.log('✔ wrote design/previews/keychains.png');
+
   // ---- cat ----------------------------------------------------------------
   const { CatSkia } = require('../src/art/CatSkia') as typeof import('../src/art/CatSkia');
   const catSurface = makeOffscreenSurface(360, 180);

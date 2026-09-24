@@ -17,6 +17,7 @@ import { getLevel } from '@/data/levels';
 import { dailyId } from '@/game/daily';
 import { dayKey } from '@/game/economy';
 import { useT } from '@/i18n';
+import type { KeychainId } from '@/data/keychains';
 import { skinById } from '@/data/themes';
 import { effectiveRoom, effectiveSkin, nextToPlay, totalStars, usePlayerStore } from '@/store/usePlayerStore';
 import { useShopStore } from '@/store/useShopStore';
@@ -39,6 +40,7 @@ export default function Home() {
   const ownedSkins = usePlayerStore((s) => s.ownedSkins);
   const bagSkin = usePlayerStore((s) => s.bagSkin);
   const vip = useShopStore((s) => s.entitlements.vip);
+  const keychain = usePlayerStore((s) => s.keychain);
   const dailyPuzzle = usePlayerStore((s) => s.dailyPuzzle);
   const canClaim = usePlayerStore((s) => s.dailyReward.lastClaim !== dayKey());
   const [size, setSize] = useState<{ w: number; h: number } | null>(null);
@@ -73,6 +75,7 @@ export default function Home() {
               h={size.h}
               room={effectiveRoom(room, ownedDecor, vip)}
               skin={skinById(effectiveSkin(bagSkin, ownedSkins, vip))}
+              keychain={keychain as KeychainId | null}
               isDark={palette.isDark}
               daylight={daylightFor(new Date().getHours(), palette.isDark)}
             />
@@ -122,6 +125,11 @@ export default function Home() {
             badge={canClaim}
           />
           <RoundButton label="🛍" onPress={() => router.push('/shop')} accessibilityLabel={ui.shop} />
+          <RoundButton
+            label="🔑"
+            onPress={() => router.push('/collection')}
+            accessibilityLabel={ui.collection}
+          />
         </View>
         <View style={styles.chips}>
           <Chip icon={<StarGlyph />} value={totalStars(progress)} label={ui.stars} />

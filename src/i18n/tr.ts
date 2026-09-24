@@ -1,4 +1,5 @@
 import type { DecorSlot } from '@/data/decor';
+import type { KeychainId } from '@/data/keychains';
 import type { BagSkinId, ThemeId } from '@/data/themes';
 import type { Issue } from '@/game/rules';
 import type { Subject, TipKey, Weekday } from '@/game/types';
@@ -112,6 +113,18 @@ const decor: Record<string, string> = {
   plant_flowers: 'Lale saksısı',
 };
 
+const keychains: Record<KeychainId, string> = {
+  star: 'Yıldızcık',
+  heart: 'Kalpçik',
+  cloud: 'Bulut',
+  apple: 'Elmacık',
+  cat: 'Minik Pamuk',
+  rainbow: 'Gökkuşağı',
+  sun: 'Güneş',
+  pencil: 'Kurşun kalem',
+  trophy: 'Kupa',
+};
+
 const themes: Record<ThemeId, string> = {
   autumn: 'Sonbahar',
   sweets: 'Şekerleme',
@@ -197,6 +210,19 @@ const ui = {
   cancel: 'Vazgeç',
   version: (v: string) => `Sürüm ${v}`,
 
+  // collection
+  collection: 'Koleksiyon',
+  keychainsTitle: 'Anahtarlıklar',
+  keychainsBody: 'Oynadıkça kendiliğinden açılır. Birini seç, çantana takılsın.',
+  goalStars: (n: number) => `${n} yıldız topla`,
+  goalLevel: (week: number, day: string) => `${week}. haftanın ${day} gününü bitir`,
+  goalStreak: (n: number) => `${n} günlük Günün Çantası serisi yap`,
+  goalDaily: (n: number) => `${n} Günün Çantası bitir`,
+  hang: 'Çantaya tak',
+  unhang: 'Çıkar',
+  onBag: 'Çantada',
+  newKeychain: (name: string) => `Yeni anahtarlık: ${name}`,
+
   // themes
   bagTab: 'Çanta',
   themesTitle: 'Temalar',
@@ -280,6 +306,7 @@ export const tr = {
   decor,
   themes,
   skins,
+  keychains,
   ui,
 };
 

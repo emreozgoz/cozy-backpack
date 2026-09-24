@@ -13,7 +13,10 @@ import {
 import type { DecorSlot } from '@/data/decor';
 import { BAG_SKINS, type BagSkin } from '@/data/themes';
 
+import type { KeychainId } from '@/data/keychains';
+
 import { BagPattern } from '../bagSkins';
+import { KeychainCharm } from '../keychains';
 
 import { luminance, shade } from '../color';
 import { Face } from '../primitives/Face';
@@ -40,9 +43,10 @@ interface Props {
   daylight: Daylight;
   /** Bag pattern for the backpack on the desk. */
   skin?: BagSkin;
+  keychain?: KeychainId | null;
 }
 
-export function RoomScene({ w, h, room, isDark, daylight, skin = BAG_SKINS[0] }: Props) {
+export function RoomScene({ w, h, room, isDark, daylight, skin = BAG_SKINS[0], keychain }: Props) {
   const L = roomLayout(w, h);
   const night = daylight === 'night';
   const wall = isDark ? '#3A2F42' : '#FBE9DA';
@@ -76,6 +80,14 @@ export function RoomScene({ w, h, room, isDark, daylight, skin = BAG_SKINS[0] }:
       <Lamp L={L} id={room.lamp} on={night || daylight === 'evening'} />
       <PencilCup L={L} />
       <Backpack L={L} ink={ink} isDark={isDark} skin={skin} />
+      {keychain ? (
+        <KeychainCharm
+          id={keychain}
+          cx={L.backpack.x + L.backpack.w * 0.95}
+          cy={L.backpack.y + L.backpack.h * 0.5}
+          size={L.backpack.w * 0.26}
+        />
+      ) : null}
       <Plant L={L} id={room.plant} ink={ink} />
       {night ? <Rect x={0} y={0} width={w} height={h} color="rgba(20,16,40,0.18)" /> : null}
     </Group>
