@@ -210,6 +210,17 @@ const ui = {
   cancel: 'Vazgeç',
   version: (v: string) => `Sürüm ${v}`,
 
+  // Sabah Telaşı (timed mode)
+  rushTitle: 'Sabah Telaşı',
+  rushBody: 'Bitirdiğin günleri süreyle yeniden oyna. Yıldızların değişmez, sadece rekorun tutulur.',
+  rushTimer: 'Süre',
+  rushTime: (t: string) => `Süre: ${t}`,
+  newRecord: 'Yeni rekor!',
+  record: (t: string) => `Rekorun: ${t}`,
+  noRecord: 'Henüz rekor yok',
+  tryAgain: 'Tekrar dene',
+  backToDays: 'Günlere dön',
+
   // collection
   collection: 'Koleksiyon',
   keychainsTitle: 'Anahtarlıklar',

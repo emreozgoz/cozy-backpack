@@ -10,7 +10,8 @@ import { feedback } from '@/features/feedback';
 import { isDailyId } from '@/game/daily';
 import type { Subject } from '@/game/types';
 import { useT } from '@/i18n';
-import { useGameStore } from '@/store/useGameStore';
+import { formatMs } from '@/game/time';
+import { useGameStore, type PlayMode } from '@/store/useGameStore';
 import { usePlayerStore } from '@/store/usePlayerStore';
 import { rewardedAvailable, useShopStore } from '@/store/useShopStore';
 import { Coin, RoundButton, SoftButton } from '@/ui/kit';
@@ -20,7 +21,9 @@ import { AnimatedText, Text } from '@/ui/Text';
 export default function Play() {
   const { ui, stuckReasons, tips, surprises } = useT();
   const announcement = useGameStore((s) => s.announcement);
-  const { levelId } = useLocalSearchParams<{ levelId: string }>();
+  const { levelId, mode } = useLocalSearchParams<{ levelId: string; mode?: string }>();
+  const playMode: PlayMode = mode === 'rush' ? 'rush' : 'normal';
+  const loadedMode = useGameStore((s) => s.mode);
   const palette = usePalette();
   const insets = useSafeAreaInsets();
   const load = useGameStore((s) => s.load);
@@ -40,8 +43,8 @@ export default function Play() {
   }, [notice]);
 
   useEffect(() => {
-    load(levelId);
-  }, [levelId, load]);
+    load(levelId, playMode);
+  }, [levelId, playMode, load]);
 
   const onBoardLayout = (e: LayoutChangeEvent) => {
     const { width, height } = e.nativeEvent.layout;
@@ -82,22 +85,27 @@ export default function Play() {
     }
   };
 
-  if (!level || level.id !== levelId) return <View style={{ flex: 1, backgroundColor: palette.bg }} />;
+  if (!level || level.id !== levelId || loadedMode !== playMode)
+    return <View style={{ flex: 1, backgroundColor: palette.bg }} />;
 
   return (
     <View style={[styles.screen, { backgroundColor: palette.bg, paddingTop: insets.top + 8 }]}>
       <View style={styles.header}>
         <RoundButton label="‹" onPress={() => router.back()} accessibilityLabel={ui.home} />
         <ScheduleNote palette={palette} />
-        <View>
-          <RoundButton label="💡" onPress={hint} accessibilityLabel={`${ui.hint}: ${hints}`} />
-          <View
-            pointerEvents="none"
-            style={[styles.hintCount, { backgroundColor: palette.primary, borderColor: palette.bg }]}
-          >
-            <Text style={styles.hintCountText}>{hints}</Text>
+        {playMode === 'rush' ? (
+          <RushTimer palette={palette} />
+        ) : (
+          <View>
+            <RoundButton label="💡" onPress={hint} accessibilityLabel={`${ui.hint}: ${hints}`} />
+            <View
+              pointerEvents="none"
+              style={[styles.hintCount, { backgroundColor: palette.primary, borderColor: palette.bg }]}
+            >
+              <Text style={styles.hintCountText}>{hints}</Text>
+            </View>
           </View>
-        </View>
+        )}
       </View>
 
       <View style={styles.board} onLayout={onBoardLayout}>
@@ -134,7 +142,7 @@ export default function Play() {
           <AnimatedText key={notice} entering={FadeIn} style={[styles.stuck, { color: palette.text }]}>
             {notice}
           </AnimatedText>
-        ) : level.tip && tipClosed !== level.id ? (
+        ) : playMode !== 'rush' && level.tip && tipClosed !== level.id ? (
           <Animated.View
             key={`tip-${level.id}`}
             entering={FadeIn.delay(300)}
@@ -156,7 +164,13 @@ export default function Play() {
         )}
       </View>
 
-      {status === 'won' ? <WinCard palette={palette} levelId={level.id} /> : null}
+      {status === 'won' ? (
+        playMode === 'rush' ? (
+          <RushCard palette={palette} levelId={level.id} />
+        ) : (
+          <WinCard palette={palette} levelId={level.id} />
+        )
+      ) : null}
     </View>
   );
 }
@@ -192,6 +206,60 @@ function ScheduleNote({ palette }: { palette: Palette }) {
         ))}
       </View>
     </View>
+  );
+}
+
+/** Sabah Telaşı stopwatch; freezes when the bag is zipped. */
+function RushTimer({ palette }: { palette: Palette }) {
+  const { ui } = useT();
+  const startedAt = useGameStore((s) => s.startedAt);
+  const done = useGameStore((s) => s.rush);
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    if (done) return;
+    const t = setInterval(() => setNow(Date.now()), 100);
+    return () => clearInterval(t);
+  }, [done]);
+  const ms = done ? done.ms : Math.max(0, now - startedAt);
+  return (
+    <View
+      accessible
+      accessibilityLabel={`${ui.rushTimer}: ${formatMs(ms)}`}
+      style={[styles.timer, { backgroundColor: palette.surface, shadowColor: palette.shadow }]}
+    >
+      <Text style={styles.timerIcon}>⏱</Text>
+      <Text style={[styles.timerText, { color: palette.text }]}>{formatMs(ms)}</Text>
+    </View>
+  );
+}
+
+function RushCard({ palette, levelId }: { palette: Palette; levelId: string }) {
+  const { ui } = useT();
+  const rush = useGameStore((s) => s.rush);
+  const load = useGameStore((s) => s.load);
+  if (!rush) return null;
+  return (
+    <Animated.View entering={FadeIn.delay(450).duration(250)} style={[StyleSheet.absoluteFill, styles.scrim]}>
+      <Animated.View
+        entering={ZoomIn.delay(450).springify().damping(12)}
+        style={[styles.winCard, { backgroundColor: palette.surface, shadowColor: palette.shadow }]}
+      >
+        <Text style={[styles.winTitle, { color: palette.text }]}>{ui.rushTitle}</Text>
+        <Text style={[styles.rushTime, { color: palette.text }]}>{formatMs(rush.ms)}</Text>
+        <Text style={[styles.rewardLine, { color: rush.best ? palette.primary : palette.textMuted }]}>
+          {rush.best ? `🏆 ${ui.newRecord}` : ui.record(formatMs(rush.previous ?? rush.ms))}
+        </Text>
+        <Pressable
+          onPress={() => load(levelId, 'rush')}
+          style={[styles.zipButton, { backgroundColor: palette.primary }]}
+        >
+          <Text style={styles.zipText}>{ui.tryAgain}</Text>
+        </Pressable>
+        <Pressable onPress={() => router.back()} style={styles.secondary}>
+          <Text style={[styles.secondaryText, { color: palette.textMuted }]}>{ui.backToDays}</Text>
+        </Pressable>
+      </Animated.View>
+    </Animated.View>
   );
 }
 
@@ -382,6 +450,20 @@ const styles = StyleSheet.create({
   stars: { flexDirection: 'row', gap: 8 },
   star: { fontSize: 48 },
   secondary: { paddingVertical: 6 },
+  timer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    height: 46,
+    paddingHorizontal: 12,
+    borderRadius: 23,
+    shadowOpacity: 1,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
+  },
+  timerIcon: { fontSize: 16 },
+  timerText: { fontSize: 17, fontWeight: '800', fontVariant: ['tabular-nums'], minWidth: 52 },
+  rushTime: { fontSize: 44, fontWeight: '900', fontVariant: ['tabular-nums'] },
   offer: { alignItems: 'center', gap: 8, paddingVertical: 6 },
   offerButton: { paddingVertical: 11, paddingHorizontal: 18 },
   rewards: { alignItems: 'center', gap: 4 },

@@ -1,9 +1,10 @@
 import { router } from 'expo-router';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { levelsByWeek } from '@/data/levels';
+import { formatMs, RUSH_UNLOCK_LEVEL } from '@/game/time';
 import type { LevelDef } from '@/game/types';
 import { useT } from '@/i18n';
 import { isUnlocked, nextToPlay, usePlayerStore } from '@/store/usePlayerStore';
@@ -19,6 +20,9 @@ export default function Map() {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const progress = usePlayerStore((s) => s.progress);
+  const rushBest = usePlayerStore((s) => s.rushBest);
+  const rushOpen = progress[RUSH_UNLOCK_LEVEL] !== undefined;
+  const [rush, setRush] = useState(false);
   const weeks = levelsByWeek();
   const current = nextToPlay(progress);
   const startIndex = Math.max(
@@ -31,9 +35,19 @@ export default function Map() {
     <View style={[styles.screen, { backgroundColor: palette.bg, paddingTop: insets.top + 8 }]}>
       <View style={styles.header}>
         <RoundButton label="‹" onPress={() => router.back()} accessibilityLabel={ui.home} />
-        <Text style={[styles.title, { color: palette.text }]}>{ui.levels}</Text>
-        <View style={{ width: 46 }} />
+        <Text style={[styles.title, { color: palette.text }]}>{rush ? ui.rushTitle : ui.levels}</Text>
+        {rushOpen ? (
+          <RoundButton
+            label={rush ? '★' : '⏱'}
+            onPress={() => setRush(!rush)}
+            accessibilityLabel={rush ? ui.levels : ui.rushTitle}
+            badge={!rush && Object.keys(rushBest).length === 0}
+          />
+        ) : (
+          <View style={{ width: 46 }} />
+        )}
       </View>
+      {rush ? <Text style={[styles.rushBody, { color: palette.textMuted }]}>{ui.rushBody}</Text> : null}
       <FlatList
         ref={list}
         data={weeks}
@@ -51,6 +65,8 @@ export default function Map() {
               progress={progress}
               current={current}
               palette={palette}
+              rush={rush}
+              rushBest={rushBest}
             />
           </View>
         )}
@@ -65,12 +81,16 @@ function WeekPage({
   progress,
   current,
   palette,
+  rush,
+  rushBest,
 }: {
   week: number;
   levels: LevelDef[];
   progress: Record<string, number>;
   current: string;
   palette: Palette;
+  rush: boolean;
+  rushBest: Record<string, number>;
 }) {
   const { ui, weekdays, subjects, weekNames } = useT();
   return (
@@ -85,14 +105,20 @@ function WeekPage({
       <Text style={styles.weekName}>{weekNames[week] ?? ''}</Text>
       <View style={styles.days}>
         {levels.map((level) => {
-          const open = isUnlocked(level.id, progress);
+          // Sabah Telaşı replays finished days only.
+          const open = rush ? progress[level.id] !== undefined : isUnlocked(level.id, progress);
           const stars = progress[level.id];
           const isCurrent = level.id === current;
           return (
             <Pressable
               key={level.id}
               disabled={!open}
-              onPress={() => router.push({ pathname: '/play/[levelId]', params: { levelId: level.id } })}
+              onPress={() =>
+                router.push({
+                  pathname: '/play/[levelId]',
+                  params: rush ? { levelId: level.id, mode: 'rush' } : { levelId: level.id },
+                })
+              }
               accessibilityRole="button"
               accessibilityState={{ disabled: !open }}
               accessibilityLabel={`${weekdays[level.day]}, ${level.schedule.map((s) => subjects[s]).join(', ')}${
@@ -114,7 +140,11 @@ function WeekPage({
                   {open ? level.schedule.map((s) => subjects[s]).join(' · ') : ui.locked}
                 </Text>
               </View>
-              {open ? (
+              {open && rush ? (
+                <Text style={[styles.best, { color: palette.text }]}>
+                  {rushBest[level.id] !== undefined ? `⏱ ${formatMs(rushBest[level.id])}` : ui.noRecord}
+                </Text>
+              ) : open ? (
                 <View style={styles.stars}>
                   {[1, 2, 3].map((n) => (
                     <StarGlyph key={n} size={18} filled={!!stars && n <= stars} />
@@ -186,4 +216,6 @@ const styles = StyleSheet.create({
   subjects: { fontSize: 14, fontWeight: '600', marginTop: 2 },
   stars: { flexDirection: 'row', gap: 2 },
   lock: { fontSize: 18 },
+  best: { fontSize: 14, fontWeight: '800', fontVariant: ['tabular-nums'] },
+  rushBody: { fontSize: 14, fontWeight: '600', paddingHorizontal: 20, marginBottom: 10, textAlign: 'center' },
 });

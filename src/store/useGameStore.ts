@@ -15,6 +15,17 @@ import { useShopStore } from './useShopStore';
 
 type Status = 'playing' | 'won';
 
+/** 'rush' = Sabah Telaşı: timed replay of a finished day; stars and rewards stay as they are. */
+export type PlayMode = 'normal' | 'rush';
+
+export interface RushResult {
+  ms: number;
+  /** New personal best for this level. */
+  best: boolean;
+  /** The best time before this run, if any. */
+  previous?: number;
+}
+
 interface GameState {
   level: LevelDef | null;
   instances: ItemInstance[];
@@ -34,8 +45,11 @@ interface GameState {
   revealed: string[];
   /** Item id of the surprise that just arrived (shown in the footer). */
   announcement: string | null;
+  mode: PlayMode;
+  startedAt: number;
+  rush: RushResult | null;
 
-  load(levelId: string): void;
+  load(levelId: string, mode?: PlayMode): void;
   place(uid: string, compartmentId: string, x: number, y: number): boolean;
   unplace(uid: string): void;
   rotate(uid: string): boolean;
@@ -64,8 +78,11 @@ export const useGameStore = create<GameState>((set, get) => ({
   hint: null,
   revealed: [],
   announcement: null,
+  mode: 'normal',
+  startedAt: 0,
+  rush: null,
 
-  load(levelId) {
+  load(levelId, mode = 'normal') {
     const level = getLevel(levelId);
     if (!level) throw new Error(`Unknown level ${levelId}`);
     const instances = createInstances(level, catalog);
@@ -83,6 +100,9 @@ export const useGameStore = create<GameState>((set, get) => ({
       hint: null,
       revealed: [],
       announcement: null,
+      mode,
+      startedAt: Date.now(),
+      rush: null,
     });
   },
 
@@ -168,6 +188,14 @@ export const useGameStore = create<GameState>((set, get) => ({
     if (issues.length === 0) {
       const stars = starsFor(failedZips, hintsUsed);
       const player = usePlayerStore.getState();
+      if (get().mode === 'rush') {
+        // Timed replay: only the personal best changes.
+        const ms = Date.now() - get().startedAt;
+        const previous = player.rushBest[level.id];
+        const best = player.recordRush(level.id, ms);
+        set({ status: 'won', stars, completion: null, rush: { ms, best, previous }, issues: [], hint: null });
+        return [];
+      }
       const completion = isDailyId(level.id)
         ? player.completeDaily(level.id.slice(DAILY_PREFIX.length), stars)
         : player.completeLevel(level.id, stars);

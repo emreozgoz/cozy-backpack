@@ -95,3 +95,36 @@ describe('surprise items', () => {
     expect(game().stars).toBe(3);
   });
 });
+
+describe('Sabah Telaşı (timed replay)', () => {
+  it('keeps stars and rewards untouched and records only the best time', () => {
+    game().load('w01-d1');
+    packLevel();
+    game().zip(); // normal clear: 3 stars, buttons
+    const before = { ...usePlayerStore.getState() };
+
+    const now = jest.spyOn(Date, 'now');
+    now.mockReturnValue(1_000_000);
+    game().load('w01-d1', 'rush');
+    packLevel();
+    now.mockReturnValue(1_000_000 + 42_300);
+    expect(game().zip()).toEqual([]);
+    expect(game().rush).toEqual({ ms: 42_300, best: true, previous: undefined });
+    expect(game().completion).toBeNull();
+
+    const after = usePlayerStore.getState();
+    expect(after.progress).toEqual(before.progress);
+    expect(after.buttons).toBe(before.buttons);
+    expect(after.rushBest['w01-d1']).toBe(42_300);
+
+    // a slower run is not a record
+    now.mockReturnValue(2_000_000);
+    game().load('w01-d1', 'rush');
+    packLevel();
+    now.mockReturnValue(2_000_000 + 50_000);
+    game().zip();
+    expect(game().rush).toEqual({ ms: 50_000, best: false, previous: 42_300 });
+    expect(usePlayerStore.getState().rushBest['w01-d1']).toBe(42_300);
+    now.mockRestore();
+  });
+});

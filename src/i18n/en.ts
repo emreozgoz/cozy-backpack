@@ -199,6 +199,16 @@ export const en: Strings = {
     cancel: 'Cancel',
     version: (v: string) => `Version ${v}`,
 
+    rushTitle: 'Morning Rush',
+    rushBody: 'Replay the days you finished against the clock. Your stars stay the same; only your record is kept.',
+    rushTimer: 'Time',
+    rushTime: (t: string) => `Time: ${t}`,
+    newRecord: 'New record!',
+    record: (t: string) => `Your record: ${t}`,
+    noRecord: 'No record yet',
+    tryAgain: 'Try again',
+    backToDays: 'Back to days',
+
     collection: 'Collection',
     keychainsTitle: 'Keychains',
     keychainsBody: 'They unlock as you play. Pick one to hang on your bag.',
