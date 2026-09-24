@@ -1,0 +1,29 @@
+{
+  "id": "w05-d3",
+  "week": 5,
+  "day": "wed",
+  "schedule": ["english", "art", "science"],
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 7,
+        "rows": 6
+      }
+    ]
+  },
+  "items": [
+    { "ref": "book_english", "role": "required" },
+    { "ref": "sketchbook", "role": "required" },
+    { "ref": "crayons", "role": "required" },
+    { "ref": "book_science", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "homework", "role": "required", "appearsAfter": 4 },
+    { "ref": "ball", "role": "distractor" },
+    { "ref": "comic", "role": "distractor" }
+  ]
+}

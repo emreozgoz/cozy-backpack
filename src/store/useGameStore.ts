@@ -30,6 +30,10 @@ interface GameState {
   /** Problems from the last stuck zip, shown as gentle glows until the next move. */
   issues: Issue[];
   hint: Hint | null;
+  /** Surprise items that have dropped onto the desk so far. */
+  revealed: string[];
+  /** Item id of the surprise that just arrived (shown in the footer). */
+  announcement: string | null;
 
   load(levelId: string): void;
   place(uid: string, compartmentId: string, x: number, y: number): boolean;
@@ -40,6 +44,11 @@ interface GameState {
 }
 
 const UPRIGHT: Orientation = { rotation: 0, shapeIndex: 0 };
+
+/** Items on the desk or in the bag right now (surprises only once revealed). */
+export function visibleInstances(instances: ItemInstance[], revealed: string[]): ItemInstance[] {
+  return instances.filter((i) => i.appearsAfter === undefined || revealed.includes(i.uid));
+}
 
 export const useGameStore = create<GameState>((set, get) => ({
   level: null,
@@ -53,6 +62,8 @@ export const useGameStore = create<GameState>((set, get) => ({
   completion: null,
   issues: [],
   hint: null,
+  revealed: [],
+  announcement: null,
 
   load(levelId) {
     const level = getLevel(levelId);
@@ -70,6 +81,8 @@ export const useGameStore = create<GameState>((set, get) => ({
       completion: null,
       issues: [],
       hint: null,
+      revealed: [],
+      announcement: null,
     });
   },
 
@@ -79,10 +92,19 @@ export const useGameStore = create<GameState>((set, get) => ({
     if (!level || !inst) return false;
     const p: Placement = { compartmentId, x, y, ...orient[uid] };
     if (!canPlace(level, instances, placements, inst, p)) return false;
+    const next = { ...placements, [uid]: p };
+    // Packing enough items can make a surprise drop onto the desk.
+    const { revealed } = get();
+    const packed = Object.keys(next).length;
+    const arriving = instances.filter(
+      (i) => i.appearsAfter !== undefined && !revealed.includes(i.uid) && packed >= i.appearsAfter,
+    );
     set({
-      placements: { ...placements, [uid]: p },
+      placements: next,
       issues: [],
       hint: hint?.uid === uid ? null : hint,
+      revealed: arriving.length ? [...revealed, ...arriving.map((i) => i.uid)] : revealed,
+      announcement: arriving.length ? arriving[0].def.id : null,
     });
     return true;
   },
@@ -128,8 +150,20 @@ export const useGameStore = create<GameState>((set, get) => ({
   },
 
   zip() {
-    const { level, instances, placements, failedZips, hintsUsed } = get();
+    const { level, instances, placements, failedZips, hintsUsed, revealed } = get();
     if (!level) return [];
+    // Zipping before a surprise showed up: it arrives now. Not the player's
+    // mistake, so it costs nothing.
+    const hidden = instances.filter((i) => i.appearsAfter !== undefined && !revealed.includes(i.uid));
+    if (hidden.length) {
+      const surprise: Issue[] = [{ kind: 'surprise', uid: hidden[0].uid }];
+      set({
+        revealed: [...revealed, ...hidden.map((i) => i.uid)],
+        announcement: hidden[0].def.id,
+        issues: surprise,
+      });
+      return surprise;
+    }
     const issues = validateBag(level, instances, placements);
     if (issues.length === 0) {
       const stars = starsFor(failedZips, hintsUsed);
@@ -146,9 +180,9 @@ export const useGameStore = create<GameState>((set, get) => ({
   },
 
   requestHint() {
-    const { level, instances, placements, hintsUsed } = get();
+    const { level, instances, placements, hintsUsed, revealed } = get();
     if (!level) return null;
-    const hint = findHint(level, instances, placements);
+    const hint = findHint(level, visibleInstances(instances, revealed), placements);
     if (hint) set({ hint, hintsUsed: hintsUsed + 1, issues: [] });
     return hint;
   },

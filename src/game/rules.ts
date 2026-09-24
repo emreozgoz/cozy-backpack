@@ -12,7 +12,9 @@ export type Issue =
   /** Something sits on top of a fragile item. */
   | { kind: 'fragile'; uid: string; crushedBy: string }
   /** Pocket-only item in the wrong compartment. */
-  | { kind: 'pocket'; uid: string };
+  | { kind: 'pocket'; uid: string }
+  /** A surprise item just showed up (raised by the game store, not the rules). */
+  | { kind: 'surprise'; uid: string };
 
 /** Rule checks for a single packed item that don't depend on its neighbours. */
 function itemIssues(level: LevelDef, inst: ItemInstance, p: Placement): Issue[] {

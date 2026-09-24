@@ -17,7 +17,8 @@ import { Coin, RoundButton, SoftButton } from '@/ui/kit';
 import { radius, usePalette, type Palette } from '@/ui/tokens';
 
 export default function Play() {
-  const { ui, stuckReasons, tips } = useT();
+  const { ui, stuckReasons, tips, surprises } = useT();
+  const announcement = useGameStore((s) => s.announcement);
   const { levelId } = useLocalSearchParams<{ levelId: string }>();
   const palette = usePalette();
   const insets = useSafeAreaInsets();
@@ -99,11 +100,19 @@ export default function Play() {
       </View>
 
       <View style={styles.board} onLayout={onBoardLayout}>
-        {boardSize ? <Board width={boardSize.w} height={boardSize.h} /> : null}
+        {boardSize ? <Board key={level.id} width={boardSize.w} height={boardSize.h} /> : null}
       </View>
 
       <View style={[styles.footer, { paddingBottom: insets.bottom + 12, backgroundColor: palette.desk }]}>
-        {issues.length ? (
+        {announcement ? (
+          <Animated.Text
+            key={`surprise-${announcement}`}
+            entering={FadeIn}
+            style={[styles.stuck, { color: palette.text }]}
+          >
+            {surprises[announcement] ?? stuckReasons.surprise}
+          </Animated.Text>
+        ) : issues.length ? (
           <Animated.Text
             key={`stuck-${issues[0].kind}`}
             entering={FadeIn}

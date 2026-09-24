@@ -1,0 +1,29 @@
+{
+  "id": "w06-d1",
+  "week": 6,
+  "day": "mon",
+  "schedule": ["science", "math"],
+  "tip": "kit",
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 6
+      }
+    ]
+  },
+  "items": [
+    { "ref": "experiment_kit", "role": "required" },
+    { "ref": "book_science", "role": "required" },
+    { "ref": "book_math", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "toy_car", "role": "distractor" },
+    { "ref": "cards", "role": "distractor" }
+  ]
+}

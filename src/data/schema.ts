@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { TIP_KEYS } from '@/game/types';
+
 // Runtime shape of the JSON content files. Kept in sync with src/game/types.ts
 // (the `satisfies` checks in scripts/validate-levels.ts fail if they drift).
 
@@ -56,9 +58,16 @@ export const levelSchema = z.strictObject({
       .min(1)
       .refine((cs) => cs.filter((c) => c.kind === 'main').length === 1, 'exactly one main compartment'),
   }),
-  items: z.array(z.strictObject({ ref: z.string(), role: z.enum(['required', 'distractor']) })).min(1),
-  tip: z
-    .enum(['drag', 'hint', 'rotate', 'distractor', 'flute', 'upright', 'bottle', 'art', 'tight', 'finale'])
-    .optional(),
+  items: z
+    .array(
+      z.strictObject({
+        ref: z.string(),
+        role: z.enum(['required', 'distractor']),
+        appearsAfter: z.number().int().min(1).optional(),
+      }),
+    )
+    .min(1),
+  tip: z.enum(TIP_KEYS).optional(),
+  cat: z.boolean().optional(),
   par: z.strictObject({ hints: z.number().int().min(0) }).optional(),
 });

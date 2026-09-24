@@ -40,6 +40,10 @@ interface Props {
   onDrop(uid: string, left: number, top: number): Target;
   /** Returns false when the item can't turn where it is. */
   onTap(uid: string): boolean;
+  /** A surprise: drop in from above the screen instead of appearing in place. */
+  enter?: boolean;
+  /** Something (the cat) is sitting on it: it can't be picked up. */
+  locked?: boolean;
 }
 
 const LIFT = -18; // raise the item above the finger while dragging
@@ -54,8 +58,8 @@ export function DraggableItem(props: Props) {
   const baseH = size.h * cell;
 
   const cx = useSharedValue(target.x);
-  const cy = useSharedValue(target.y);
-  const scale = useSharedValue(target.scale);
+  const cy = useSharedValue(props.enter ? target.y - 480 : target.y);
+  const scale = useSharedValue(props.enter ? target.scale * 0.7 : target.scale);
   const raise = useSharedValue(0);
   const lift = useSharedValue(0);
   const tilt = useSharedValue(0);
@@ -89,6 +93,13 @@ export function DraggableItem(props: Props) {
   }, [happy]);
 
   const expression: Expression = held ? 'held' : highlight === 'issue' ? 'worried' : happy ? 'happy' : 'idle';
+
+  // Surprises thump onto the desk.
+  useEffect(() => {
+    if (!props.enter) return;
+    const t = setTimeout(() => feedback.place(), 380);
+    return () => clearTimeout(t);
+  }, [props.enter]);
 
   // Settle on the target whenever it changes (placement, desk reflow, rotation).
   useEffect(() => {
@@ -168,6 +179,7 @@ export function DraggableItem(props: Props) {
   const release = () => setHeld(false);
 
   const pan = Gesture.Pan()
+    .enabled(!props.locked)
     .minDistance(4)
     .onBegin(() => {
       lift.set(withSpring(1, springs.pickup));
@@ -209,6 +221,7 @@ export function DraggableItem(props: Props) {
     });
 
   const tapGesture = Gesture.Tap()
+    .enabled(!props.locked)
     .maxDistance(6)
     .onBegin(() => {
       lift.set(withSpring(0.5, springs.pickup));

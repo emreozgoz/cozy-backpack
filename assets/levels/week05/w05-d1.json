@@ -1,0 +1,29 @@
+{
+  "id": "w05-d1",
+  "week": 5,
+  "day": "mon",
+  "schedule": ["turkish", "social"],
+  "tip": "library",
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 6
+      }
+    ]
+  },
+  "items": [
+    { "ref": "book_turkish", "role": "required" },
+    { "ref": "book_social", "role": "required" },
+    { "ref": "library_book", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "comic", "role": "distractor" },
+    { "ref": "cards", "role": "distractor" }
+  ]
+}

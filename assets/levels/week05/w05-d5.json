@@ -1,0 +1,33 @@
+{
+  "id": "w05-d5",
+  "week": 5,
+  "day": "fri",
+  "schedule": ["turkish", "music", "math"],
+  "tip": "finale",
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 7,
+        "rows": 6
+      }
+    ]
+  },
+  "items": [
+    { "ref": "book_turkish", "role": "required" },
+    { "ref": "flute", "role": "required" },
+    { "ref": "book_math", "role": "required" },
+    { "ref": "set_square", "role": "required" },
+    { "ref": "library_book", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "calculator", "role": "required" },
+    { "ref": "comic", "role": "distractor" },
+    { "ref": "plush", "role": "distractor" },
+    { "ref": "ball", "role": "distractor" }
+  ]
+}

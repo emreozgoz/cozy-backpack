@@ -1,0 +1,33 @@
+{
+  "id": "w04-d5",
+  "week": 4,
+  "day": "fri",
+  "schedule": ["turkish", "math", "art"],
+  "tip": "finale",
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 7,
+        "rows": 7
+      }
+    ]
+  },
+  "items": [
+    { "ref": "book_turkish", "role": "required" },
+    { "ref": "book_math", "role": "required" },
+    { "ref": "sketchbook", "role": "required" },
+    { "ref": "crayons", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "calculator", "role": "required" },
+    { "ref": "gift", "role": "required", "appearsAfter": 4 },
+    { "ref": "toy_car", "role": "distractor" },
+    { "ref": "cards", "role": "distractor" },
+    { "ref": "comic", "role": "distractor" }
+  ]
+}

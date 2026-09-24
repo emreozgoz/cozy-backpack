@@ -1,0 +1,35 @@
+{
+  "id": "w06-d3",
+  "week": 6,
+  "day": "wed",
+  "schedule": ["science", "english", "pe"],
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 6
+      },
+      {
+        "id": "side",
+        "kind": "side",
+        "cols": 1,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "experiment_kit", "role": "required" },
+    { "ref": "poster_roll", "role": "required" },
+    { "ref": "book_english", "role": "required" },
+    { "ref": "pe_clothes", "role": "required" },
+    { "ref": "shoe_bag", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "plush", "role": "distractor" },
+    { "ref": "cards", "role": "distractor" }
+  ]
+}

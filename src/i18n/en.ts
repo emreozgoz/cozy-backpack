@@ -38,6 +38,23 @@ export const en: Strings = {
     art: 'Art day! Crayons and the sketchbook go in the bag too.',
     tight: 'The bag is quite full today. Every gap counts.',
     finale: "Last day of the week: all of this week's rules at once.",
+    clothes: 'The sports kit is soft: tap it to fold it into another shape.',
+    pocket: 'The bag has pockets! The shoe bag goes in the side pocket.',
+    surprise: 'Sometimes something turns up at the last minute. Keep an eye on the desk!',
+    fragile: 'The gift is fragile: nothing on top of it.',
+    homework: 'Exam week! Could you be forgetting something?',
+    shapes: 'The set square has a corner. Try it facing different ways.',
+    full: 'Today not a single square in the bag stays empty.',
+    cat: 'Cotton is on the desk today. If she sits on something, give her a pet!',
+    library: 'Don’t forget to take the library book back.',
+    kit: 'The science kit has glass tubes: nothing on top of it.',
+    poster: 'The poster roll is really long. Think about how it fits.',
+  },
+
+  surprises: {
+    permission_slip: 'A note from the teacher: the permission slip goes in the front pocket!',
+    gift: "It's your friend's birthday today! The gift is fragile.",
+    homework: 'Mum calls out: “You left your homework on the desk!”',
   },
 
   stuckReasons: {
@@ -46,6 +63,7 @@ export const en: Strings = {
     orientation: 'The zipper is stuck: something is facing the wrong way.',
     fragile: 'The zipper is stuck: something is sitting on top of the gift.',
     pocket: "The zipper is stuck: something isn't in its own pocket.",
+    surprise: 'Wait! Something else just landed on the desk.',
   },
 
   weekNames: {
@@ -53,6 +71,8 @@ export const en: Strings = {
     2: 'Lunchbox Week',
     3: 'Sports Week',
     4: 'Exam Week',
+    5: 'Library Week',
+    6: 'Science Fair',
   },
 
   slots: {
@@ -195,5 +215,7 @@ export const en: Strings = {
 
     zipper: 'Zipper',
     zipperHint: 'Pull right to close the bag',
+    cat: 'Cat',
+    petCat: 'Pet the cat',
   },
 };

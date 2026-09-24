@@ -23,6 +23,9 @@
 
   "permission_slip": { "shape": ["X"],            "sprite": "slip",        "color": "butter", "tags": ["surprise"], "pocket": "front" },
   "gift":          { "shape": ["XX", "XX"],       "sprite": "gift",        "color": "pink",  "tags": ["surprise"], "fragile": true },
+  "library_book":  { "shape": ["XX", "XX"],       "sprite": "libraryBook", "color": "lavender", "tags": ["library"] },
+  "experiment_kit": { "shape": ["XXX", "XXX"],    "sprite": "experimentKit", "color": "mint", "subject": "science", "fragile": true },
+  "poster_roll":   { "shape": ["X", "X", "X", "X", "X"], "sprite": "posterRoll", "color": "butter", "subject": "science" },
   "homework":      { "shape": ["X", "X"],         "sprite": "homework",    "color": "butter", "tags": ["surprise"] },
 
   "toy_car":       { "shape": ["XX"],             "sprite": "toyCar",      "color": "coral", "tags": ["toy"] },

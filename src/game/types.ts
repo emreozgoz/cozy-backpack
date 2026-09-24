@@ -47,14 +47,38 @@ export interface CompartmentDef {
 }
 
 /** Short coaching line shown on the desk for levels that introduce something. */
-export type TipKey =
-  'drag' | 'hint' | 'rotate' | 'distractor' | 'flute' | 'upright' | 'bottle' | 'art' | 'tight' | 'finale';
+export const TIP_KEYS = [
+  'drag',
+  'hint',
+  'rotate',
+  'distractor',
+  'flute',
+  'upright',
+  'bottle',
+  'art',
+  'tight',
+  'finale',
+  'clothes',
+  'pocket',
+  'surprise',
+  'fragile',
+  'homework',
+  'shapes',
+  'full',
+  'cat',
+  'library',
+  'kit',
+  'poster',
+] as const;
+export type TipKey = (typeof TIP_KEYS)[number];
 
 export type ItemRole = 'required' | 'distractor';
 
 export interface LevelItemRef {
   ref: string;
   role: ItemRole;
+  /** Surprise: the item drops onto the desk once this many items are packed. */
+  appearsAfter?: number;
 }
 
 export interface LevelDef {
@@ -68,6 +92,8 @@ export interface LevelDef {
   };
   items: LevelItemRef[];
   tip?: TipKey;
+  /** The desk cat visits this level. */
+  cat?: boolean;
   par?: { hints: number };
 }
 
@@ -77,6 +103,8 @@ export interface ItemInstance {
   uid: string;
   def: ItemDef;
   role: ItemRole;
+  /** Hidden on the desk until revealed (see LevelItemRef.appearsAfter). */
+  appearsAfter?: number;
 }
 
 /** Where and how an instance sits in the bag. */

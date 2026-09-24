@@ -104,6 +104,15 @@ for (const file of files) {
       warn(`${ref} is a daily item used as a distractor — players may find that unfair`);
     }
   }
+  const others = level.items.filter((i) => i.appearsAfter === undefined).length;
+  for (const { ref, role, appearsAfter } of level.items) {
+    if (appearsAfter === undefined) continue;
+    if (role !== 'required') err(`${ref}: only required items can be surprises`);
+    if (appearsAfter > others)
+      warn(
+        `${ref} appears after ${appearsAfter} packed items but only ${others} exist — it will only show up when zipping`,
+      );
+  }
   for (const s of level.schedule) {
     if (!level.items.some((i) => i.role === 'required' && catalog[i.ref].subject === s)) {
       err(`${s} is on the schedule but no required item belongs to it`);

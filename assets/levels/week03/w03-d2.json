@@ -1,0 +1,34 @@
+{
+  "id": "w03-d2",
+  "week": 3,
+  "day": "tue",
+  "schedule": ["pe", "science"],
+  "tip": "pocket",
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 5,
+        "rows": 6
+      },
+      {
+        "id": "side",
+        "kind": "side",
+        "cols": 1,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "pe_clothes", "role": "required" },
+    { "ref": "shoe_bag", "role": "required" },
+    { "ref": "book_science", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "comic", "role": "distractor" }
+  ]
+}

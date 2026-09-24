@@ -5,12 +5,12 @@ export type Placements = Record<string, Placement>;
 
 export function createInstances(level: LevelDef, catalog: Catalog): ItemInstance[] {
   const counts: Record<string, number> = {};
-  return level.items.map(({ ref, role }) => {
+  return level.items.map(({ ref, role, appearsAfter }) => {
     const def = catalog[ref];
     if (!def) throw new Error(`Level ${level.id}: unknown item "${ref}"`);
     const n = counts[ref] ?? 0;
     counts[ref] = n + 1;
-    return { uid: `${ref}#${n}`, def, role };
+    return { uid: `${ref}#${n}`, def, role, ...(appearsAfter ? { appearsAfter } : {}) };
   });
 }
 

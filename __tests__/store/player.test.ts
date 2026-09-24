@@ -41,7 +41,7 @@ describe('player progress', () => {
     const first = store().completeLevel('w01-d1', 3); // 0 → 3 stars
     expect(first.unlocked.map((d) => d.id)).toEqual(['plant_cactus']);
     const { unlocked } = store().completeLevel('w01-d2', 3); // 3 → 6 stars
-    expect(unlocked.map((d) => d.id).sort()).toEqual(['curtain_lavender', 'wall_rainbow']);
+    expect(unlocked.map((d) => d.id)).toEqual(['curtain_lavender']);
     expect(totalStars(store().progress)).toBe(6);
   });
 });

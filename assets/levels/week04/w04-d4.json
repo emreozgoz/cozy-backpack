@@ -1,0 +1,38 @@
+{
+  "id": "w04-d4",
+  "week": 4,
+  "day": "thu",
+  "schedule": ["music", "pe", "math"],
+  "tip": "cat",
+  "cat": true,
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 5,
+        "rows": 6
+      },
+      {
+        "id": "side",
+        "kind": "side",
+        "cols": 1,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "flute", "role": "required" },
+    { "ref": "pe_clothes", "role": "required" },
+    { "ref": "shoe_bag", "role": "required" },
+    { "ref": "book_math", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "set_square", "role": "required" },
+    { "ref": "ball", "role": "distractor" },
+    { "ref": "plush", "role": "distractor" },
+    { "ref": "comic", "role": "distractor" }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "w06-d2",
+  "week": 6,
+  "day": "tue",
+  "schedule": ["science", "art"],
+  "tip": "poster",
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 6
+      }
+    ]
+  },
+  "items": [
+    { "ref": "poster_roll", "role": "required" },
+    { "ref": "sketchbook", "role": "required" },
+    { "ref": "crayons", "role": "required" },
+    { "ref": "book_science", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "ball", "role": "distractor" },
+    { "ref": "comic", "role": "distractor" }
+  ]
+}

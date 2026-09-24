@@ -1,0 +1,39 @@
+{
+  "id": "w06-d5",
+  "week": 6,
+  "day": "fri",
+  "schedule": ["science", "art", "turkish"],
+  "tip": "finale",
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 7,
+        "rows": 7
+      },
+      {
+        "id": "front",
+        "kind": "front",
+        "cols": 2,
+        "rows": 1
+      }
+    ]
+  },
+  "items": [
+    { "ref": "experiment_kit", "role": "required" },
+    { "ref": "poster_roll", "role": "required" },
+    { "ref": "sketchbook", "role": "required" },
+    { "ref": "crayons", "role": "required" },
+    { "ref": "book_turkish", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "gift", "role": "required", "appearsAfter": 5 },
+    { "ref": "permission_slip", "role": "required" },
+    { "ref": "comic", "role": "distractor" },
+    { "ref": "plush", "role": "distractor" },
+    { "ref": "cards", "role": "distractor" }
+  ]
+}

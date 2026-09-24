@@ -1,6 +1,6 @@
 import { dailyId } from '@/game/daily';
 import { solve } from '@/game/solver';
-import { useGameStore } from '@/store/useGameStore';
+import { useGameStore, visibleInstances } from '@/store/useGameStore';
 import { usePlayerStore } from '@/store/usePlayerStore';
 
 jest.mock('@/store/storage', () => {
@@ -60,5 +60,38 @@ describe('playing a level end to end', () => {
     packLevel();
     expect(game().zip()).toEqual([]);
     expect(usePlayerStore.getState().dailyPuzzle).toMatchObject({ streak: 1, lastDay: '2026-09-23' });
+  });
+});
+
+describe('surprise items', () => {
+  it('drop onto the desk after enough items are packed', () => {
+    game().load('w03-d3'); // permission slip appears after 3 packed items
+    const { level, instances } = game();
+    const solution = solve(level!, instances).solutions[0];
+    const slip = instances.find((i) => i.def.id === 'permission_slip')!;
+    expect(visibleInstances(instances, game().revealed)).not.toContain(slip);
+
+    const others = Object.keys(solution).filter((uid) => uid !== slip.uid);
+    for (const uid of others.slice(0, 2)) {
+      const p = solution[uid];
+      while (game().orient[uid].rotation !== p.rotation) game().rotate(uid);
+      game().place(uid, p.compartmentId, p.x, p.y);
+    }
+    expect(game().revealed).toEqual([]);
+    const third = others[2];
+    const p3 = solution[third];
+    while (game().orient[third].rotation !== p3.rotation) game().rotate(third);
+    game().place(third, p3.compartmentId, p3.x, p3.y);
+    expect(game().revealed).toEqual([slip.uid]);
+    expect(game().announcement).toBe('permission_slip');
+  });
+
+  it('arrive when zipping too early, without costing a star', () => {
+    game().load('w04-d5'); // birthday gift appears after 4
+    expect(game().zip()).toEqual([{ kind: 'surprise', uid: expect.stringContaining('gift') }]);
+    expect(game().failedZips).toBe(0);
+    packLevel();
+    expect(game().zip()).toEqual([]);
+    expect(game().stars).toBe(3);
   });
 });

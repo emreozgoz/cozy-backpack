@@ -72,17 +72,47 @@ export function BagView({ layout, level, palette }: Props) {
         />
       </RoundedRect>
       {/* compartments (the zipper itself is drawn by <Zipper>) */}
-      {compartments.map((f) => (
-        <RoundedRect
-          key={f.id}
-          x={f.x - 3}
-          y={f.y - 3}
-          width={f.cols * cell + 6}
-          height={f.rows * cell + 6}
-          r={cell * 0.25}
-          color={palette.bagInside}
-        />
-      ))}
+      {compartments.map((f) => {
+        const isPocket = level.bag.compartments.find((c) => c.id === f.id)?.kind !== 'main';
+        const pad = cell * 0.22;
+        return (
+          <Group key={f.id}>
+            {isPocket ? (
+              // a sewn-on patch of fabric, so pockets read as separate from the main bag
+              <Group>
+                <RoundedRect
+                  x={f.x - pad}
+                  y={f.y - pad}
+                  width={f.cols * cell + pad * 2}
+                  height={f.rows * cell + pad * 2}
+                  r={cell * 0.3}
+                  color={shade(palette.bagBody)}
+                />
+                <RoundedRect
+                  x={f.x - pad + 4}
+                  y={f.y - pad + 4}
+                  width={f.cols * cell + pad * 2 - 8}
+                  height={f.rows * cell + pad * 2 - 8}
+                  r={cell * 0.26}
+                  style="stroke"
+                  strokeWidth={1.5}
+                  color="rgba(255,255,255,0.6)"
+                >
+                  <DashPathEffect intervals={[4, 4]} />
+                </RoundedRect>
+              </Group>
+            ) : null}
+            <RoundedRect
+              x={f.x - 3}
+              y={f.y - 3}
+              width={f.cols * cell + 6}
+              height={f.rows * cell + 6}
+              r={cell * 0.25}
+              color={palette.bagInside}
+            />
+          </Group>
+        );
+      })}
       <Path path={grid} style="stroke" strokeWidth={1.5} color={palette.gridLine} strokeCap="round">
         <DashPathEffect intervals={[5, 6]} />
       </Path>

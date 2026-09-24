@@ -1,0 +1,35 @@
+{
+  "id": "w03-d3",
+  "week": 3,
+  "day": "wed",
+  "schedule": ["math", "history"],
+  "tip": "surprise",
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 5,
+        "rows": 6
+      },
+      {
+        "id": "front",
+        "kind": "front",
+        "cols": 2,
+        "rows": 1
+      }
+    ]
+  },
+  "items": [
+    { "ref": "book_math", "role": "required" },
+    { "ref": "book_history", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "permission_slip", "role": "required", "appearsAfter": 3 },
+    { "ref": "toy_car", "role": "distractor" },
+    { "ref": "cards", "role": "distractor" }
+  ]
+}

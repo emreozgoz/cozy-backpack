@@ -1,0 +1,43 @@
+{
+  "id": "w03-d5",
+  "week": 3,
+  "day": "fri",
+  "schedule": ["pe", "art", "math"],
+  "tip": "finale",
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 6
+      },
+      {
+        "id": "side",
+        "kind": "side",
+        "cols": 1,
+        "rows": 2
+      },
+      {
+        "id": "front",
+        "kind": "front",
+        "cols": 2,
+        "rows": 1
+      }
+    ]
+  },
+  "items": [
+    { "ref": "pe_clothes", "role": "required" },
+    { "ref": "shoe_bag", "role": "required" },
+    { "ref": "sketchbook", "role": "required" },
+    { "ref": "crayons", "role": "required" },
+    { "ref": "book_math", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "permission_slip", "role": "required", "appearsAfter": 4 },
+    { "ref": "comic", "role": "distractor" },
+    { "ref": "toy_car", "role": "distractor" }
+  ]
+}

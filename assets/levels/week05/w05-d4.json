@@ -1,0 +1,37 @@
+{
+  "id": "w05-d4",
+  "week": 5,
+  "day": "thu",
+  "schedule": ["history", "pe"],
+  "cat": true,
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 6
+      },
+      {
+        "id": "side",
+        "kind": "side",
+        "cols": 1,
+        "rows": 2
+      }
+    ]
+  },
+  "items": [
+    { "ref": "book_history", "role": "required" },
+    { "ref": "pe_clothes", "role": "required" },
+    { "ref": "shoe_bag", "role": "required" },
+    { "ref": "library_book", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "gift", "role": "required", "appearsAfter": 3 },
+    { "ref": "cards", "role": "distractor" },
+    { "ref": "toy_car", "role": "distractor" }
+  ]
+}

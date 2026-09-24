@@ -1,0 +1,35 @@
+{
+  "id": "w05-d2",
+  "week": 5,
+  "day": "tue",
+  "schedule": ["life", "math"],
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 6,
+        "rows": 6
+      },
+      {
+        "id": "front",
+        "kind": "front",
+        "cols": 2,
+        "rows": 1
+      }
+    ]
+  },
+  "items": [
+    { "ref": "book_life", "role": "required" },
+    { "ref": "book_math", "role": "required" },
+    { "ref": "library_book", "role": "required" },
+    { "ref": "calculator", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "permission_slip", "role": "required" },
+    { "ref": "plush", "role": "distractor" },
+    { "ref": "toy_car", "role": "distractor" }
+  ]
+}

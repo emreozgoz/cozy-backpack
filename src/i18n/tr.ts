@@ -38,6 +38,24 @@ const tips: Record<TipKey, string> = {
   art: 'Resim günü! Boya kalemleri ve resim defteri de çantaya girer.',
   tight: 'Bugün çanta biraz dolu. Her boşluk önemli.',
   finale: 'Haftanın son günü: bu haftanın bütün kuralları bir arada.',
+  clothes: 'Spor kıyafeti yumuşak: dokununca katlanıp şekil değiştirir.',
+  pocket: 'Çantanın cepleri var! Ayakkabı torbası yan cebe girer.',
+  surprise: 'Bazen son anda bir şey hatırlanır. Masaya göz kulak ol!',
+  fragile: 'Hediye kırılabilir: üstüne hiçbir şey koyma.',
+  homework: 'Sınav haftası! Bir şey unutmuş olabilir misin?',
+  shapes: 'Gönye seti köşeli. Farklı yönlerde dene.',
+  full: 'Bugün çantada tek bir boş kare bile kalmayacak.',
+  cat: 'Pamuk bugün masada. Bir eşyanın üstüne oturursa onu sev!',
+  library: 'Kütüphane kitabını geri götürmeyi unutma.',
+  kit: 'Deney setinde cam tüpler var: üstüne bir şey koyma.',
+  poster: 'Poster rulosu çok uzun. Nasıl sığar, bir düşün.',
+};
+
+/** What a surprise item says when it drops onto the desk. */
+const surprises: Record<string, string> = {
+  permission_slip: 'Öğretmenden not: izin kâğıdını ön cebe koymayı unutma!',
+  gift: 'Bugün arkadaşının doğum günü! Hediye kırılabilir.',
+  homework: 'Annen seslendi: “Ödevini masada unuttun!”',
 };
 
 /** Why the zipper got stuck — the first problem found, in plain words. */
@@ -47,6 +65,7 @@ const stuckReasons: Record<Issue['kind'], string> = {
   orientation: 'Fermuar takıldı: bir eşya yanlış yönde duruyor.',
   fragile: 'Fermuar takıldı: hediyenin üstüne bir şey konmuş.',
   pocket: 'Fermuar takıldı: bir eşya kendi cebinde değil.',
+  surprise: 'Dur! Masaya bir şey daha geldi.',
 };
 
 const weekNames: Record<number, string> = {
@@ -54,6 +73,8 @@ const weekNames: Record<number, string> = {
   2: 'Beslenme Saati',
   3: 'Spor Haftası',
   4: 'Sınav Haftası',
+  5: 'Kütüphane Haftası',
+  6: 'Bilim Şenliği',
 };
 
 const slots: Record<DecorSlot, string> = {
@@ -202,8 +223,10 @@ const ui = {
   // accessibility
   zipper: 'Fermuar',
   zipperHint: 'Çantayı kapatmak için sağa çek',
+  cat: 'Kedi',
+  petCat: 'Kediyi sev',
 };
 
-export const tr = { subjects, weekdays, tips, stuckReasons, weekNames, slots, decor, ui };
+export const tr = { subjects, weekdays, tips, surprises, stuckReasons, weekNames, slots, decor, ui };
 
 export type Strings = typeof tr;

@@ -135,6 +135,25 @@ async function main() {
       ))}
     </Group>,
   );
+  // ---- cat ----------------------------------------------------------------
+  const { CatSkia } = require('../src/art/CatSkia') as typeof import('../src/art/CatSkia');
+  const catSurface = makeOffscreenSurface(360, 180);
+  const catImage = await drawOffscreen(
+    catSurface,
+    <Group>
+      <Rect x={0} y={0} width={180} height={180} color="#E9CDAE" />
+      <Rect x={180} y={0} width={180} height={180} color="#5A4638" />
+      <Group transform={[{ translateX: 20 }, { translateY: 20 }]}>
+        <CatSkia size={140} happy={false} />
+      </Group>
+      <Group transform={[{ translateX: 200 }, { translateY: 20 }]}>
+        <CatSkia size={140} happy />
+      </Group>
+    </Group>,
+  );
+  fs.writeFileSync(path.resolve(__dirname, '../design/previews/cat.png'), catImage.encodeToBytes());
+  console.log('✔ wrote design/previews/cat.png');
+
   const roomOut = path.resolve(__dirname, '../design/previews/room.png');
   fs.writeFileSync(roomOut, roomImage.encodeToBytes());
   console.log(`✔ wrote ${path.relative(process.cwd(), roomOut)}`);

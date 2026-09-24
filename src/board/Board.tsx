@@ -14,12 +14,15 @@ import { Celebration } from '@/art/fx/Celebration';
 import { canPlace } from '@/game/placement';
 import { orientedCells } from '@/game/shapes';
 import type { Cell } from '@/game/types';
-import { useGameStore } from '@/store/useGameStore';
+import { useGameStore, visibleInstances } from '@/store/useGameStore';
 import { usePalette } from '@/ui/tokens';
 
 import { solve } from '@/game/solver';
 
+import { useT } from '@/i18n';
+
 import { BagView } from './BagView';
+import { DeskCat } from './DeskCat';
 import { DragHand } from './DragHand';
 import { DraggableItem, type Highlight } from './DraggableItem';
 import { GhostPreview, type GhostMode } from './GhostPreview';
@@ -38,13 +41,34 @@ interface Ghost {
 export function Board({ width, height }: { width: number; height: number }) {
   const palette = usePalette();
   const level = useGameStore((s) => s.level);
-  const instances = useGameStore((s) => s.instances);
+  const allInstances = useGameStore((s) => s.instances);
+  const revealed = useGameStore((s) => s.revealed);
+  // Surprise items stay off the desk until they drop in.
+  const instances = useMemo(() => visibleInstances(allInstances, revealed), [allInstances, revealed]);
   const placements = useGameStore((s) => s.placements);
   const orient = useGameStore((s) => s.orient);
   const issues = useGameStore((s) => s.issues);
   const hint = useGameStore((s) => s.hint);
   const [ghost, setGhost] = useState<Ghost | null>(null);
   const status = useGameStore((s) => s.status);
+  const { ui } = useT();
+
+  // The desk cat: on cat levels she curls up on a desk item shortly after the
+  // first move and stays until petted.
+  const [catOn, setCatOn] = useState<string | null>(null);
+  const [catDone, setCatDone] = useState(false);
+  const placedCount = Object.keys(placements).length;
+  useEffect(() => {
+    if (!level?.cat || catDone || catOn || status !== 'playing' || placedCount < 1) return;
+    const t = setTimeout(() => {
+      const s = useGameStore.getState();
+      const onDesk = visibleInstances(s.instances, s.revealed).filter((i) => !s.placements[i.uid]);
+      // Prefer something she is "guarding" that the player actually needs.
+      const pick = onDesk.find((i) => i.role === 'required') ?? onDesk[0];
+      if (pick) setCatOn(pick.uid);
+    }, 1400);
+    return () => clearTimeout(t);
+  }, [level, catDone, catOn, status, placedCount]);
 
   // The packed bag hops once when it zips shut.
   const hop = useSharedValue(0);
@@ -186,12 +210,40 @@ export function Board({ width, height }: { width: number; height: number }) {
             onDragMove={onDragMove}
             onDrop={onDrop}
             onTap={onTap}
+            enter={inst.appearsAfter !== undefined}
+            locked={inst.uid === catOn}
           />
         ))}
         <View style={[StyleSheet.absoluteFill, styles.zipLayer]} pointerEvents="box-none">
           <Zipper key={level.id} layout={layout} palette={palette} />
         </View>
       </Animated.View>
+      {catOn && !placements[catOn] ? (
+        <DeskCat
+          x={
+            targetFor(
+              layout,
+              instances.find((i) => i.uid === catOn)!,
+              orient[catOn],
+              undefined,
+            ).x
+          }
+          y={
+            targetFor(
+              layout,
+              instances.find((i) => i.uid === catOn)!,
+              orient[catOn],
+              undefined,
+            ).y
+          }
+          size={Math.max(56, layout.cell * 1.3)}
+          petLabel={ui.petCat}
+          onGone={() => {
+            setCatOn(null);
+            setCatDone(true);
+          }}
+        />
+      ) : null}
       {handPath ? <DragHand from={handPath.from} to={handPath.to} /> : null}
       {status === 'won' ? (
         <View style={[StyleSheet.absoluteFill, styles.fxLayer]} pointerEvents="none">

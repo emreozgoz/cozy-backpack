@@ -1,0 +1,29 @@
+{
+  "id": "w03-d4",
+  "week": 3,
+  "day": "thu",
+  "schedule": ["english", "music"],
+  "tip": "fragile",
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 5,
+        "rows": 6
+      }
+    ]
+  },
+  "items": [
+    { "ref": "book_english", "role": "required" },
+    { "ref": "flute", "role": "required" },
+    { "ref": "gift", "role": "required", "appearsAfter": 2 },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "notebook", "role": "required" },
+    { "ref": "plush", "role": "distractor" },
+    { "ref": "ball", "role": "distractor" }
+  ]
+}

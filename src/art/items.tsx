@@ -377,6 +377,112 @@ const gift: Drawer = ({ w, h, base }) => {
   };
 };
 
+const libraryBook: Drawer = ({ w, h, c, base }) => ({
+  details: (
+    <Group>
+      <RoundedRect
+        x={G}
+        y={G}
+        width={w * 0.2}
+        height={h - G * 2}
+        r={8}
+        color={shade(base, -0.18)}
+        opacity={0.7}
+      />
+      {/* barcode sticker */}
+      <RoundedRect x={w * 0.34} y={h * 0.12} width={w * 0.52} height={h * 0.2} r={4} color="#FFFFFF" />
+      {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+        <RoundedRect
+          key={i}
+          x={w * 0.38 + i * w * 0.063}
+          y={h * 0.15}
+          width={i % 3 ? 1.5 : 3}
+          height={h * 0.14}
+          r={0.5}
+          color="#5B4636"
+        />
+      ))}
+      {/* library stamp */}
+      <Circle
+        cx={w * 0.78}
+        cy={h * 0.78}
+        r={c * 0.16}
+        style="stroke"
+        strokeWidth={2}
+        color={shade(base, -0.35)}
+      />
+    </Group>
+  ),
+  face: { cx: w * 0.58, cy: h * 0.58, size: w * 0.62 },
+});
+
+const experimentKit: Drawer = ({ w, h, c, base }) => {
+  const tubes = ['#F7B6C8', '#A8D8F0', '#FFE29A'];
+  return {
+    details: (
+      <Group>
+        {tubes.map((col, i) => (
+          <Group key={col}>
+            <RoundedRect
+              x={w * (0.18 + i * 0.24)}
+              y={G + 4}
+              width={c * 0.26}
+              height={h * 0.36}
+              r={c * 0.13}
+              color="rgba(255,255,255,0.75)"
+            />
+            <RoundedRect
+              x={w * (0.18 + i * 0.24)}
+              y={G + 4 + h * 0.18}
+              width={c * 0.26}
+              height={h * 0.18}
+              r={c * 0.13}
+              color={col}
+            />
+          </Group>
+        ))}
+        <RoundedRect
+          x={G}
+          y={h * 0.44}
+          width={w - G * 2}
+          height={Math.max(3, h * 0.05)}
+          r={2}
+          color={shade(base, -0.2)}
+        />
+        {/* fragile sticker */}
+        <RoundedRect x={w * 0.66} y={h * 0.6} width={w * 0.26} height={h * 0.26} r={5} color="#FFFBEF" />
+        <Path
+          path={`M ${w * 0.72} ${h * 0.66} l ${w * 0.14} ${h * 0.14} M ${w * 0.86} ${h * 0.66} l ${-w * 0.14} ${h * 0.14}`}
+          style="stroke"
+          strokeWidth={2}
+          strokeCap="round"
+          color="#F79E89"
+        />
+      </Group>
+    ),
+    face: { cx: w * 0.36, cy: h * 0.72, size: w * 0.34 },
+  };
+};
+
+const posterRoll: Drawer = ({ w, h, base }) => ({
+  details: (
+    <Group>
+      <Oval x={G + 1} y={G} width={w - G * 2 - 2} height={w * 0.55} color={shade(base, -0.12)} />
+      <Oval x={w * 0.3} y={G + w * 0.12} width={w * 0.4} height={w * 0.3} color={shade(base, -0.28)} />
+      <RoundedRect
+        x={G}
+        y={h * 0.62}
+        width={w - G * 2}
+        height={Math.max(4, h * 0.035)}
+        r={2}
+        color="#F79E89"
+      />
+      <RoundedRect x={w - G - 7} y={h * 0.2} width={3} height={h * 0.3} r={1.5} color={WHITE_SOFT} />
+    </Group>
+  ),
+  face: { cx: w / 2, cy: h * 0.42, size: w * 0.8 },
+});
+
 const generic: Drawer = ({ w, h, c, cells }) => {
   const rect = cells.length === (w / c) * (h / c);
   // Non-rectangular shapes: put the face on the bottom-left-most full cell.
@@ -413,6 +519,9 @@ const drawers: Record<string, Drawer> = {
   plush,
   cards,
   gift,
+  libraryBook,
+  experimentKit,
+  posterRoll,
 };
 
 export function drawItem(sprite: string, ctx: DrawCtx): Drawing {

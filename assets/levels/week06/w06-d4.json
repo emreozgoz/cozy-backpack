@@ -1,0 +1,32 @@
+{
+  "id": "w06-d4",
+  "week": 6,
+  "day": "thu",
+  "schedule": ["science", "history", "music"],
+  "cat": true,
+  "bag": {
+    "type": "backpack",
+    "compartments": [
+      {
+        "id": "main",
+        "kind": "main",
+        "cols": 7,
+        "rows": 6
+      }
+    ]
+  },
+  "items": [
+    { "ref": "experiment_kit", "role": "required" },
+    { "ref": "book_history", "role": "required" },
+    { "ref": "flute", "role": "required" },
+    { "ref": "poster_roll", "role": "required" },
+    { "ref": "pencil_case", "role": "required" },
+    { "ref": "lunchbox", "role": "required" },
+    { "ref": "water_bottle", "role": "required" },
+    { "ref": "homework", "role": "required", "appearsAfter": 4 },
+    { "ref": "calculator", "role": "required" },
+    { "ref": "ball", "role": "distractor" },
+    { "ref": "toy_car", "role": "distractor" },
+    { "ref": "comic", "role": "distractor" }
+  ]
+}
