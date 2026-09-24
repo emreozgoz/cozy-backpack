@@ -21,7 +21,11 @@
    - birincil dil Türkçe, ikincil dil İngilizce
    - kategori: Oyunlar → Bulmaca, ikincil kategori: Gündelik
 6. ⏳ **Ürünler, RevenueCat, AdMob:** `docs/gelir-kurulumu.md`
-7. ⏳ **İlk TestFlight derlemesi:** `npx eas-cli@latest build --profile production --platform ios` ve ardından `npx eas-cli@latest submit --platform ios`
+7. ⏳ **Sentry (isteğe bağlı ama önerilir):**
+   - sentry.io'da bir React Native projesi aç, DSN'i `.env`'e `EXPO_PUBLIC_SENTRY_DSN` olarak yaz.
+   - Kaynak haritalarının yüklenmesi için `SENTRY_ORG`, `SENTRY_PROJECT` ve `SENTRY_AUTH_TOKEN` değerlerini EAS secret olarak ekle.
+   - Ardından `eas.json`'daki `SENTRY_DISABLE_AUTO_UPLOAD` satırlarını sil.
+8. ⏳ **İlk TestFlight derlemesi:** `npx eas-cli@latest build --profile production --platform ios` ve ardından `npx eas-cli@latest submit --platform ios`
 
 ## Ekran görüntüleri
 1. Mac'te simülatörü aç: iPhone 16 Pro Max (6,9") ve iPad Pro 13".
@@ -42,7 +46,7 @@
   - **Kimlik bilgileri → Cihaz kimliği:** AdMob ve RevenueCat. Kullanım amaçları: üçüncü taraf reklamcılık, uygulama işlevselliği. Kullanıcıyla ilişkilendirilmez; izleme için kullanılır (izin verilirse).
   - **Satın alımlar → Satın alma geçmişi:** RevenueCat. Uygulama işlevselliği için. Kullanıcıyla ilişkilendirilmez.
   - **Kullanım verileri → Ürün etkileşimi:** AdMob. Üçüncü taraf reklamcılık için.
-  - **Tanılama verileri:** AdMob. Performans ölçümü için.
+  - **Tanılama verileri:** AdMob (performans ölçümü) ve Sentry (çökme verisi; uygulama işlevselliği). Kullanıcıyla ilişkilendirilmez.
   - **Konum → Yaklaşık konum:** AdMob (IP üzerinden). Üçüncü taraf reklamcılık için.
 - **İhracat uyumu (şifreleme):** `app.json`'da beyan edildiği için artık sorulmaz.
 - **Sürüm bilgisi:**

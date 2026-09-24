@@ -83,7 +83,8 @@
         {
           "userTrackingPermission": "This lets us show you more relevant ads. The whole game plays exactly the same if you say no."
         }
-      ]
+      ],
+      "@sentry/react-native"
     ],
     "experiments": {
       "typedRoutes": true,

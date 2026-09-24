@@ -5,13 +5,21 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { initMusic, initSound, setHapticsEnabled, setMusicEnabled, setSoundEnabled } from '@/features/feedback';
+import { initCrashReporting } from '@/features/crashReporting';
+import {
+  initMusic,
+  initSound,
+  setHapticsEnabled,
+  setMusicEnabled,
+  setSoundEnabled,
+} from '@/features/feedback';
 import { MockAdOverlay } from '@/features/monetization/MockAdOverlay';
 import { usePlayerStore } from '@/store/usePlayerStore';
 import { useShopStore } from '@/store/useShopStore';
 import { FONTS } from '@/ui/Text';
 import { usePalette } from '@/ui/tokens';
 
+initCrashReporting();
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
