@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import { useT } from '@/i18n';
@@ -7,6 +7,7 @@ import { SoftButton } from '@/ui/kit';
 import { radius, usePalette } from '@/ui/tokens';
 
 import { useMockAd } from './ads';
+import { Text } from '@/ui/Text';
 
 const REWARD_AFTER_S = 2;
 

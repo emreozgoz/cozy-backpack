@@ -55,7 +55,7 @@ async function main() {
   // (Fredoka, the first choice, lacks ş, ğ and İ).
   const provider = Skia.TypefaceFontProvider.Make();
   const nunito = Skia.Typeface.MakeFreeTypeFaceFromData(
-    Skia.Data.fromBytes(new Uint8Array(fs.readFileSync(path.join(root, 'assets/fonts/Nunito.ttf')))),
+    Skia.Data.fromBytes(new Uint8Array(fs.readFileSync(path.join(root, 'assets/fonts/Nunito-Black.ttf')))),
   );
   provider.registerFont(nunito, 'Nunito');
 
@@ -76,7 +76,6 @@ async function main() {
         color: Skia.Color('#5B4636'),
         fontFamilies: ['Nunito'],
         fontSize: size,
-        fontVariations: [{ axis: 'wght', value: 900 }],
         heightMultiplier: 1.08,
       })
       .addText(text)

@@ -1,6 +1,6 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View, type LayoutChangeEvent } from 'react-native';
+import { Pressable, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -15,6 +15,7 @@ import { usePlayerStore } from '@/store/usePlayerStore';
 import { rewardedAvailable, useShopStore } from '@/store/useShopStore';
 import { Coin, RoundButton, SoftButton } from '@/ui/kit';
 import { radius, usePalette, type Palette } from '@/ui/tokens';
+import { AnimatedText, Text } from '@/ui/Text';
 
 export default function Play() {
   const { ui, stuckReasons, tips, surprises } = useT();
@@ -105,21 +106,21 @@ export default function Play() {
 
       <View style={[styles.footer, { paddingBottom: insets.bottom + 12, backgroundColor: palette.desk }]}>
         {announcement ? (
-          <Animated.Text
+          <AnimatedText
             key={`surprise-${announcement}`}
             entering={FadeIn}
             style={[styles.stuck, { color: palette.text }]}
           >
             {surprises[announcement] ?? stuckReasons.surprise}
-          </Animated.Text>
+          </AnimatedText>
         ) : issues.length ? (
-          <Animated.Text
+          <AnimatedText
             key={`stuck-${issues[0].kind}`}
             entering={FadeIn}
             style={[styles.stuck, { color: palette.text }]}
           >
             {stuckReasons[issues[0].kind]}
-          </Animated.Text>
+          </AnimatedText>
         ) : offerHintAd && hints === 0 ? (
           <Animated.View key="hint-ad" entering={FadeIn} style={styles.offer}>
             <Text style={[styles.stuck, { color: palette.text }]}>
@@ -130,9 +131,9 @@ export default function Play() {
             ) : null}
           </Animated.View>
         ) : notice ? (
-          <Animated.Text key={notice} entering={FadeIn} style={[styles.stuck, { color: palette.text }]}>
+          <AnimatedText key={notice} entering={FadeIn} style={[styles.stuck, { color: palette.text }]}>
             {notice}
-          </Animated.Text>
+          </AnimatedText>
         ) : level.tip && tipClosed !== level.id ? (
           <Animated.View
             key={`tip-${level.id}`}
@@ -244,7 +245,7 @@ function WinCard({ palette, levelId }: { palette: Palette; levelId: string }) {
         <Text style={[styles.winTitle, { color: palette.text }]}>{daily ? ui.dailyComplete : ui.packed}</Text>
         <View style={styles.stars}>
           {[1, 2, 3].map((n) => (
-            <Animated.Text
+            <AnimatedText
               key={n}
               entering={ZoomIn.delay(STAR_DELAY + n * STAR_STEP)
                 .springify()
@@ -252,7 +253,7 @@ function WinCard({ palette, levelId }: { palette: Palette; levelId: string }) {
               style={[styles.star, { color: n <= stars ? '#F6C177' : palette.gridLine }]}
             >
               ★
-            </Animated.Text>
+            </AnimatedText>
           ))}
         </View>
         {completion ? (

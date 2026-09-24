@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, ZoomIn } from 'react-native-reanimated';
 
 import { DAILY_REWARDS, dayKey, type DailyReward } from '@/game/economy';
@@ -10,6 +10,7 @@ import { usePlayerStore } from '@/store/usePlayerStore';
 import { useShopStore } from '@/store/useShopStore';
 import { Coin, SoftButton } from '@/ui/kit';
 import { radius, usePalette } from '@/ui/tokens';
+import { Text } from '@/ui/Text';
 
 // The 7-day gift strip. Presented as a transparent modal over the room.
 export default function DailyRewardModal() {

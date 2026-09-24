@@ -1,7 +1,7 @@
 import { Canvas } from '@shopify/react-native-skia';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View, type LayoutChangeEvent } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { daylightFor, RoomScene } from '@/art/room/RoomScene';
@@ -11,6 +11,7 @@ import { useT } from '@/i18n';
 import { totalStars, usePlayerStore } from '@/store/usePlayerStore';
 import { Chip, Coin, RoundButton, SoftButton, StarGlyph } from '@/ui/kit';
 import { radius, usePalette } from '@/ui/tokens';
+import { Text } from '@/ui/Text';
 
 // Decorate the room: pick a slot, try an item on (the preview shows it even
 // before buying), then buy or equip it.

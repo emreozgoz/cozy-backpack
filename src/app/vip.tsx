@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { feedback } from '@/features/feedback';
@@ -11,6 +11,7 @@ import { useT } from '@/i18n';
 import { useShopStore } from '@/store/useShopStore';
 import { SoftButton } from '@/ui/kit';
 import { radius, usePalette } from '@/ui/tokens';
+import { Text } from '@/ui/Text';
 
 // VIP paywall. Apple requires: plan price and period, auto-renew terms, a way
 // to restore, and links to the Terms (EULA) and Privacy Policy — all here.

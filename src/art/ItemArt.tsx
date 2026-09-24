@@ -1,6 +1,6 @@
 import { Canvas, type Transforms3d } from '@shopify/react-native-skia';
 import { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {
   useDerivedValue,
   useReducedMotion,
@@ -17,6 +17,7 @@ import { itemColor } from '@/ui/colors';
 import { shade } from './color';
 import { itemDrawing, itemSize, ItemSkia } from './ItemSkia';
 import type { Expression } from './primitives/Face';
+import { Text } from '@/ui/Text';
 
 const LABELS: Record<Subject, string> = {
   math: 'π',

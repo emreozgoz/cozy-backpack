@@ -1,7 +1,7 @@
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Switch, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useT, type LanguageSetting } from '@/i18n';
@@ -9,6 +9,7 @@ import { usePlayerStore } from '@/store/usePlayerStore';
 import { isAdFree, privacy, useShopStore } from '@/store/useShopStore';
 import { RoundButton, SoftButton } from '@/ui/kit';
 import { radius, usePalette } from '@/ui/tokens';
+import { Text } from '@/ui/Text';
 
 export default function Settings() {
   const { ui } = useT();

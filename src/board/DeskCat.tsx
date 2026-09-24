@@ -1,6 +1,6 @@
 import { Canvas, type Transforms3d } from '@shopify/react-native-skia';
 import { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
@@ -18,6 +18,7 @@ import { CatSkia } from '@/art/CatSkia';
 import { feedback } from '@/features/feedback';
 
 import { springs } from './springs';
+import { Text } from '@/ui/Text';
 
 // "Pamuk", the desk cat (Style A). She curls up on one desk item — which can't
 // be picked up while she's there — until the player pets her. Pure charm: no

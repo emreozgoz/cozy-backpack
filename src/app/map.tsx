@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useRef } from 'react';
-import { FlatList, Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { levelsByWeek } from '@/data/levels';
@@ -9,6 +9,7 @@ import { useT } from '@/i18n';
 import { isUnlocked, nextToPlay, usePlayerStore } from '@/store/usePlayerStore';
 import { RoundButton, StarGlyph } from '@/ui/kit';
 import { radius, usePalette, type Palette } from '@/ui/tokens';
+import { Text } from '@/ui/Text';
 
 // The level map is a weekly planner: one notebook page per school week,
 // swiped sideways. It opens on the week of the next day to play.

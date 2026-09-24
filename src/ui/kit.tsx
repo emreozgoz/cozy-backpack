@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react';
-import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { radius, usePalette } from './tokens';
+import { Text } from './Text';
 
 /** The "düğme" currency icon: a little sewing button with four holes. */
 export function Coin({ size = 18 }: { size?: number }) {

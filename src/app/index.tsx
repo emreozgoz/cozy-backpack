@@ -1,7 +1,7 @@
 import { Canvas } from '@shopify/react-native-skia';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View, type LayoutChangeEvent } from 'react-native';
+import { Pressable, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useReducedMotion,
@@ -20,6 +20,7 @@ import { useT } from '@/i18n';
 import { nextToPlay, totalStars, usePlayerStore } from '@/store/usePlayerStore';
 import { Chip, Coin, RoundButton, SoftButton, StarGlyph } from '@/ui/kit';
 import { radius, usePalette } from '@/ui/tokens';
+import { Text } from '@/ui/Text';
 
 // Offer the daily reward once per app launch, not every time Home re-mounts.
 let rewardOffered = false;

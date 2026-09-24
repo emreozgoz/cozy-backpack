@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { feedback } from '@/features/feedback';
@@ -10,6 +10,7 @@ import { isAdFree, starterOffered, useShopStore } from '@/store/useShopStore';
 import { usePlayerStore } from '@/store/usePlayerStore';
 import { Chip, Coin, RoundButton, SoftButton } from '@/ui/kit';
 import { radius, usePalette } from '@/ui/tokens';
+import { Text } from '@/ui/Text';
 
 export default function Shop() {
   const { ui } = useT();
