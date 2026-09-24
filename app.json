@@ -23,7 +23,11 @@
         ],
         "CFBundleAllowMixedLocalizations": true
       },
-      "requireFullScreen": true
+      "requireFullScreen": true,
+      "buildNumber": "1",
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {

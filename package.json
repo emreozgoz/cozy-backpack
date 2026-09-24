@@ -61,7 +61,8 @@
     "levels": "tsx scripts/validate-levels.ts",
     "art": "tsx scripts/render-art-preview.tsx",
     "sfx": "tsx scripts/synth-sfx.ts",
-    "icons": "tsx scripts/render-icons.tsx"
+    "icons": "tsx scripts/render-icons.tsx",
+    "screenshots": "tsx scripts/frame-screenshots.tsx"
   },
   "private": true,
   "allowScripts": {

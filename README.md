@@ -20,6 +20,8 @@ npx expo run:ios        # Mac'te yerel dev build
 | `npm run levels` | Tüm bölümleri doğrular, çözülebilirliği kanıtlar, zorluk raporu yazar ve `src/data/levelIndex.ts`'i üretir |
 | `npm run art` | Eşyaları ve odayı `design/previews/` altına PNG olarak çizer (açık/koyu, yüz ifadeleri, dekorlar) |
 | `npm run sfx` | Ses efektlerini sentezler (`assets/audio/sfx/`) |
+| `npm run icons` | Uygulama ikonu, açılış ekranı ve Android katmanlarını çizer (`assets/icons/`) |
+| `npm run screenshots` | Ham simülatör görüntülerini App Store için çerçeveler (`--demo` ile deneme seti) |
 
 ## Yeni bölüm eklemek
 
@@ -36,3 +38,6 @@ Eşyalar `assets/data/items.json` içinde tanımlı. Şekiller `X` (dolu) ve `.`
 - `src/app/` — ekranlar (expo-router)
 - `scripts/` — bölüm doğrulayıcı ve görsel önizleme
 - `design/` — stil keşfi ve önizleme çıktıları
+- `store/` — App Store metinleri (TR/EN)
+- `site/` — destek sayfası, gizlilik politikası, kullanım şartları (GitHub Pages)
+- `docs/` — kurulum ve yayın rehberleri

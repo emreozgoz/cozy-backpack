@@ -80,6 +80,8 @@ function admob(g: GMA): AdService {
           nonPersonalized = false;
         }
         if (!canRequest) return;
+        // A cozy game for all ages: only general-audience ads.
+        await g.default().setRequestConfiguration({ maxAdContentRating: g.MaxAdContentRating.G });
         await g.default().initialize();
         loadInterstitial();
         loadRewarded();
