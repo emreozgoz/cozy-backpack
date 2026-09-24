@@ -32,9 +32,11 @@ export default function Settings() {
     setStoreMessage((await useShopStore.getState().restore()) ? ui.restoreDone : ui.restoreNone);
   };
 
-  const rows: { key: 'sound' | 'haptics'; label: string }[] = [
+  const rows: { key: 'sound' | 'music' | 'haptics' | 'leftHanded'; label: string }[] = [
+    { key: 'music', label: ui.music },
     { key: 'sound', label: ui.sound },
     { key: 'haptics', label: ui.haptics },
+    { key: 'leftHanded', label: ui.leftHanded },
   ];
   // Language names stay in their own language so anyone can find theirs.
   const languages: { value: LanguageSetting; label: string }[] = [

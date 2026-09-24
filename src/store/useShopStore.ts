@@ -23,6 +23,8 @@ import {
   type PurchaseService,
 } from '@/features/monetization/purchases';
 
+import { withMusicPaused } from '@/features/feedback/music';
+
 import { kvStorage } from './storage';
 import { usePlayerStore } from './usePlayerStore';
 
@@ -184,7 +186,7 @@ export const useShopStore = create<ShopState>()(
           const { counters, entitlements } = get();
           const ctx = { now: Date.now(), today: dayKey(), adFree: isAdFree(entitlements), isDaily };
           if (!shouldShowInterstitial(counters, ctx)) return;
-          const shown = await services().ads.showInterstitial();
+          const shown = await withMusicPaused(() => services().ads.showInterstitial());
           if (shown) {
             set({ counters: { ...get().counters, levelsSinceAd: 0, lastInterstitialAt: Date.now() } });
           }
@@ -193,7 +195,7 @@ export const useShopStore = create<ShopState>()(
         async watchRewarded() {
           const today = dayKey();
           if (!rewardedAvailable(get(), today)) return false;
-          const earned = await services().ads.showRewarded();
+          const earned = await withMusicPaused(() => services().ads.showRewarded());
           if (earned) {
             const c = get().counters;
             set({

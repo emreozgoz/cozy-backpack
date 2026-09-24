@@ -108,12 +108,17 @@ function room(b: Buf, mix = 0.18): Buf {
   return outBuf;
 }
 
-function write(name: string, b: Buf, peak: number) {
-  // normalise, then a 6ms fade-out so nothing clicks at the end
+function write(
+  name: string,
+  b: Buf,
+  peak: number,
+  { rate = RATE, dir = out, fadeOut = true }: { rate?: number; dir?: string; fadeOut?: boolean } = {},
+) {
+  // normalise, then a 6ms fade-out so nothing clicks at the end (not for loops)
   let max = 0;
   for (const v of b) max = Math.max(max, Math.abs(v));
   const gain = max ? peak / max : 0;
-  const fade = Math.floor(0.006 * RATE);
+  const fade = fadeOut ? Math.floor(0.006 * rate) : 0;
   const data = Buffer.alloc(b.length * 2);
   for (let i = 0; i < b.length; i++) {
     const f = i > b.length - fade ? (b.length - i) / fade : 1;
@@ -128,14 +133,15 @@ function write(name: string, b: Buf, peak: number) {
   header.writeUInt32LE(16, 16);
   header.writeUInt16LE(1, 20); // PCM
   header.writeUInt16LE(1, 22); // mono
-  header.writeUInt32LE(RATE, 24);
-  header.writeUInt32LE(RATE * 2, 28);
+  header.writeUInt32LE(rate, 24);
+  header.writeUInt32LE(rate * 2, 28);
   header.writeUInt16LE(2, 32);
   header.writeUInt16LE(16, 34);
   header.write('data', 36);
   header.writeUInt32LE(data.length, 40);
-  fs.writeFileSync(path.join(out, `${name}.wav`), Buffer.concat([header, data]));
-  console.log(`  ${name}.wav  ${(b.length / RATE).toFixed(2)}s`);
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, `${name}.wav`), Buffer.concat([header, data]));
+  console.log(`  ${name}.wav  ${(b.length / rate).toFixed(2)}s`);
 }
 
 fs.mkdirSync(out, { recursive: true });
@@ -223,6 +229,105 @@ console.log('Synthesizing sfx →', path.relative(process.cwd(), out));
   hush(b, { dur: 0.18, amp: 1, lp: 0.12, hp: 0.03, attack: 0.03 });
   tone(b, { freq: 300, to: 220, dur: 0.12, amp: 0.3, decay: 0.04 });
   write('fold', b, 0.35);
+}
+
+// ---- music: a soft lo-fi loop ----------------------------------------------
+// 72 BPM, 8 bars of Fmaj7 → Em7 → Dm7 → Cmaj7 on a warm electric piano,
+// round bass, brushed drums, a sparse pentatonic melody and faint vinyl
+// crackle. Rendered with a tail that is folded back to the start, so the loop
+// point is seamless.
+{
+  const BPM = 72;
+  const beat = 60 / BPM;
+  const bar = beat * 4;
+  const bars = 8;
+  const loopLen = bar * bars;
+  const tail = 2.5;
+  const b = buf(loopLen + tail);
+
+  const chords = [
+    [174.61, 220.0, 261.63, 329.63], // Fmaj7
+    [164.81, 196.0, 246.94, 293.66], // Em7
+    [146.83, 174.61, 220.0, 261.63], // Dm7
+    [130.81, 164.81, 196.0, 246.94], // Cmaj7
+  ];
+
+  /** Electric-piano note: sine + soft 2nd harmonic, gentle tremolo, long decay. */
+  const keys = (at: number, f: number, amp: number, dur = 1.8) => {
+    const start = Math.floor(at * RATE);
+    const n = Math.floor(dur * RATE);
+    for (let i = 0; i < n && start + i < b.length; i++) {
+      const t = i / RATE;
+      const env = Math.min(1, t / 0.012) * Math.exp(-t / (dur / 3));
+      const trem = 1 + 0.12 * Math.sin(2 * Math.PI * 4.5 * t);
+      const v = Math.sin(2 * Math.PI * f * t) + 0.18 * Math.sin(2 * Math.PI * 2 * f * t) + 0.05 * Math.sin(2 * Math.PI * 3 * f * t);
+      b[start + i] += v * env * trem * amp;
+    }
+  };
+
+  const melody = [
+    [0, 2, 523.25],
+    [0, 3.5, 587.33],
+    [1, 1, 659.25],
+    [2, 2.5, 587.33],
+    [3, 0.5, 523.25],
+    [3, 2, 440.0],
+    [4, 2, 659.25],
+    [4, 3, 783.99],
+    [5, 1.5, 659.25],
+    [6, 2, 587.33],
+    [6, 3.5, 523.25],
+    [7, 1, 440.0],
+  ];
+
+  for (let barIdx = 0; barIdx < bars; barIdx++) {
+    const t0 = barIdx * bar;
+    const chord = chords[barIdx % chords.length];
+    // chord hits on beats 1 and 3, lightly strummed
+    for (const hit of [0, 2]) {
+      chord.forEach((f, k) => keys(t0 + hit * beat + k * 0.018, f, hit === 0 ? 0.22 : 0.16));
+    }
+    // bass: root an octave down on 1 and the "and" of 2
+    tone(b, { at: t0, freq: chord[0] / 2, dur: beat * 1.4, amp: 0.55, attack: 0.01, decay: 0.5 });
+    tone(b, { at: t0 + beat * 1.5, freq: chord[0] / 2, dur: beat, amp: 0.35, attack: 0.01, decay: 0.35 });
+    for (let k = 0; k < 4; k++) {
+      const bt = t0 + k * beat;
+      // soft kick on 1 and 3
+      if (k % 2 === 0) tone(b, { at: bt, freq: 90, to: 50, dur: 0.18, amp: 0.5, attack: 0.002, decay: 0.06 });
+      // brushed snare on 2 and 4
+      if (k % 2 === 1) hush(b, { at: bt, dur: 0.16, amp: 0.16, lp: 0.5, hp: 0.12, attack: 0.01 });
+      // hat on the off-beats, slightly swung
+      hush(b, { at: bt + beat * 0.56, dur: 0.05, amp: 0.07, lp: 0.9, hp: 0.5, attack: 0.002 });
+    }
+  }
+  for (const [barIdx, beatPos, f] of melody) {
+    bell(b, barIdx * bar + beatPos * beat, f, 0.11, 1.1);
+  }
+  // vinyl: very quiet noise bed and sparse crackles
+  hush(b, { dur: loopLen + tail, amp: 0.012, lp: 0.3, hp: 0.05, attack: 0.5 });
+  for (let t = 0.3; t < loopLen; t += 0.37 + (Math.abs(noise()) * 0.9)) {
+    hush(b, { at: t, dur: 0.004, amp: 0.05, lp: 0.9, hp: 0.6, attack: 0.001 });
+  }
+
+  // warm it up: gentle low-pass
+  let lp = 0;
+  for (let i = 0; i < b.length; i++) {
+    lp += 0.22 * (b[i] - lp);
+    b[i] = lp;
+  }
+  // fold the tail over the start → seamless loop
+  const loopN = Math.floor(loopLen * RATE);
+  const loop = new Float32Array(loopN);
+  for (let i = 0; i < loopN; i++) loop[i] = b[i];
+  for (let i = loopN; i < b.length; i++) loop[i - loopN] += b[i];
+  // 22.05 kHz is plenty for soft music and halves the file size
+  const half = new Float32Array(Math.floor(loopN / 2));
+  for (let i = 0; i < half.length; i++) half[i] = (loop[2 * i] + loop[2 * i + 1]) / 2;
+  write('cozy-loop', half, 0.55, {
+    rate: RATE / 2,
+    dir: path.resolve(__dirname, '../assets/audio/music'),
+    fadeOut: false,
+  });
 }
 
 console.log('✔ done');

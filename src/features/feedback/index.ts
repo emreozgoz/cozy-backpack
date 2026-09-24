@@ -3,6 +3,7 @@ import * as Haptics from 'expo-haptics';
 import { play } from './sound';
 
 export { initSound, setSoundEnabled } from './sound';
+export { initMusic, setMusicEnabled, withMusicPaused } from './music';
 
 let hapticsOn = true;
 export function setHapticsEnabled(on: boolean) {

@@ -5,7 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { initSound, setHapticsEnabled, setSoundEnabled } from '@/features/feedback';
+import { initMusic, initSound, setHapticsEnabled, setMusicEnabled, setSoundEnabled } from '@/features/feedback';
 import { MockAdOverlay } from '@/features/monetization/MockAdOverlay';
 import { usePlayerStore } from '@/store/usePlayerStore';
 import { useShopStore } from '@/store/useShopStore';
@@ -18,6 +18,7 @@ export default function RootLayout() {
   const palette = usePalette();
   const sound = usePlayerStore((s) => s.settings.sound);
   const haptics = usePlayerStore((s) => s.settings.haptics);
+  const music = usePlayerStore((s) => s.settings.music);
 
   const [fontsLoaded, fontError] = useFonts(FONTS);
   const ready = fontsLoaded || !!fontError;
@@ -28,13 +29,15 @@ export default function RootLayout() {
 
   useEffect(() => {
     initSound();
+    initMusic();
     useShopStore.getState().init();
   }, []);
 
   useEffect(() => {
     setSoundEnabled(sound);
     setHapticsEnabled(haptics);
-  }, [sound, haptics]);
+    setMusicEnabled(music);
+  }, [sound, haptics, music]);
 
   if (!ready) return null;
 
